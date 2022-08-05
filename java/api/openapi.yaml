@@ -1,0 +1,1768 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: opensource@swisssign.com
+    name: SwissSign Support
+  description: See https://github.com/SwissSign-AG/RaApi/README.md
+  title: SwissSign RA REST API
+  version: 2.0.207
+servers:
+- description: Pre Production
+  url: https://api.ra.pre.swisssign.ch/v2
+- description: Production
+  url: https://api.ra.swisssign.ch/v2
+tags:
+- name: api_registration
+paths:
+  /v2/jwt/{userName}:
+    post:
+      description: "Helper service to generate a JWT derived from you login username\
+        \ and API Key\n---\n* Use the generated JWT in the header of __each__ HTTP\
+        \ request to the service\n\n`Authorization: Bearer <encoded JWT>`\n"
+      operationId: jwt
+      parameters:
+      - explode: false
+        in: path
+        name: userName
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/jwt_request'
+        description: User Secret payload
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                readOnly: true
+                type: string
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      summary: Produce a user JWT
+      tags:
+      - api_registration
+      x-content-type: application/x-www-form-urlencoded
+      x-accepts: application/json
+  /v2/clients:
+    post:
+      description: "Search for clients for which the RA Operator can issue, revoke\
+        \ or pre validate DNS entries.\nThe Client information includes the list of\
+        \ assigned certificate products.\n"
+      operationId: searchClients
+      parameters:
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          description: search query string with optional wildcard attributes ? and/or
+            *
+          example: C?mpan* Ltd
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Client'
+                readOnly: true
+                type: array
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Search Clients available to the RA Operator
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/client/{clientReference}:
+    post:
+      description: |
+        Get a client given its reference UUID
+      operationId: getClient
+      parameters:
+      - description: Client reference UUID
+        explode: false
+        in: path
+        name: clientReference
+        required: true
+        schema:
+          description: Client reference UUID
+          example: cli-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "cli-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Get a client given its reference Id
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/issue/csr/{productReference}:
+    post:
+      description: |
+        Issue a certificate based on the Product reference (CSR)
+      operationId: issueCertificate
+      parameters:
+      - description: Certificate product reference UUID
+        explode: false
+        in: path
+        name: productReference
+        required: true
+        schema:
+          description: Product reference UUID
+          example: pma-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "pma-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example: "----BEGIN CERTIFICATE REQUEST-----\nMIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh\n\
+              ... [snipped] ...\n6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP\n\
+              -----END CERTIFICATE REQUEST-----\n"
+            schema:
+              type: string
+        description: Certificate Request in Base64 with start/end beacon
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateOrder'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Issue certificate using CSR
+      tags:
+      - api_registration
+      x-content-type: application/json
+      x-accepts: application/json
+  /v2/order/{orderReference}/status:
+    post:
+      description: |
+        Retrieve a certificate order status given the order reference identifier.
+      operationId: getCertificateOrderStatus
+      parameters:
+      - explode: false
+        in: path
+        name: orderReference
+        required: true
+        schema:
+          description: Certificate order reference UUID
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateOrderStatus'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Retrieve a Certificate Order status given the Order reference
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/order/{orderReference}:
+    post:
+      description: |
+        Retrieve a certificate order given the order reference identifier.
+      operationId: getCertificateOrder
+      parameters:
+      - explode: false
+        in: path
+        name: orderReference
+        required: true
+        schema:
+          description: Certificate order reference UUID
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateOrder'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Retrieve a Certificate Order given the Order reference
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/order/{orderReference}/certificate/chain:
+    post:
+      description: "Retrieve the certificate chain base64 encoded text. First element\
+        \ in list is leaf certificate, last element is Root certificate.\n"
+      operationId: getCertificateChain
+      parameters:
+      - explode: false
+        in: path
+        name: orderReference
+        required: true
+        schema:
+          description: Certificate order reference UUID
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                readOnly: true
+                type: array
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Retrieve the certificate chain for the given Order reference
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/order/{orderReference}/tasks:
+    post:
+      description: |
+        Retrieve a certificate order tasks given the order reference identifier.
+      operationId: getCertificateOrderTasks
+      parameters:
+      - explode: false
+        in: path
+        name: orderReference
+        required: true
+        schema:
+          description: Certificate order reference UUID
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CertificateOrderTask'
+                readOnly: true
+                type: array
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Retrieve a Certificate Order Tasks given the Order reference
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/orders:
+    post:
+      description: |
+        Search for Certificate Orders given search parameters
+      operationId: getCertificateOrders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchCertificateOrder'
+        description: Certificate order search options
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CertificateOrder'
+                readOnly: true
+                type: array
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Search Certificate Orders
+      tags:
+      - api_registration
+      x-content-type: application/json
+      x-accepts: application/json
+  /v2/revoke:
+    post:
+      description: |
+        Revoke one or more certificates
+      operationId: revokeCertificates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/RevocationRequest'
+              type: array
+        description: Certificate references to revoke
+        required: true
+      responses:
+        "204":
+          description: successfully submitted revocation request
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Revoke certificates
+      tags:
+      - api_registration
+      x-content-type: application/json
+      x-accepts: application/json
+  /v2/client/domain/{clientReference}/list:
+    post:
+      description: |
+        Retrieve the list of pre validated domains and their status for the selected client
+      operationId: getClientPrevalidatedDomains
+      parameters:
+      - description: Client reference UUID
+        explode: false
+        in: path
+        name: clientReference
+        required: true
+        schema:
+          description: Client reference UUID
+          example: cli-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "cli-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClientDNS'
+                readOnly: true
+                type: array
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Get the list of prevalidated domains for the selected client given
+        its reference Id
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/client/domain/{clientReference}/register:
+    post:
+      description: |
+        Create and issue domains pre validation tokens for the selected client
+      operationId: createClientPrevalidatedDomains
+      parameters:
+      - description: Client reference UUID
+        explode: false
+        in: path
+        name: clientReference
+        required: true
+        schema:
+          description: Client reference UUID
+          example: cli-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "cli-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                description: Domain name
+                example: déjà.vu.com
+                nullable: false
+                type: string
+              type: array
+        description: Client domains
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClientDNS'
+                readOnly: true
+                type: array
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Register new prevalidated domains for the selected client given its
+        reference Id
+      tags:
+      - api_registration
+      x-content-type: application/json
+      x-accepts: application/json
+  /v2/client/domain/{prevalidatedDomainReference}:
+    post:
+      description: |
+        Get pre validatied domain token for the selected identifier
+      operationId: getClientPrevalidatedDomain
+      parameters:
+      - description: Pre validated domain reference UUID
+        explode: false
+        in: path
+        name: prevalidatedDomainReference
+        required: true
+        schema:
+          description: Pre validated fomain reference UUID
+          example: cld-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "cld-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDNS'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Get prevalidated domains for the selected domain reference Id
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/client/domain/{prevalidatedDomainReference}/validate:
+    post:
+      description: |
+        Pre validate domain token for the selected identifier
+      operationId: validateClientPrevalidatedDomain
+      parameters:
+      - description: Pre validated domain reference UUID
+        explode: false
+        in: path
+        name: prevalidatedDomainReference
+        required: true
+        schema:
+          description: Pre validated fomain reference UUID
+          example: cld-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "cld-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDNS'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Prevalidate domain for the selected domain reference Id
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/client/domain/{prevalidatedDomainReference}/delete:
+    post:
+      description: |
+        Delete pre validated domain
+      operationId: deleteClientPrevalidatedDomain
+      parameters:
+      - description: Pre validated domain reference UUID
+        explode: false
+        in: path
+        name: prevalidatedDomainReference
+        required: true
+        schema:
+          description: Pre validated domain reference UUID
+          example: cld-2263d498-6569-46d6-9359-f08a1d298d2d
+          nullable: false
+          pattern: "cld-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Delete prevalidated domain for the selected reference Id
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/client/domain/{prevalidatedDomainReference}/token/reset:
+    post:
+      description: |
+        Reset pre validated domain token
+      operationId: resetClientPrevalidatedDomain
+      parameters:
+      - description: Pre validated domain reference UUID
+        explode: false
+        in: path
+        name: prevalidatedDomainReference
+        required: true
+        schema:
+          description: Pre validated domain reference UUID
+          example: cld-2263d498-6569-46d6-9359-f08a1d298d2d
+          nullable: false
+          pattern: "cld-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDNS'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Reset prevalidated domain token for the selected reference Id
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/client/domain/{prevalidatedDomainReference}/token/delete:
+    post:
+      description: |
+        Delete pre validated domain token
+      operationId: deleteClientPrevalidatedDomainToken
+      parameters:
+      - description: Pre validated domain reference UUID
+        explode: false
+        in: path
+        name: prevalidatedDomainReference
+        required: true
+        schema:
+          description: Pre validated domain reference UUID
+          example: cld-2263d498-6569-46d6-9359-f08a1d298d2d
+          nullable: false
+          pattern: "cld-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDNS'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Delete prevalidated domain token for the selected reference Id
+      tags:
+      - api_registration
+      x-accepts: application/json
+components:
+  schemas:
+    RevocationReason:
+      description: Revocation reason
+      enum:
+      - unused
+      - keyCompromise
+      - cACompromise
+      - affiliationChanged
+      - superseded
+      - cessationOfOperation
+      - certificateHold
+      - removeFromCRL
+      - privilegeWithdrawn
+      - aACompromise
+      example: unused
+      nullable: false
+      readOnly: true
+      type: string
+    ClientDomainValidationStatus:
+      description: Status of the domain pre validation
+      enum:
+      - pending
+      - expired
+      - valid
+      - not_validated
+      example: not_validated
+      nullable: false
+      readOnly: true
+      type: string
+    RevocationRequest:
+      example:
+        serialNumber: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+        issuerName: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+        revocationReason: unused
+      properties:
+        serialNumber:
+          description: Certificate serial number (Big Integer HEX encoded)
+          example: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+          nullable: false
+          type: string
+        revocationReason:
+          description: Revocation reason
+          enum:
+          - unused
+          - keyCompromise
+          - affiliationChanged
+          - superseded
+          - cessationOfOperation
+          - privilegeWithdrawn
+          example: unused
+          nullable: false
+          type: string
+        issuerName:
+          description: Certificate issuer distinguished name
+          example: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+          nullable: false
+          type: string
+      required:
+      - issuerName
+      - revocationReason
+      - serialNumber
+      type: object
+    KeyType:
+      description: Key generation type
+      enum:
+      - rsa_2048
+      - rsa_3072
+      - rsa_4096
+      - rsa_8192
+      - ec_secp224k1
+      - ec_secp224r1
+      - ec_secp256k1
+      - ec_secp256r1
+      - ec_secp384r1
+      - ec_secp521r1
+      - ec_x962p239v1
+      - ec_x962p239v2
+      - ec_x962p239v3
+      - ec_brainpool224r1
+      - ec_brainpool256r1
+      - ec_brainpool320r1
+      - ec_brainpool384r1
+      - ec_brainpool512r1
+      - ec_frp256v1
+      example: rsa_2048
+      nullable: false
+      readOnly: true
+      type: string
+    Product:
+      example:
+        renewalRule: false
+        publishCertificate: false
+        uuid: pma-123e4567-e89b-12d3-a456-426614174000
+        productName: SSL Silver
+        keyGenerationType: PKCS10
+        authorization: false
+        revocationNotification: false
+        issuanceNotification: false
+        clientPublishCertificateOverrideDefault: false
+        keyType: rsa_2048
+        clientPublishCertificateOverride: false
+        productDescription: SSL NCP policy with domain validation
+        expirationDate: 2022-02-15T00:00:00.000+00:00
+      properties:
+        uuid:
+          description: Product UUID reference
+          example: pma-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "pma-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+        productName:
+          description: Certificate product name
+          example: SSL Silver
+          nullable: false
+          readOnly: true
+          type: string
+        productDescription:
+          description: Product additional description
+          example: SSL NCP policy with domain validation
+          nullable: true
+          readOnly: true
+          type: string
+        keyGenerationType:
+          description: Key generation protocol
+          enum:
+          - PKCS10
+          - PKCS12
+          - PKCS12withPIN
+          - PKCS10or12withPIN
+          - HSM
+          - CNG
+          example: PKCS10
+          nullable: false
+          readOnly: true
+          type: string
+        keyType:
+          $ref: '#/components/schemas/KeyType'
+        issuanceNotification:
+          description: Indicate if the certificate sends a notification on issuance
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        revocationNotification:
+          description: Indicate if the certificate sends a notification on revocation
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        authorization:
+          description: Indicate if the certificate requires an authorization on issuance/revocation
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        renewalRule:
+          description: Indicate if the certificate sends a notification for renewal
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        publishCertificate:
+          description: Indicate if the certificate is published to the public LDAP
+            after issuance
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        clientPublishCertificateOverride:
+          description: Indicate if the certificate publication can be overridden
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        clientPublishCertificateOverrideDefault:
+          description: Indicate the default value if publication override is enabled
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        expirationDate:
+          description: Indicate if the certificate product has an expiration date
+          example: 2022-02-15
+          format: date
+          nullable: true
+          readOnly: true
+          type: string
+      required:
+      - authorization
+      - clientPublishCertificateOverride
+      - clientPublishCertificateOverrideDefault
+      - issuanceNotification
+      - keyGenerationType
+      - keyType
+      - name
+      - publishCertificate
+      - renewalRule
+      - revocationNotification
+      - uuid
+      type: object
+    CertificateOrderStatus:
+      description: Status of the certificate Order
+      enum:
+      - new
+      - key_validation
+      - pre_validation
+      - generate_tbs
+      - pending_auth
+      - pre_issue
+      - issue
+      - post_validation
+      - finalize_issuance
+      - issued
+      - revoked
+      - failed
+      - rejected
+      - pending_csr_renewal
+      - unknown
+      example: issued
+      nullable: false
+      readOnly: true
+      type: string
+    SearchCertificateOrder:
+      example:
+        serialNumber: 3893409CB*66E1F09?
+        clientReferences:
+        - cli-123e4567-e89b-12d3-a456-426614174000
+        startAfter: 2002-03-15T00:00:00.000+00:00
+        startBefore: 2002-01-18T00:00:00.000+00:00
+        orderReference: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+        orderStatus:
+        - issued
+        - issued
+        attribute: s?me@emai* or 2.5.4.r or streetAddress
+        revocationReason:
+        - unused
+        - unused
+      properties:
+        orderReference:
+          description: Certificate Order reference
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          nullable: true
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+        serialNumber:
+          description: Certificate serial number (Big Integer HEX encoded) with optional
+            wildcard attributes ? and/or *
+          example: 3893409CB*66E1F09?
+          nullable: true
+          type: string
+        orderStatus:
+          items:
+            $ref: '#/components/schemas/CertificateOrderStatus'
+          nullable: true
+          type: array
+        revocationReason:
+          items:
+            $ref: '#/components/schemas/RevocationReason'
+          nullable: true
+          type: array
+        clientReferences:
+          description: Client reference UUID
+          example:
+          - cli-123e4567-e89b-12d3-a456-426614174000
+          items:
+            pattern: "cli-[0-9a-f-]{36}"
+            type: string
+          nullable: true
+          type: array
+        startAfter:
+          description: End Validity not starting after Date
+          example: 2002-03-15
+          format: date
+          nullable: true
+          type: string
+        startBefore:
+          description: Validity not starting before Date
+          example: 2002-01-18
+          format: date
+          nullable: true
+          type: string
+        attribute:
+          description: Any certificate attribute OID or value with optional wildcard
+            attributes ? and/or *
+          example: s?me@emai* or 2.5.4.r or streetAddress
+          nullable: true
+          type: string
+      type: object
+    ClientDNS:
+      example:
+        domainUnicode: déjà.vu.com
+        timeValidated: 2022-01-12T23:20:50.52Z
+        validationResult: Validated XYZ ...
+        trustedDomain: true
+        randomValueTimeExpired: false
+        randomValue: ""
+        randomValueTimeCreated: 2022-01-12T23:20:50.52Z
+        uuid: cld-10877aec-412f-4b96-a5d4-f5f95da8634e
+        timeExpired: 2022-01-12T23:20:50.52Z
+        expired: false
+        validated: true
+        validationMethod: cabdns
+        domain: xn--dj-kia8a.vu.com
+        randomValueTimeExpire: 2022-01-12T23:20:50.52Z
+        status: not_validated
+      properties:
+        uuid:
+          description: Pre validated client domain reference
+          example: cld-10877aec-412f-4b96-a5d4-f5f95da8634e
+          nullable: false
+          pattern: "cld-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+        domain:
+          description: Client domain in punycode
+          example: xn--dj-kia8a.vu.com
+          nullable: false
+          type: string
+        domainUnicode:
+          description: Client domain in unicode
+          example: déjà.vu.com
+          nullable: false
+          readOnly: true
+          type: string
+        validated:
+          description: Indicates if the domain is validated
+          example: true
+          nullable: false
+          readOnly: true
+          type: boolean
+        trustedDomain:
+          description: Indicates if the domain is a trusted domain (for private PKIs).
+            This setting is linked to the certificate product DNS validation rule
+            for Private PKIs.
+          example: true
+          nullable: false
+          readOnly: false
+          type: boolean
+        timeValidated:
+          description: Indicates when the domain got validated
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        validationMethod:
+          description: DNS validation type
+          example: cabdns
+          nullable: false
+          readOnly: true
+          type: string
+        randomValue:
+          description: The random value to add to the DNS TXT record for the domain
+          example: ""
+          nullable: true
+          readOnly: true
+          type: string
+        randomValueTimeCreated:
+          description: Indicates when the random value was created
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          nullable: false
+          readOnly: true
+          type: string
+        randomValueTimeExpire:
+          description: Indicates when the random value expires
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          nullable: false
+          readOnly: true
+          type: string
+        validationResult:
+          description: Indicates the validation result
+          example: Validated XYZ ...
+          nullable: true
+          readOnly: true
+          type: string
+        timeExpired:
+          description: Indicates when the random value was created
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        expired:
+          description: Indicates if the pre validation of the domain has expired
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        randomValueTimeExpired:
+          description: Indicates if the random value is expired
+          example: false
+          nullable: false
+          readOnly: true
+          type: boolean
+        status:
+          $ref: '#/components/schemas/ClientDomainValidationStatus'
+      required:
+      - createdOn
+      - domain
+      - domainUnicode
+      - expired
+      - randomValueTimeExpired
+      - trustedDomain
+      - uuid
+      - validated
+      - validationMethod
+      type: object
+    JobStatus:
+      description: Status of the certificate Order Task
+      enum:
+      - waiting
+      - pending
+      - processing
+      - success
+      - failed
+      - schedule_request
+      - schedule_response
+      - retry
+      - connection_or_channel_closed
+      - unknown
+      example: success
+      nullable: false
+      readOnly: true
+      type: string
+    JobType:
+      description: Certificate Order Task Type
+      enum:
+      - SubmitCertificateOrderJob
+      - CertificateRenewalValidationJob
+      - KeyValidationJob
+      - PreValidationParentJob
+      - GenerateTBSJob
+      - PolicyValidationJob
+      - CAACheckValidationJob
+      - DomainOwnerCheckValidationJob
+      - EndUserEmailValidationJob
+      - PreLintingCertificateJob
+      - PreIssueCertificateParentJob
+      - CTLogPrecertPublicationJob
+      - IssueCertificateJob
+      - PostIssueCertificateParentJob
+      - FinalizeIssueCertificateParentJob
+      - PostLintingCertificateJob
+      - PostPublishCertificateJob
+      - CTLogPublicationJob
+      - CertificateOrderAuthorizationJob
+      - NotifyIssuedCertificateJob
+      - NotifyRenewalCertificateJob
+      - UpdateRenewalCertificateJob
+      - RevokeRenewedCertificateJob
+      - NotifyRenewalP12CertificateJob
+      - NotifyRenewalHsmCertificateJob
+      - SetP12PinJob
+      example: CTLogPublicationJob
+      nullable: false
+      readOnly: true
+      type: string
+    CertificateOrder:
+      example:
+        issuedBy: some@email.org
+        clientReference: cli-123e4567-e89b-12d3-a456-426614174000
+        certificate:
+          serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+          endValidity: 2023-01-12T23:20:50.52Z
+          subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+          revocationStatus:
+            revokedOn: 2022-02-12T05:10:50.52Z
+            reason: unused
+            revokedBy: some@email.org
+          startValidity: 2022-01-12T23:20:50.52Z
+          certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+          issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+        productReference: pma-123e4567-e89b-12d3-a456-426614174000
+        uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+        createdOn: 2022-02-12T05:10:50.52Z
+        status: issued
+      properties:
+        uuid:
+          description: Certificate Order reference
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          nullable: false
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+        createdOn:
+          description: Certificate Order creation date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          nullable: false
+          type: string
+        status:
+          $ref: '#/components/schemas/CertificateOrderStatus'
+        clientReference:
+          description: Client reference UUID
+          example: cli-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "cli-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+        productReference:
+          description: Product reference UUID
+          example: pma-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "pma-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+        certificate:
+          $ref: '#/components/schemas/Certificate'
+        issuedBy:
+          description: email of the person who created the order
+          example: some@email.org
+          format: email
+          nullable: false
+          readOnly: true
+          type: string
+      required:
+      - clientReference
+      - createdOn
+      - productReference
+      - status
+      - uuid
+      type: object
+    CertificateOrderTask:
+      example:
+        timeScheduled: 2022-02-12T05:10:50.52Z
+        response: Processed successfully
+        timeStarted: 2022-02-12T05:10:50.52Z
+        timeFinished: 2022-02-12T05:10:50.52Z
+        numberOfExecutions: 2
+        type: CTLogPublicationJob
+        error: Error processing xyz ...
+        uuid: job-f0725b50-c533-4802-a844-de57bfb7a80e
+        createdOn: 2022-02-12T05:10:50.52Z
+        status: success
+      properties:
+        uuid:
+          description: Certificate Order Task reference
+          example: job-f0725b50-c533-4802-a844-de57bfb7a80e
+          nullable: false
+          pattern: "job-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+        createdOn:
+          description: Certificate Order creation date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          nullable: false
+          readOnly: true
+          type: string
+        timeScheduled:
+          description: Scheduled date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          nullable: false
+          readOnly: true
+          type: string
+        timeStarted:
+          description: Started date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        timeFinished:
+          description: Finished date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        type:
+          $ref: '#/components/schemas/JobType'
+        numberOfExecutions:
+          description: Number of executions
+          example: 2
+          nullable: false
+          readOnly: true
+          type: integer
+        response:
+          description: Response
+          example: Processed successfully
+          nullable: true
+          readOnly: true
+          type: string
+        error:
+          description: Error message
+          example: Error processing xyz ...
+          nullable: true
+          readOnly: true
+          type: string
+      required:
+      - numberOfExecutions
+      - status
+      - timeCreated
+      - timeScheduled
+      - type
+      - uuid
+      type: object
+    RevocationStatus:
+      example:
+        revokedOn: 2022-02-12T05:10:50.52Z
+        reason: unused
+        revokedBy: some@email.org
+      properties:
+        revokedOn:
+          description: Revocation date in UTC
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          nullable: false
+          readOnly: true
+          type: string
+        reason:
+          $ref: '#/components/schemas/RevocationReason'
+        revokedBy:
+          description: email of the person who revoked the certificate
+          example: some@email.org
+          format: email
+          nullable: false
+          readOnly: true
+          type: string
+      required:
+      - reason
+      - revokedBy
+      - revokedOn
+      type: object
+    APIError:
+      properties:
+        uuid:
+          description: end user error UUID reference
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          nullable: false
+          readOnly: true
+          type: string
+        errorCode:
+          description: Error code
+          example: <000.000.0000>
+          nullable: false
+          readOnly: true
+          type: string
+        errorMessages:
+          items:
+            description: Error message
+            example: Invalid identifier for product xyz
+            nullable: false
+            readOnly: true
+            type: string
+          type: array
+      required:
+      - errorCode
+      - errorMessages
+      - uuid
+      type: object
+    Client:
+      example:
+        name: Company XYZ
+        description: Some information about Company XYZ
+        uuid: cli-123e4567-e89b-12d3-a456-426614174000
+        products:
+        - renewalRule: false
+          publishCertificate: false
+          uuid: pma-123e4567-e89b-12d3-a456-426614174000
+          productName: SSL Silver
+          keyGenerationType: PKCS10
+          authorization: false
+          revocationNotification: false
+          issuanceNotification: false
+          clientPublishCertificateOverrideDefault: false
+          keyType: rsa_2048
+          clientPublishCertificateOverride: false
+          productDescription: SSL NCP policy with domain validation
+          expirationDate: 2022-02-15T00:00:00.000+00:00
+        - renewalRule: false
+          publishCertificate: false
+          uuid: pma-123e4567-e89b-12d3-a456-426614174000
+          productName: SSL Silver
+          keyGenerationType: PKCS10
+          authorization: false
+          revocationNotification: false
+          issuanceNotification: false
+          clientPublishCertificateOverrideDefault: false
+          keyType: rsa_2048
+          clientPublishCertificateOverride: false
+          productDescription: SSL NCP policy with domain validation
+          expirationDate: 2022-02-15T00:00:00.000+00:00
+      properties:
+        uuid:
+          description: Client UUID reference
+          example: cli-123e4567-e89b-12d3-a456-426614174000
+          nullable: false
+          pattern: "cli-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+        name:
+          description: Client name
+          example: Company XYZ
+          nullable: false
+          readOnly: true
+          type: string
+        description:
+          description: Client description
+          example: Some information about Company XYZ
+          nullable: true
+          readOnly: true
+          type: string
+        products:
+          description: List of available certificate products
+          items:
+            $ref: '#/components/schemas/Product'
+          nullable: false
+          readOnly: true
+          type: array
+      required:
+      - name
+      - uuid
+      type: object
+    Certificate:
+      example:
+        serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+        endValidity: 2023-01-12T23:20:50.52Z
+        subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+        revocationStatus:
+          revokedOn: 2022-02-12T05:10:50.52Z
+          reason: unused
+          revokedBy: some@email.org
+        startValidity: 2022-01-12T23:20:50.52Z
+        certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+        issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+      properties:
+        subject:
+          description: Certificate Subject Distinguished Name
+          example: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+          nullable: false
+          readOnly: true
+          type: string
+        issuer:
+          description: Certificate Issuer Distinguished Name
+          example: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+          nullable: false
+          readOnly: true
+          type: string
+        serial:
+          description: Certificate serial number (Big Integer HEX encoded)
+          example: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+          nullable: false
+          readOnly: true
+          type: string
+        startValidity:
+          description: Certificate start validity in UTC
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          nullable: false
+          readOnly: true
+          type: string
+        endValidity:
+          description: Certificate start validity in UTC
+          example: 2023-01-12T23:20:50.52Z
+          format: date-time
+          nullable: false
+          readOnly: true
+          type: string
+        certificate:
+          description: base64 encoded DER certificate
+          example: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+          nullable: false
+          readOnly: true
+          type: string
+        revocationStatus:
+          $ref: '#/components/schemas/RevocationStatus'
+      required:
+      - certificate
+      - endValidity
+      - issuer
+      - serial
+      - startValidity
+      - subject
+      type: object
+    jwt_request:
+      properties:
+        userSecret:
+          type: string
+      required:
+      - userSecret
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: Authorization
+      type: apiKey
+

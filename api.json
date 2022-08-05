@@ -1,0 +1,2247 @@
+{
+  "components": {
+    "schemas": {
+      "RevocationReason": {
+        "type": "string",
+        "enum": [
+          "unused",
+          "keyCompromise",
+          "cACompromise",
+          "affiliationChanged",
+          "superseded",
+          "cessationOfOperation",
+          "certificateHold",
+          "removeFromCRL",
+          "privilegeWithdrawn",
+          "aACompromise"
+        ],
+        "nullable": false,
+        "readOnly": true,
+        "description": "Revocation reason",
+        "example": "unused"
+      },
+      "ClientDomainValidationStatus": {
+        "type": "string",
+        "readOnly": true,
+        "enum": [
+          "pending",
+          "expired",
+          "valid",
+          "not_validated"
+        ],
+        "nullable": false,
+        "description": "Status of the domain pre validation",
+        "example": "not_validated"
+      },
+      "RevocationRequest": {
+        "type": "object",
+        "required": [
+          "serialNumber",
+          "revocationReason",
+          "issuerName"
+        ],
+        "properties": {
+          "serialNumber": {
+            "type": "string",
+            "nullable": false,
+            "description": "Certificate serial number (Big Integer HEX encoded)",
+            "example": "3893409CB666E1F092B7B6F28E1EAF4582AA7F21"
+          },
+          "revocationReason": {
+            "type": "string",
+            "enum": [
+              "unused",
+              "keyCompromise",
+              "affiliationChanged",
+              "superseded",
+              "cessationOfOperation",
+              "privilegeWithdrawn"
+            ],
+            "nullable": false,
+            "description": "Revocation reason",
+            "example": "unused"
+          },
+          "issuerName": {
+            "type": "string",
+            "nullable": false,
+            "description": "Certificate issuer distinguished name",
+            "example": "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+          }
+        }
+      },
+      "KeyType": {
+        "type": "string",
+        "readOnly": true,
+        "nullable": false,
+        "description": "Key generation type",
+        "example": "rsa_2048",
+        "enum": [
+          "rsa_2048",
+          "rsa_3072",
+          "rsa_4096",
+          "rsa_8192",
+          "ec_secp224k1",
+          "ec_secp224r1",
+          "ec_secp256k1",
+          "ec_secp256r1",
+          "ec_secp384r1",
+          "ec_secp521r1",
+          "ec_x962p239v1",
+          "ec_x962p239v2",
+          "ec_x962p239v3",
+          "ec_brainpool224r1",
+          "ec_brainpool256r1",
+          "ec_brainpool320r1",
+          "ec_brainpool384r1",
+          "ec_brainpool512r1",
+          "ec_frp256v1"
+        ]
+      },
+      "Product": {
+        "type": "object",
+        "required": [
+          "uuid",
+          "name",
+          "keyGenerationType",
+          "keyType",
+          "issuanceNotification",
+          "revocationNotification",
+          "authorization",
+          "renewalRule",
+          "publishCertificate",
+          "clientPublishCertificateOverride",
+          "clientPublishCertificateOverrideDefault"
+        ],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "pattern": "pma-[0-9a-f-]{36}",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Product UUID reference",
+            "example": "pma-123e4567-e89b-12d3-a456-426614174000"
+          },
+          "productName": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Certificate product name",
+            "example": "SSL Silver"
+          },
+          "productDescription": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true,
+            "description": "Product additional description",
+            "example": "SSL NCP policy with domain validation"
+          },
+          "keyGenerationType": {
+            "type": "string",
+            "enum": [
+              "PKCS10",
+              "PKCS12",
+              "PKCS12withPIN",
+              "PKCS10or12withPIN",
+              "HSM",
+              "CNG"
+            ],
+            "readOnly": true,
+            "nullable": false,
+            "description": "Key generation protocol",
+            "example": "PKCS10"
+          },
+          "keyType": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "issuanceNotification": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Indicate if the certificate sends a notification on issuance",
+            "example": "true or false"
+          },
+          "revocationNotification": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Indicate if the certificate sends a notification on revocation",
+            "example": "true or false"
+          },
+          "authorization": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Indicate if the certificate requires an authorization on issuance/revocation",
+            "example": "true or false"
+          },
+          "renewalRule": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Indicate if the certificate sends a notification for renewal",
+            "example": "true or false"
+          },
+          "publishCertificate": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Indicate if the certificate is published to the public LDAP after issuance",
+            "example": "true or false"
+          },
+          "clientPublishCertificateOverride": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Indicate if the certificate publication can be overridden",
+            "example": "true or false"
+          },
+          "clientPublishCertificateOverrideDefault": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Indicate the default value if publication override is enabled",
+            "example": "true or false"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date",
+            "readOnly": true,
+            "nullable": true,
+            "description": "Indicate if the certificate product has an expiration date",
+            "example": "2022-02-15"
+          }
+        }
+      },
+      "CertificateOrderStatus": {
+        "type": "string",
+        "readOnly": true,
+        "enum": [
+          "new",
+          "key_validation",
+          "pre_validation",
+          "generate_tbs",
+          "pending_auth",
+          "pre_issue",
+          "issue",
+          "post_validation",
+          "finalize_issuance",
+          "issued",
+          "revoked",
+          "failed",
+          "rejected",
+          "pending_csr_renewal",
+          "unknown"
+        ],
+        "nullable": false,
+        "description": "Status of the certificate Order",
+        "example": "issued"
+      },
+      "SearchCertificateOrder": {
+        "type": "object",
+        "properties": {
+          "orderReference": {
+            "type": "string",
+            "pattern": "ord-[0-9a-f-]{36}",
+            "nullable": true,
+            "description": "Certificate Order reference",
+            "example": "ord-f0725b50-c533-4802-a844-de57bfb7a80e"
+          },
+          "serialNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Certificate serial number (Big Integer HEX encoded) with optional wildcard attributes ? and/or *",
+            "example": "3893409CB*66E1F09?"
+          },
+          "orderStatus": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CertificateOrderStatus"
+            }
+          },
+          "revocationReason": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/RevocationReason"
+            }
+          },
+          "clientReferences": {
+            "type": "array",
+            "nullable": true,
+            "description": "Client reference UUID",
+            "example": [
+              "cli-123e4567-e89b-12d3-a456-426614174000"
+            ],
+            "items": {
+              "type": "string",
+              "pattern": "cli-[0-9a-f-]{36}"
+            }
+          },
+          "startAfter": {
+            "type": "string",
+            "nullable": true,
+            "format": "date",
+            "description": "End Validity not starting after Date",
+            "example": "2002-03-15"
+          },
+          "startBefore": {
+            "type": "string",
+            "nullable": true,
+            "format": "date",
+            "description": "Validity not starting before Date",
+            "example": "2002-01-18"
+          },
+          "attribute": {
+            "type": "string",
+            "nullable": true,
+            "description": "Any certificate attribute OID or value with optional wildcard attributes ? and/or *",
+            "example": "s?me@emai* or 2.5.4.r or streetAddress"
+          }
+        }
+      },
+      "ClientDNS": {
+        "type": "object",
+        "required": [
+          "uuid",
+          "createdOn",
+          "domain",
+          "domainUnicode",
+          "validated",
+          "trustedDomain",
+          "validationMethod",
+          "expired",
+          "randomValueTimeExpired"
+        ],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "pattern": "cld-[0-9a-f-]{36}",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Pre validated client domain reference",
+            "example": "cld-10877aec-412f-4b96-a5d4-f5f95da8634e"
+          },
+          "domain": {
+            "type": "string",
+            "nullable": false,
+            "description": "Client domain in punycode",
+            "example": "xn--dj-kia8a.vu.com"
+          },
+          "domainUnicode": {
+            "type": "string",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Client domain in unicode",
+            "example": "déjà.vu.com"
+          },
+          "validated": {
+            "type": "boolean",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Indicates if the domain is validated",
+            "example": true
+          },
+          "trustedDomain": {
+            "type": "boolean",
+            "nullable": false,
+            "readOnly": false,
+            "description": "Indicates if the domain is a trusted domain (for private PKIs). This setting is linked to the certificate product DNS validation rule for Private PKIs.",
+            "example": true
+          },
+          "timeValidated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Indicates when the domain got validated",
+            "example": "2022-01-12T23:20:50.52Z"
+          },
+          "validationMethod": {
+            "type": "string",
+            "nullable": false,
+            "readOnly": true,
+            "description": "DNS validation type",
+            "example": "cabdns"
+          },
+          "randomValue": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The random value to add to the DNS TXT record for the domain",
+            "example": ""
+          },
+          "randomValueTimeCreated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Indicates when the random value was created",
+            "example": "2022-01-12T23:20:50.52Z"
+          },
+          "randomValueTimeExpire": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Indicates when the random value expires",
+            "example": "2022-01-12T23:20:50.52Z"
+          },
+          "validationResult": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Indicates the validation result",
+            "example": "Validated XYZ ..."
+          },
+          "timeExpired": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Indicates when the random value was created",
+            "example": "2022-01-12T23:20:50.52Z"
+          },
+          "expired": {
+            "type": "boolean",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Indicates if the pre validation of the domain has expired",
+            "example": false
+          },
+          "randomValueTimeExpired": {
+            "type": "boolean",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Indicates if the random value is expired",
+            "example": false
+          },
+          "status": {
+            "$ref": "#/components/schemas/ClientDomainValidationStatus"
+          }
+        }
+      },
+      "JobStatus": {
+        "type": "string",
+        "readOnly": true,
+        "enum": [
+          "waiting",
+          "pending",
+          "processing",
+          "success",
+          "failed",
+          "schedule_request",
+          "schedule_response",
+          "retry",
+          "connection_or_channel_closed",
+          "unknown"
+        ],
+        "nullable": false,
+        "description": "Status of the certificate Order Task",
+        "example": "success"
+      },
+      "JobType": {
+        "type": "string",
+        "readOnly": true,
+        "enum": [
+          "SubmitCertificateOrderJob",
+          "CertificateRenewalValidationJob",
+          "KeyValidationJob",
+          "PreValidationParentJob",
+          "GenerateTBSJob",
+          "PolicyValidationJob",
+          "CAACheckValidationJob",
+          "DomainOwnerCheckValidationJob",
+          "EndUserEmailValidationJob",
+          "PreLintingCertificateJob",
+          "PreIssueCertificateParentJob",
+          "CTLogPrecertPublicationJob",
+          "IssueCertificateJob",
+          "PostIssueCertificateParentJob",
+          "FinalizeIssueCertificateParentJob",
+          "PostLintingCertificateJob",
+          "PostPublishCertificateJob",
+          "CTLogPublicationJob",
+          "CertificateOrderAuthorizationJob",
+          "NotifyIssuedCertificateJob",
+          "NotifyRenewalCertificateJob",
+          "UpdateRenewalCertificateJob",
+          "RevokeRenewedCertificateJob",
+          "NotifyRenewalP12CertificateJob",
+          "NotifyRenewalHsmCertificateJob",
+          "SetP12PinJob"
+        ],
+        "nullable": false,
+        "description": "Certificate Order Task Type",
+        "example": "CTLogPublicationJob"
+      },
+      "CertificateOrder": {
+        "type": "object",
+        "required": [
+          "uuid",
+          "createdOn",
+          "status",
+          "clientReference",
+          "productReference"
+        ],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "pattern": "ord-[0-9a-f-]{36}",
+            "nullable": false,
+            "description": "Certificate Order reference",
+            "example": "ord-f0725b50-c533-4802-a844-de57bfb7a80e"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "description": "Certificate Order creation date time",
+            "example": "2022-02-12T05:10:50.52Z"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CertificateOrderStatus"
+          },
+          "clientReference": {
+            "type": "string",
+            "pattern": "cli-[0-9a-f-]{36}",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Client reference UUID",
+            "example": "cli-123e4567-e89b-12d3-a456-426614174000"
+          },
+          "productReference": {
+            "type": "string",
+            "pattern": "pma-[0-9a-f-]{36}",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Product reference UUID",
+            "example": "pma-123e4567-e89b-12d3-a456-426614174000"
+          },
+          "certificate": {
+            "readOnly": true,
+            "nullable": true,
+            "description": "Certificate reference",
+            "$ref": "#/components/schemas/Certificate"
+          },
+          "issuedBy": {
+            "type": "string",
+            "format": "email",
+            "readOnly": true,
+            "nullable": false,
+            "description": "email of the person who created the order",
+            "example": "some@email.org"
+          }
+        }
+      },
+      "CertificateOrderTask": {
+        "type": "object",
+        "required": [
+          "uuid",
+          "timeCreated",
+          "timeScheduled",
+          "numberOfExecutions",
+          "status",
+          "type"
+        ],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "pattern": "job-[0-9a-f-]{36}",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Certificate Order Task reference",
+            "example": "job-f0725b50-c533-4802-a844-de57bfb7a80e"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Certificate Order creation date time",
+            "example": "2022-02-12T05:10:50.52Z"
+          },
+          "timeScheduled": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Scheduled date time",
+            "example": "2022-02-12T05:10:50.52Z"
+          },
+          "timeStarted": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Started date time",
+            "example": "2022-02-12T05:10:50.52Z"
+          },
+          "timeFinished": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Finished date time",
+            "example": "2022-02-12T05:10:50.52Z"
+          },
+          "status": {
+            "$ref": "#/components/schemas/JobStatus"
+          },
+          "type": {
+            "$ref": "#/components/schemas/JobType"
+          },
+          "numberOfExecutions": {
+            "type": "integer",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Number of executions",
+            "example": 2
+          },
+          "response": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Response",
+            "example": "Processed successfully"
+          },
+          "error": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Error message",
+            "example": "Error processing xyz ..."
+          }
+        }
+      },
+      "RevocationStatus": {
+        "type": "object",
+        "required": [
+          "revokedOn",
+          "reason",
+          "revokedBy"
+        ],
+        "properties": {
+          "revokedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Revocation date in UTC",
+            "example": "2022-02-12T05:10:50.52Z"
+          },
+          "reason": {
+            "$ref": "#/components/schemas/RevocationReason"
+          },
+          "revokedBy": {
+            "type": "string",
+            "format": "email",
+            "readOnly": true,
+            "nullable": false,
+            "description": "email of the person who revoked the certificate",
+            "example": "some@email.org"
+          }
+        }
+      },
+      "APIError": {
+        "type": "object",
+        "required": [
+          "uuid",
+          "errorCode",
+          "errorMessages"
+        ],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "nullable": false,
+            "description": "end user error UUID reference",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "errorCode": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Error code",
+            "example": "<000.000.0000>"
+          },
+          "errorMessages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "readOnly": true,
+              "nullable": false,
+              "description": "Error message",
+              "example": "Invalid identifier for product xyz"
+            }
+          }
+        }
+      },
+      "Client": {
+        "type": "object",
+        "required": [
+          "uuid",
+          "name"
+        ],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "pattern": "cli-[0-9a-f-]{36}",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Client UUID reference",
+            "example": "cli-123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Client name",
+            "example": "Company XYZ"
+          },
+          "description": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true,
+            "description": "Client description",
+            "example": "Some information about Company XYZ"
+          },
+          "products": {
+            "description": "List of available certificate products",
+            "readOnly": true,
+            "nullable": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "Certificate": {
+        "type": "object",
+        "required": [
+          "subject",
+          "issuer",
+          "serial",
+          "startValidity",
+          "endValidity",
+          "certificate"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Certificate Subject Distinguished Name",
+            "example": "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+          },
+          "issuer": {
+            "type": "string",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Certificate Issuer Distinguished Name",
+            "example": "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+          },
+          "serial": {
+            "type": "string",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Certificate serial number (Big Integer HEX encoded)",
+            "example": "3893409CB666E1F092B7B6F28E1EAF4582AA7F21"
+          },
+          "startValidity": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Certificate start validity in UTC",
+            "example": "2022-01-12T23:20:50.52Z"
+          },
+          "endValidity": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "readOnly": true,
+            "description": "Certificate start validity in UTC",
+            "example": "2023-01-12T23:20:50.52Z"
+          },
+          "certificate": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": false,
+            "description": "base64 encoded DER certificate",
+            "example": "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+          },
+          "revocationStatus": {
+            "readOnly": true,
+            "nullable": true,
+            "description": "Certificate revocation",
+            "$ref": "#/components/schemas/RevocationStatus"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ra.pre.swisssign.ch/v2",
+      "description": "Pre Production"
+    },
+    {
+      "url": "https://api.ra.swisssign.ch/v2",
+      "description": "Production"
+    }
+  ],
+  "openapi": "3.0.0",
+  "paths": {
+    "/v2/jwt/{userName}": {
+      "post": {
+        "operationId": "jwt",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Produce a user JWT",
+        "description": "Helper service to generate a JWT derived from you login username and API Key\n---\n* Use the generated JWT in the header of __each__ HTTP request to the service\n\n`Authorization: Bearer <encoded JWT>`\n",
+        "requestBody": {
+          "description": "User Secret payload",
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userSecret": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "userSecret"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "readOnly": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      }
+    },
+    "/v2/clients": {
+      "post": {
+        "operationId": "searchClients",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Search Clients available to the RA Operator",
+        "description": "Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries.\nThe Client information includes the list of assigned certificate products.\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "search query string with optional wildcard attributes ? and/or *",
+              "example": "C?mpan* Ltd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "readOnly": true,
+                  "items": {
+                    "$ref": "#/components/schemas/Client"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/client/{clientReference}": {
+      "post": {
+        "operationId": "getClient",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Get a client given its reference Id",
+        "description": "Get a client given its reference UUID\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "cli-[0-9a-f-]{36}",
+              "description": "Client reference UUID",
+              "type": "string",
+              "example": "cli-123e4567-e89b-12d3-a456-426614174000"
+            },
+            "in": "path",
+            "name": "clientReference",
+            "description": "Client reference UUID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/issue/csr/{productReference}": {
+      "post": {
+        "operationId": "issueCertificate",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Issue certificate using CSR",
+        "description": "Issue a certificate based on the Product reference (CSR)\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "pma-[0-9a-f-]{36}",
+              "description": "Product reference UUID",
+              "type": "string",
+              "example": "pma-123e4567-e89b-12d3-a456-426614174000"
+            },
+            "in": "path",
+            "name": "productReference",
+            "description": "Certificate product reference UUID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "Certificate Request in Base64 with start/end beacon",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              },
+              "example": "----BEGIN CERTIFICATE REQUEST-----\nMIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh\n... [snipped] ...\n6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP\n-----END CERTIFICATE REQUEST-----\n"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CertificateOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/order/{orderReference}/status": {
+      "post": {
+        "operationId": "getCertificateOrderStatus",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Retrieve a Certificate Order status given the Order reference",
+        "description": "Retrieve a certificate order status given the order reference identifier.\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "pattern": "ord-[0-9a-f-]{36}",
+              "description": "Certificate order reference UUID",
+              "type": "string",
+              "example": "ord-f0725b50-c533-4802-a844-de57bfb7a80e"
+            },
+            "in": "path",
+            "name": "orderReference",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CertificateOrderStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/order/{orderReference}": {
+      "post": {
+        "operationId": "getCertificateOrder",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Retrieve a Certificate Order given the Order reference",
+        "description": "Retrieve a certificate order given the order reference identifier.\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "pattern": "ord-[0-9a-f-]{36}",
+              "description": "Certificate order reference UUID",
+              "type": "string",
+              "example": "ord-f0725b50-c533-4802-a844-de57bfb7a80e"
+            },
+            "in": "path",
+            "name": "orderReference",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CertificateOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/order/{orderReference}/certificate/chain": {
+      "post": {
+        "operationId": "getCertificateChain",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Retrieve the certificate chain for the given Order reference",
+        "description": "Retrieve the certificate chain base64 encoded text. First element in list is leaf certificate, last element is Root certificate.\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "pattern": "ord-[0-9a-f-]{36}",
+              "description": "Certificate order reference UUID",
+              "type": "string",
+              "example": "ord-f0725b50-c533-4802-a844-de57bfb7a80e"
+            },
+            "in": "path",
+            "name": "orderReference",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "readOnly": true,
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/order/{orderReference}/tasks": {
+      "post": {
+        "operationId": "getCertificateOrderTasks",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Retrieve a Certificate Order Tasks given the Order reference",
+        "description": "Retrieve a certificate order tasks given the order reference identifier.\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "pattern": "ord-[0-9a-f-]{36}",
+              "description": "Certificate order reference UUID",
+              "type": "string",
+              "example": "ord-f0725b50-c533-4802-a844-de57bfb7a80e"
+            },
+            "in": "path",
+            "name": "orderReference",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "readOnly": true,
+                  "items": {
+                    "$ref": "#/components/schemas/CertificateOrderTask"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/orders": {
+      "post": {
+        "operationId": "getCertificateOrders",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Search Certificate Orders",
+        "description": "Search for Certificate Orders given search parameters\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Certificate order search options",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchCertificateOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "readOnly": true,
+                  "items": {
+                    "$ref": "#/components/schemas/CertificateOrder"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/revoke": {
+      "post": {
+        "operationId": "revokeCertificates",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Revoke certificates",
+        "description": "Revoke one or more certificates\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Certificate references to revoke",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RevocationRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "successfully submitted revocation request"
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/client/domain/{clientReference}/list": {
+      "post": {
+        "operationId": "getClientPrevalidatedDomains",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Get the list of prevalidated domains for the selected client given its reference Id",
+        "description": "Retrieve the list of pre validated domains and their status for the selected client\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "cli-[0-9a-f-]{36}",
+              "description": "Client reference UUID",
+              "type": "string",
+              "example": "cli-123e4567-e89b-12d3-a456-426614174000"
+            },
+            "in": "path",
+            "name": "clientReference",
+            "description": "Client reference UUID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "readOnly": true,
+                  "items": {
+                    "$ref": "#/components/schemas/ClientDNS"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/client/domain/{clientReference}/register": {
+      "post": {
+        "operationId": "createClientPrevalidatedDomains",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Register new prevalidated domains for the selected client given its reference Id",
+        "description": "Create and issue domains pre validation tokens for the selected client\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "cli-[0-9a-f-]{36}",
+              "description": "Client reference UUID",
+              "type": "string",
+              "example": "cli-123e4567-e89b-12d3-a456-426614174000"
+            },
+            "in": "path",
+            "name": "clientReference",
+            "description": "Client reference UUID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "Client domains",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "nullable": false,
+                  "description": "Domain name",
+                  "example": "déjà.vu.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "readOnly": true,
+                  "items": {
+                    "$ref": "#/components/schemas/ClientDNS"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/client/domain/{prevalidatedDomainReference}": {
+      "post": {
+        "operationId": "getClientPrevalidatedDomain",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Get prevalidated domains for the selected domain reference Id",
+        "description": "Get pre validatied domain token for the selected identifier\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "cld-[0-9a-f-]{36}",
+              "description": "Pre validated fomain reference UUID",
+              "type": "string",
+              "example": "cld-123e4567-e89b-12d3-a456-426614174000"
+            },
+            "in": "path",
+            "name": "prevalidatedDomainReference",
+            "description": "Pre validated domain reference UUID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDNS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/client/domain/{prevalidatedDomainReference}/validate": {
+      "post": {
+        "operationId": "validateClientPrevalidatedDomain",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Prevalidate domain for the selected domain reference Id",
+        "description": "Pre validate domain token for the selected identifier\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "cld-[0-9a-f-]{36}",
+              "description": "Pre validated fomain reference UUID",
+              "type": "string",
+              "example": "cld-123e4567-e89b-12d3-a456-426614174000"
+            },
+            "in": "path",
+            "name": "prevalidatedDomainReference",
+            "description": "Pre validated domain reference UUID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDNS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/client/domain/{prevalidatedDomainReference}/delete": {
+      "post": {
+        "operationId": "deleteClientPrevalidatedDomain",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Delete prevalidated domain for the selected reference Id",
+        "description": "Delete pre validated domain\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "cld-[0-9a-f-]{36}",
+              "description": "Pre validated domain reference UUID",
+              "type": "string",
+              "example": "cld-2263d498-6569-46d6-9359-f08a1d298d2d"
+            },
+            "in": "path",
+            "name": "prevalidatedDomainReference",
+            "description": "Pre validated domain reference UUID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "success"
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/client/domain/{prevalidatedDomainReference}/token/reset": {
+      "post": {
+        "operationId": "resetClientPrevalidatedDomain",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Reset prevalidated domain token for the selected reference Id",
+        "description": "Reset pre validated domain token\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "cld-[0-9a-f-]{36}",
+              "description": "Pre validated domain reference UUID",
+              "type": "string",
+              "example": "cld-2263d498-6569-46d6-9359-f08a1d298d2d"
+            },
+            "in": "path",
+            "name": "prevalidatedDomainReference",
+            "description": "Pre validated domain reference UUID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDNS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/client/domain/{prevalidatedDomainReference}/token/delete": {
+      "post": {
+        "operationId": "deleteClientPrevalidatedDomainToken",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Delete prevalidated domain token for the selected reference Id",
+        "description": "Delete pre validated domain token\n",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "nullable": false,
+              "pattern": "cld-[0-9a-f-]{36}",
+              "description": "Pre validated domain reference UUID",
+              "type": "string",
+              "example": "cld-2263d498-6569-46d6-9359-f08a1d298d2d"
+            },
+            "in": "path",
+            "name": "prevalidatedDomainReference",
+            "description": "Pre validated domain reference UUID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDNS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "SwissSign RA REST API",
+    "version": "2.0.207",
+    "contact": {
+      "name": "SwissSign Support",
+      "email": "opensource@swisssign.com"
+    },
+    "description": "See https://github.com/SwissSign-AG/RaApi/README.md"
+  },
+  "tags": [
+    {
+      "name": "api_registration"
+    }
+  ]
+}
