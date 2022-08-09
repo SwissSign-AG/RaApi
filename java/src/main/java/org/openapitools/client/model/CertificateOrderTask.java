@@ -51,7 +51,7 @@ import org.openapitools.client.JSON;
 /**
  * CertificateOrderTask
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-09T13:17:52.329053Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-09T15:50:20.946855Z[Etc/UTC]")
 public class CertificateOrderTask {
   public static final String SERIALIZED_NAME_UUID = "uuid";
   @SerializedName(SERIALIZED_NAME_UUID)
