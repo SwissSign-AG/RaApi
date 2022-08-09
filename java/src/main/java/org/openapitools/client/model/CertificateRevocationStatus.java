@@ -61,7 +61,7 @@ import com.google.gson.JsonParseException;
 
 import org.openapitools.client.JSON;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-08T21:31:43.999316Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-09T13:15:41.330599Z[Etc/UTC]")
 public class CertificateRevocationStatus extends AbstractOpenApiSchema {
     private static final Logger log = Logger.getLogger(CertificateRevocationStatus.class.getName());
 
