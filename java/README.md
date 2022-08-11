@@ -2,7 +2,7 @@
 
 SwissSign RA REST API
 - API version: 2.0.0
-  - Build date: 2022-08-09T15:51:24.197312Z[Etc/UTC]
+  - Build date: 2022-08-11T09:22:24.945516Z[Etc/UTC]
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
