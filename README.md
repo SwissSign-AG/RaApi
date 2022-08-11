@@ -178,10 +178,10 @@ Rw==
 __/v2/order/{orderReference}/status__
 
 Retrieve the Certificate Order status given an order reference (ord-_uuid_).
-Certificate order processing is an asynchronous process and
 
-the issunce of a certificate may enter wait states until all validation
-rules (e.g. DNS validation) are successfully executed. 
+Certificate order processing is an asynchronous process and the issunce of
+a certificate may enter wait states until all validation rules (e.g. DNS
+validation) are successfully executed.
 
 __Example__
 
@@ -218,6 +218,23 @@ curl -X 'POST' \
 ---
 
 ### Retrieve a certificate chain
+
+Retrieve a certificate chain given its Order reference identifier (ord-uuid)
+
+__/v2/order/{orderReference}/certificate/chain__
+
+Retrieve the the certificate chain in PKCS#7 base64 encoded given an order reference (ord-uuid).
+
+__Example__
+
+```
+curl -X 'POST' \
+'https://host:port/api/ra/v2/order/ord-157e726e-cf28-44cc-bfbe-485c0a5abe7b/certificate/chain' \
+-H 'accept: text/json' \
+-H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._ 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
+```
+
+---
 
 ### Revoke one or multiple issued certificates
 
