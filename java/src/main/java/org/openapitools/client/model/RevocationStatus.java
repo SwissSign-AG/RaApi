@@ -49,7 +49,7 @@ import org.openapitools.client.JSON;
 /**
  * RevocationStatus
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-11T11:26:13.812533Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-11T11:26:35.567985Z[Etc/UTC]")
 public class RevocationStatus {
   public static final String SERIALIZED_NAME_REVOKED_ON = "revokedOn";
   @SerializedName(SERIALIZED_NAME_REVOKED_ON)
