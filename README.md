@@ -1,5 +1,8 @@
 ## Getting started
 
+
+
+
 ### Basic workflow to generate a certificate via the RA API:
 
 ---
