@@ -1,11 +1,11 @@
 ## Getting started
 
-
-
-
 ### Basic workflow to generate a certificate via the RA API:
 
 ---
+
+asdfsadf
+
 * Get your Client, Service Account and API Key from [https://ra.swisssign.ch/account/my/SAAPIKeys]
   This key will be shared with all operators entitled to use your MPKI.
 * Use your API Key to generate a JWT Token for your session.
