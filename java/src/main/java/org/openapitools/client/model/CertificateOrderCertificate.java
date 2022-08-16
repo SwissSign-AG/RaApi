@@ -62,7 +62,7 @@ import com.google.gson.JsonParseException;
 
 import org.openapitools.client.JSON;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-16T05:52:53.759874Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-16T14:46:11.112935Z[Etc/UTC]")
 public class CertificateOrderCertificate extends AbstractOpenApiSchema {
     private static final Logger log = Logger.getLogger(CertificateOrderCertificate.class.getName());
 

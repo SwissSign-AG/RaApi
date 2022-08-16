@@ -53,18 +53,18 @@ The generated JWT has a valid of 8 hours. If you plan to generate the JWT
 yourself, you need to set the following attributes and `HMAC256` sign the
 JWT with your API Key.
              
-|JWT attribute       |Value            |Description      |
-|--------------------|-----------------|-----------------|
-|Issuer      (_iss_) |Swiss PKI        |The JWT was issued by the SwissSign CA platform.|
-|Audience    (_aud_) |REST API         |The JWT is to be consumed by the OpenAPI v3 RA API.|
-|Subject     (_sub_) |_user account_   |The (technical) account the token was issued to.|             
-|Issued at   (_iat_) |Date/Time UTC    |issueance date of the token|             
-|Not before  (_nbf_) |Date/Time UTC    |Start date of validity|            
-|Expires at  (_exp_) |Date/Time UTC    |End date of validity|
+|JWT attribute       |Value/description|
+|--------------------|-----------------|
+|Issuer      (_iss_) |Swiss PKI        |             
+|Audience    (_aud_) |REST API         |             
+|Subject     (_sub_) |_user account_   |             
+|Issued at   (_iat_) |Date/Time UTC    |             
+|Not before  (_nbf_) |Date/Time UTC    |             
+|Expires at  (_exp_) |Date/Time UTC    |
              
 __Prerequisites__
 
-This method requires a valid RA Operator account and API Key. The API Key is
+This method requies a valid RA Operator account and API Key. The API Key is
 obtained from your RA Operator 
 user account (_requires permissions to manage API Keys. Login to your RA
 Account and from the 'My Account' generate an API Key_) or is provided to
@@ -87,7 +87,7 @@ curl -X 'POST' \
 
 __/v2/clients__
 
-Search for Clients and their associated products. Returns a list of all
+Search for Clients and their associated prodcuts. Returns a list of all
 available Clients and associated certificate products you can issue.
 
 Each client product has a unique product reference (pma-_uuid_) which you
@@ -146,7 +146,7 @@ identifier (pma-_uuid_)
 
 __/v2/issue/csr/{productReference}__
 
-Issue a new Certificate Order using a CSR for the selected certificate
+Issue a new Certificate Order usin g a CSR for the selected certificate
 product. The request will create a new Certificate Order and process the
 request.
 
@@ -179,10 +179,9 @@ __/v2/order/{orderReference}/status__
 
 Retrieve the Certificate Order status given an order reference (ord-_uuid_).
 
-Certificate order processing is an asynchronous process and the issuance of
+Certificate order processing is an asynchronous process and the issunce of
 a certificate may enter wait states until all validation rules (e.g. DNS
 validation) are successfully executed.
-Please refer to chapter 3.5 of the SwissSign RA Operator Handbook for a list of certificate order statuses and their descriptions.
 
 __Example__
 
@@ -202,7 +201,7 @@ curl -X 'POST' \
 
 __/v2/orders__
 
-Retrieve the Certificate Order given an order reference (ord-_uuid_). 
+Retrieve the Certificate Order  given an order reference (ord-_uuid_). 
 
 __Example__
 
@@ -224,7 +223,7 @@ Retrieve a certificate chain given its Order reference identifier (ord-uuid)
 
 __/v2/order/{orderReference}/certificate/chain__
 
-Retrieve the certificate chain in PKCS#7 base64 encoded given an order reference (ord-uuid).
+Retrieve the the certificate chain in PKCS#7 base64 encoded given an order reference (ord-uuid).
 
 __Example__
 
@@ -241,7 +240,7 @@ curl -X 'POST' \
 
 __/v2/revoke__
 
-Revoke one or multiple valid certificates. 
+Revoke one or multiple valid certificate. 
 
 __Example__
 
@@ -268,8 +267,11 @@ curl -X 'POST' \
 Client domain owner check management is available to the RA Operator API for
 Public Trust domain validation.
 
- Edit/Delete: For Private Trust, the domain owner check management is handled by the CA Operator by setting private domain validation rules on the certificte products. Private Trust domain owner check validation do not necessarely require _dns-01_ or _https-01_ domain validation.
+For Private Trust, the domain owner check management is handled by the CA
+Operator by setting private domain validation rules
 
+on the certificte products. Private Trust domain owner check validation do
+not necessarely require _dns-01_ or _https-01_ domain validation.
 
 Using the RA Operator API for Public Trust domain validation, you can
 register domain names for clients which require domain 
