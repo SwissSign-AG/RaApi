@@ -9,7 +9,7 @@
 * Get your Client, Service Account and API Key from [https://ra.swisssign.ch/account/my/SAAPIKeys]
   This key will be shared with all operators entitled to use your MPKI.
 * Use your API Key to generate a JWT Token for your session.
-* Retreive your client uuid and products from [/v2/clients](https://github.com/SwissSign-AG/RaApi#search-for-clients-and-associated-products)
+* Retrieve your client uuid and products from [/v2/clients](https://github.com/SwissSign-AG/RaApi#search-for-clients-and-associated-products)
 * Pre-Validate your domains (Optional, otherwise the individual certificate order has to be validated). Pre-validated domains are valid 13 Months.
   * Get a domain validation token: [/v2/client/domain/{clientReference}/register](https://github.com/SwissSign-AG/RaApi#register-client-domains)
   * Configure this token in your DNS
@@ -49,7 +49,7 @@ __/v2/jwt/{userName}__
 
 Helper method to generate a `JWT` for authenticating subsequent calls.
 
-The generated JWT has a validity of 8 hours. If you plan to generate the JWT
+The generated JWT has a valid of 8 hours. If you plan to generate the JWT
 yourself, you need to set the following attributes and `HMAC256` sign the
 JWT with your API Key.
              
@@ -67,7 +67,7 @@ __Prerequisites__
 This method requies a valid RA Operator account and API Key. The API Key is
 obtained from your RA Operator 
 user account (_requires permissions to manage API Keys. Login to your RA
-Account and retrieve the API Key from 'My Account'_) or is provided to
+Account and from the 'My Account' generate an API Key_) or is provided to
 you via your CA Operator.
              
 __Example__
@@ -146,7 +146,7 @@ identifier (pma-_uuid_)
 
 __/v2/issue/csr/{productReference}__
 
-Issue a new Certificate Order using a CSR for the selected certificate
+Issue a new Certificate Order usin g a CSR for the selected certificate
 product. The request will create a new Certificate Order and process the
 request.
 
@@ -179,7 +179,7 @@ __/v2/order/{orderReference}/status__
 
 Retrieve the Certificate Order status given an order reference (ord-_uuid_).
 
-Certificate order processing is an asynchronous process and the issuance of
+Certificate order processing is an asynchronous process and the issunce of
 a certificate may enter wait states until all validation rules (e.g. DNS
 validation) are successfully executed.
 
@@ -223,7 +223,7 @@ Retrieve a certificate chain given its Order reference identifier (ord-uuid)
 
 __/v2/order/{orderReference}/certificate/chain__
 
-Retrieve the certificate chain in PKCS#7 base64 encoded given an order reference (ord-uuid).
+Retrieve the the certificate chain in PKCS#7 base64 encoded given an order reference (ord-uuid).
 
 __Example__
 
@@ -240,7 +240,7 @@ curl -X 'POST' \
 
 __/v2/revoke__
 
-Revoke one or multiple valid certificates. 
+Revoke one or multiple valid certificate. 
 
 __Example__
 
@@ -267,23 +267,15 @@ curl -X 'POST' \
 Client domain owner check management is available to the RA Operator API for
 Public Trust domain validation.
 
-For Private Trust, the domain owner check management is handled by the CA
-Operator by setting private domain validation rules
-
-on the certificte products. Private Trust domain owner check validation do
-not necessarely require _dns-01_ or _https-01_ domain validation.
-
 Using the RA Operator API for Public Trust domain validation, you can
 register domain names for clients which require domain 
-owner check validation based on _dns-01_ only. You generate tokens for the
+owner check validation based on DNS only. You generate tokens for the
 client domain names you register as TXT records on the DNS server.
 
 The generated tokens are valid for a 30 days period during which you can
-issue certificates for the corresponding client
+enter them in the DNS TXT record in order to proof the ownership of the according domain.
 
-domain names.
-
-For example, registering a client domain _déjà.vu.com_ for domain owner check
+For example, registering a client domain _déjà.vu.com_ for doman owner check
 pre validation would generate
 
 a token _swiss-pki=CTvhWIvNCuEjIynG574gD5Jeopo_ to register in the DNS with
@@ -434,7 +426,7 @@ attribute information
 
 |Attributes    | Value/description                                                                                              |
 |--------------|----------------------------------------------------------------------------------------------------------------|
-|uuid          |A correlation UUID linked to the server error code. You can
+|uuid          |A correlation UUID (Universally Unique Identifer), i.e. a unique identifier for the server error code. You can
 use this correlation value when contacting support. |             
 |errorCode     |An error code represented in the form _<module.section.error>_ as in _<001.002.0003>_                           |
 |errorMessages |A list of error messages |
@@ -469,7 +461,7 @@ use this correlation value when contacting support. |
 
 |Error codes                  |Code|
 |-----------------------------|----|
-|AUTHENTICATION               | 0223|             
+|AUTHENTICAION                | 0223|             
 |ACCESS_DENIED                | 0224|             
 |RUNTIME                      | 0225|             
 |VALIDATION                   | 0226|             
