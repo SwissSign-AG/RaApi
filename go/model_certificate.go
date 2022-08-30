@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.0
+API version: 2.0.207
 Contact: opensource@swisssign.com
 */
 
@@ -14,7 +14,6 @@ package swisssign_ra_api.v2
 import (
 	"encoding/json"
 	"time"
-	"os"
 )
 
 // Certificate struct for Certificate
@@ -30,15 +29,15 @@ type Certificate struct {
 	// Certificate start validity in UTC
 	EndValidity time.Time `json:"endValidity"`
 	// base64 encoded DER certificate
-	Certificate *os.File `json:"certificate"`
-	RevocationStatus *CertificateRevocationStatus `json:"revocationStatus,omitempty"`
+	Certificate string `json:"certificate"`
+	RevocationStatus *RevocationStatus `json:"revocationStatus,omitempty"`
 }
 
 // NewCertificate instantiates a new Certificate object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCertificate(subject string, issuer string, serial string, startValidity time.Time, endValidity time.Time, certificate *os.File) *Certificate {
+func NewCertificate(subject string, issuer string, serial string, startValidity time.Time, endValidity time.Time, certificate string) *Certificate {
 	this := Certificate{}
 	this.Subject = subject
 	this.Issuer = issuer
@@ -178,9 +177,9 @@ func (o *Certificate) SetEndValidity(v time.Time) {
 }
 
 // GetCertificate returns the Certificate field value
-func (o *Certificate) GetCertificate() *os.File {
+func (o *Certificate) GetCertificate() string {
 	if o == nil {
-		var ret *os.File
+		var ret string
 		return ret
 	}
 
@@ -189,7 +188,7 @@ func (o *Certificate) GetCertificate() *os.File {
 
 // GetCertificateOk returns a tuple with the Certificate field value
 // and a boolean to check if the value has been set.
-func (o *Certificate) GetCertificateOk() (**os.File, bool) {
+func (o *Certificate) GetCertificateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -197,14 +196,14 @@ func (o *Certificate) GetCertificateOk() (**os.File, bool) {
 }
 
 // SetCertificate sets field value
-func (o *Certificate) SetCertificate(v *os.File) {
+func (o *Certificate) SetCertificate(v string) {
 	o.Certificate = v
 }
 
 // GetRevocationStatus returns the RevocationStatus field value if set, zero value otherwise.
-func (o *Certificate) GetRevocationStatus() CertificateRevocationStatus {
+func (o *Certificate) GetRevocationStatus() RevocationStatus {
 	if o == nil || o.RevocationStatus == nil {
-		var ret CertificateRevocationStatus
+		var ret RevocationStatus
 		return ret
 	}
 	return *o.RevocationStatus
@@ -212,7 +211,7 @@ func (o *Certificate) GetRevocationStatus() CertificateRevocationStatus {
 
 // GetRevocationStatusOk returns a tuple with the RevocationStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Certificate) GetRevocationStatusOk() (*CertificateRevocationStatus, bool) {
+func (o *Certificate) GetRevocationStatusOk() (*RevocationStatus, bool) {
 	if o == nil || o.RevocationStatus == nil {
 		return nil, false
 	}
@@ -228,8 +227,8 @@ func (o *Certificate) HasRevocationStatus() bool {
 	return false
 }
 
-// SetRevocationStatus gets a reference to the given CertificateRevocationStatus and assigns it to the RevocationStatus field.
-func (o *Certificate) SetRevocationStatus(v CertificateRevocationStatus) {
+// SetRevocationStatus gets a reference to the given RevocationStatus and assigns it to the RevocationStatus field.
+func (o *Certificate) SetRevocationStatus(v RevocationStatus) {
 	o.RevocationStatus = &v
 }
 

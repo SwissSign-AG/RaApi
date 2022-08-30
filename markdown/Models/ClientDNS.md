@@ -9,7 +9,7 @@
 | **validated** | **Boolean** | Indicates if the domain is validated | [default to null] |
 | **trustedDomain** | **Boolean** | Indicates if the domain is a trusted domain (for private PKIs). This setting is linked to the certificate product DNS validation rule for Private PKIs. | [default to null] |
 | **timeValidated** | **Date** | Indicates when the domain got validated | [optional] [default to null] |
-| **validationMethod** | [**DNSOwnerCheck**](DNSOwnerCheck.md) |  | [default to null] |
+| **validationMethod** | **String** | DNS validation type | [default to null] |
 | **randomValue** | **String** | The random value to add to the DNS TXT record for the domain | [optional] [default to null] |
 | **randomValueTimeCreated** | **Date** | Indicates when the random value was created | [optional] [default to null] |
 | **randomValueTimeExpire** | **Date** | Indicates when the random value expires | [optional] [default to null] |

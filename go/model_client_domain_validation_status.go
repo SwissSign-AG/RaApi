@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.0
+API version: 2.0.207
 Contact: opensource@swisssign.com
 */
 
@@ -21,18 +21,18 @@ type ClientDomainValidationStatus string
 
 // List of ClientDomainValidationStatus
 const (
-	PENDING ClientDomainValidationStatus = "PENDING"
-	EXPIRED ClientDomainValidationStatus = "EXPIRED"
-	VALID ClientDomainValidationStatus = "VALID"
-	NOT_VALIDATED ClientDomainValidationStatus = "NOT_VALIDATED"
+	PENDING ClientDomainValidationStatus = "pending"
+	EXPIRED ClientDomainValidationStatus = "expired"
+	VALID ClientDomainValidationStatus = "valid"
+	NOT_VALIDATED ClientDomainValidationStatus = "not_validated"
 )
 
 // All allowed values of ClientDomainValidationStatus enum
 var AllowedClientDomainValidationStatusEnumValues = []ClientDomainValidationStatus{
-	"PENDING",
-	"EXPIRED",
-	"VALID",
-	"NOT_VALIDATED",
+	"pending",
+	"expired",
+	"valid",
+	"not_validated",
 }
 
 func (v *ClientDomainValidationStatus) UnmarshalJSON(src []byte) error {

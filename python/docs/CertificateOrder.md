@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **status** | [**CertificateOrderStatus**](CertificateOrderStatus.md) |  | 
 **client_reference** | **str** | Client reference UUID | [readonly] 
 **product_reference** | **str** | Product reference UUID | [readonly] 
-**certificate** | [**CertificateOrderCertificate**](CertificateOrderCertificate.md) |  | [optional] 
+**certificate** | [**Certificate**](Certificate.md) |  | [optional] 
 **issued_by** | **str** | email of the person who created the order | [optional] [readonly] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 

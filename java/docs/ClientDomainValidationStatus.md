@@ -5,13 +5,13 @@
 ## Enum
 
 
-* `PENDING` (value: `"PENDING"`)
+* `PENDING` (value: `"pending"`)
 
-* `EXPIRED` (value: `"EXPIRED"`)
+* `EXPIRED` (value: `"expired"`)
 
-* `VALID` (value: `"VALID"`)
+* `VALID` (value: `"valid"`)
 
-* `NOT_VALIDATED` (value: `"NOT_VALIDATED"`)
+* `NOT_VALIDATED` (value: `"not_validated"`)
 
 
 

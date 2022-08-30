@@ -437,7 +437,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -817,7 +817,7 @@ MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
 ... [snipped] ...
 6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP
 -----END CERTIFICATE REQUEST-----
-" // string | Certificate Request in Base64 with start/end beacon (optional)
+" // string | Certificate Request in Base64 with start/end beacon
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -859,7 +859,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: text/plain
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -932,7 +932,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/x-www-form-urlencoded
-- **Accept**: text/plain, application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1030,7 +1030,7 @@ import (
 )
 
 func main() {
-    revocationRequest := []openapiclient.RevocationRequest{*openapiclient.NewRevocationRequest("3893409CB666E1F092B7B6F28E1EAF4582AA7F21", "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA")} // []RevocationRequest | Certificate references to revoke (optional)
+    revocationRequest := []openapiclient.RevocationRequest{*openapiclient.NewRevocationRequest("3893409CB666E1F092B7B6F28E1EAF4582AA7F21", "unused", "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA")} // []RevocationRequest | Certificate references to revoke
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)

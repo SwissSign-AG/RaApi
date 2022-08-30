@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **domain_unicode** | **str** | Client domain in unicode | [readonly] 
 **validated** | **bool** | Indicates if the domain is validated | [readonly] 
 **trusted_domain** | **bool** | Indicates if the domain is a trusted domain (for private PKIs). This setting is linked to the certificate product DNS validation rule for Private PKIs. | 
-**validation_method** | [**DNSOwnerCheck**](DNSOwnerCheck.md) |  | 
+**validation_method** | **str** | DNS validation type | [readonly] 
 **expired** | **bool** | Indicates if the pre validation of the domain has expired | [readonly] 
 **random_value_time_expired** | **bool** | Indicates if the random value is expired | [readonly] 
 **time_validated** | **datetime, none_type** | Indicates when the domain got validated | [optional] [readonly] 

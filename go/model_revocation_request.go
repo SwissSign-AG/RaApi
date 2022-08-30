@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.0
+API version: 2.0.207
 Contact: opensource@swisssign.com
 */
 
@@ -19,6 +19,8 @@ import (
 type RevocationRequest struct {
 	// Certificate serial number (Big Integer HEX encoded)
 	SerialNumber string `json:"serialNumber"`
+	// Revocation reason
+	RevocationReason string `json:"revocationReason"`
 	// Certificate issuer distinguished name
 	IssuerName string `json:"issuerName"`
 }
@@ -27,9 +29,10 @@ type RevocationRequest struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRevocationRequest(serialNumber string, issuerName string) *RevocationRequest {
+func NewRevocationRequest(serialNumber string, revocationReason string, issuerName string) *RevocationRequest {
 	this := RevocationRequest{}
 	this.SerialNumber = serialNumber
+	this.RevocationReason = revocationReason
 	this.IssuerName = issuerName
 	return &this
 }
@@ -66,6 +69,30 @@ func (o *RevocationRequest) SetSerialNumber(v string) {
 	o.SerialNumber = v
 }
 
+// GetRevocationReason returns the RevocationReason field value
+func (o *RevocationRequest) GetRevocationReason() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.RevocationReason
+}
+
+// GetRevocationReasonOk returns a tuple with the RevocationReason field value
+// and a boolean to check if the value has been set.
+func (o *RevocationRequest) GetRevocationReasonOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RevocationReason, true
+}
+
+// SetRevocationReason sets field value
+func (o *RevocationRequest) SetRevocationReason(v string) {
+	o.RevocationReason = v
+}
+
 // GetIssuerName returns the IssuerName field value
 func (o *RevocationRequest) GetIssuerName() string {
 	if o == nil {
@@ -94,6 +121,9 @@ func (o RevocationRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
 		toSerialize["serialNumber"] = o.SerialNumber
+	}
+	if true {
+		toSerialize["revocationReason"] = o.RevocationReason
 	}
 	if true {
 		toSerialize["issuerName"] = o.IssuerName

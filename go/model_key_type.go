@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.0
+API version: 2.0.207
 Contact: opensource@swisssign.com
 */
 
@@ -21,48 +21,48 @@ type KeyType string
 
 // List of KeyType
 const (
-	RSA_2048 KeyType = "RSA_2048"
-	RSA_3072 KeyType = "RSA_3072"
-	RSA_4096 KeyType = "RSA_4096"
-	RSA_8192 KeyType = "RSA_8192"
-	EC_SECP224K1 KeyType = "EC_secp224k1"
-	EC_SECP224R1 KeyType = "EC_secp224r1"
-	EC_SECP256K1 KeyType = "EC_secp256k1"
-	EC_SECP256R1 KeyType = "EC_secp256r1"
-	EC_SECP384R1 KeyType = "EC_secp384r1"
-	EC_SECP521R1 KeyType = "EC_secp521r1"
-	EC_X962P239V1 KeyType = "EC_x962p239v1"
-	EC_X962P239V2 KeyType = "EC_x962p239v2"
-	EC_X962P239V3 KeyType = "EC_x962p239v3"
-	EC_BRAINPOOL224R1 KeyType = "EC_brainpool224r1"
-	EC_BRAINPOOL256R1 KeyType = "EC_brainpool256r1"
-	EC_BRAINPOOL320R1 KeyType = "EC_brainpool320r1"
-	EC_BRAINPOOL384R1 KeyType = "EC_brainpool384r1"
-	EC_BRAINPOOL512R1 KeyType = "EC_brainpool512r1"
-	EC_FRP256V1 KeyType = "EC_frp256v1"
+	RSA_2048 KeyType = "rsa_2048"
+	RSA_3072 KeyType = "rsa_3072"
+	RSA_4096 KeyType = "rsa_4096"
+	RSA_8192 KeyType = "rsa_8192"
+	EC_SECP224K1 KeyType = "ec_secp224k1"
+	EC_SECP224R1 KeyType = "ec_secp224r1"
+	EC_SECP256K1 KeyType = "ec_secp256k1"
+	EC_SECP256R1 KeyType = "ec_secp256r1"
+	EC_SECP384R1 KeyType = "ec_secp384r1"
+	EC_SECP521R1 KeyType = "ec_secp521r1"
+	EC_X962P239V1 KeyType = "ec_x962p239v1"
+	EC_X962P239V2 KeyType = "ec_x962p239v2"
+	EC_X962P239V3 KeyType = "ec_x962p239v3"
+	EC_BRAINPOOL224R1 KeyType = "ec_brainpool224r1"
+	EC_BRAINPOOL256R1 KeyType = "ec_brainpool256r1"
+	EC_BRAINPOOL320R1 KeyType = "ec_brainpool320r1"
+	EC_BRAINPOOL384R1 KeyType = "ec_brainpool384r1"
+	EC_BRAINPOOL512R1 KeyType = "ec_brainpool512r1"
+	EC_FRP256V1 KeyType = "ec_frp256v1"
 )
 
 // All allowed values of KeyType enum
 var AllowedKeyTypeEnumValues = []KeyType{
-	"RSA_2048",
-	"RSA_3072",
-	"RSA_4096",
-	"RSA_8192",
-	"EC_secp224k1",
-	"EC_secp224r1",
-	"EC_secp256k1",
-	"EC_secp256r1",
-	"EC_secp384r1",
-	"EC_secp521r1",
-	"EC_x962p239v1",
-	"EC_x962p239v2",
-	"EC_x962p239v3",
-	"EC_brainpool224r1",
-	"EC_brainpool256r1",
-	"EC_brainpool320r1",
-	"EC_brainpool384r1",
-	"EC_brainpool512r1",
-	"EC_frp256v1",
+	"rsa_2048",
+	"rsa_3072",
+	"rsa_4096",
+	"rsa_8192",
+	"ec_secp224k1",
+	"ec_secp224r1",
+	"ec_secp256k1",
+	"ec_secp256r1",
+	"ec_secp384r1",
+	"ec_secp521r1",
+	"ec_x962p239v1",
+	"ec_x962p239v2",
+	"ec_x962p239v3",
+	"ec_brainpool224r1",
+	"ec_brainpool256r1",
+	"ec_brainpool320r1",
+	"ec_brainpool384r1",
+	"ec_brainpool512r1",
+	"ec_frp256v1",
 }
 
 func (v *KeyType) UnmarshalJSON(src []byte) error {

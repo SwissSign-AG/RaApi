@@ -451,7 +451,7 @@ public class Example {
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -883,7 +883,7 @@ MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **productReference** | **String**| Certificate product reference UUID | |
-| **body** | **String**| Certificate Request in Base64 with start/end beacon | [optional] |
+| **body** | **String**| Certificate Request in Base64 with start/end beacon | |
 
 ### Return type
 
@@ -895,7 +895,7 @@ MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
 
 ### HTTP request headers
 
- - **Content-Type**: text/plain
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -964,7 +964,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: text/plain, application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1096,7 +1096,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **revocationRequest** | [**List&lt;RevocationRequest&gt;**](RevocationRequest.md)| Certificate references to revoke | [optional] |
+| **revocationRequest** | [**List&lt;RevocationRequest&gt;**](RevocationRequest.md)| Certificate references to revoke | |
 
 ### Return type
 

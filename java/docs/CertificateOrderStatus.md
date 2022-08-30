@@ -5,35 +5,35 @@
 ## Enum
 
 
-* `NEW` (value: `"NEW"`)
+* `NEW` (value: `"new"`)
 
-* `KEY_VALIDATION` (value: `"KEY_VALIDATION"`)
+* `KEY_VALIDATION` (value: `"key_validation"`)
 
-* `PRE_VALIDATION` (value: `"PRE_VALIDATION"`)
+* `PRE_VALIDATION` (value: `"pre_validation"`)
 
-* `GENERATE_TBS` (value: `"GENERATE_TBS"`)
+* `GENERATE_TBS` (value: `"generate_tbs"`)
 
-* `PENDING_AUTH` (value: `"PENDING_AUTH"`)
+* `PENDING_AUTH` (value: `"pending_auth"`)
 
-* `PRE_ISSUE` (value: `"PRE_ISSUE"`)
+* `PRE_ISSUE` (value: `"pre_issue"`)
 
-* `ISSUE` (value: `"ISSUE"`)
+* `ISSUE` (value: `"issue"`)
 
-* `POST_VALIDATION` (value: `"POST_VALIDATION"`)
+* `POST_VALIDATION` (value: `"post_validation"`)
 
-* `FINALIZE_ISSUANCE` (value: `"FINALIZE_ISSUANCE"`)
+* `FINALIZE_ISSUANCE` (value: `"finalize_issuance"`)
 
-* `ISSUED` (value: `"ISSUED"`)
+* `ISSUED` (value: `"issued"`)
 
-* `REVOKED` (value: `"REVOKED"`)
+* `REVOKED` (value: `"revoked"`)
 
-* `FAILED` (value: `"FAILED"`)
+* `FAILED` (value: `"failed"`)
 
-* `REJECTED` (value: `"REJECTED"`)
+* `REJECTED` (value: `"rejected"`)
 
-* `PENDING_CSR_RENEWAL` (value: `"PENDING_CSR_RENEWAL"`)
+* `PENDING_CSR_RENEWAL` (value: `"pending_csr_renewal"`)
 
-* `UNKNOWN` (value: `"UNKNOWN"`)
+* `UNKNOWN` (value: `"unknown"`)
 
 
 

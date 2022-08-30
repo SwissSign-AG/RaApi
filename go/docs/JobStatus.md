@@ -3,23 +3,25 @@
 ## Enum
 
 
-* `WAITING` (value: `"WAITING"`)
+* `WAITING` (value: `"waiting"`)
 
-* `PENDING` (value: `"PENDING"`)
+* `PENDING` (value: `"pending"`)
 
-* `PROCESSING` (value: `"PROCESSING"`)
+* `PROCESSING` (value: `"processing"`)
 
-* `SUCCESS` (value: `"SUCCESS"`)
+* `SUCCESS` (value: `"success"`)
 
-* `FAILED` (value: `"FAILED"`)
+* `FAILED` (value: `"failed"`)
 
-* `SCHEDULE_REQUEST` (value: `"SCHEDULE_REQUEST"`)
+* `SCHEDULE_REQUEST` (value: `"schedule_request"`)
 
-* `SCHEDULE_RESPONSE` (value: `"SCHEDULE_RESPONSE"`)
+* `SCHEDULE_RESPONSE` (value: `"schedule_response"`)
 
-* `RETRY` (value: `"RETRY"`)
+* `RETRY` (value: `"retry"`)
 
-* `UNKNOWN` (value: `"UNKNOWN"`)
+* `CONNECTION_OR_CHANNEL_CLOSED` (value: `"connection_or_channel_closed"`)
+
+* `UNKNOWN` (value: `"unknown"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

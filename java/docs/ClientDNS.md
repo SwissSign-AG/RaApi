@@ -13,7 +13,7 @@
 |**validated** | **Boolean** | Indicates if the domain is validated |  [readonly] |
 |**trustedDomain** | **Boolean** | Indicates if the domain is a trusted domain (for private PKIs). This setting is linked to the certificate product DNS validation rule for Private PKIs. |  |
 |**timeValidated** | **OffsetDateTime** | Indicates when the domain got validated |  [optional] [readonly] |
-|**validationMethod** | **DNSOwnerCheck** |  |  |
+|**validationMethod** | **String** | DNS validation type |  [readonly] |
 |**randomValue** | **String** | The random value to add to the DNS TXT record for the domain |  [optional] [readonly] |
 |**randomValueTimeCreated** | **OffsetDateTime** | Indicates when the random value was created |  [optional] [readonly] |
 |**randomValueTimeExpire** | **OffsetDateTime** | Indicates when the random value expires |  [optional] [readonly] |

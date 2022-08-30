@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.0.0
+  version: 2.0.207
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch/v2
@@ -38,7 +38,7 @@ paths:
       responses:
         "200":
           content:
-            text/plain:
+            application/json:
               schema:
                 readOnly: true
                 type: string
@@ -200,13 +200,14 @@ paths:
         style: simple
       requestBody:
         content:
-          text/plain:
+          application/json:
             example: "----BEGIN CERTIFICATE REQUEST-----\nMIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh\n\
               ... [snipped] ...\n6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP\n\
               -----END CERTIFICATE REQUEST-----\n"
             schema:
               type: string
         description: Certificate Request in Base64 with start/end beacon
+        required: true
       responses:
         "200":
           content:
@@ -262,7 +263,7 @@ paths:
       responses:
         "200":
           content:
-            text/plain:
+            application/json:
               schema:
                 $ref: '#/components/schemas/CertificateOrderStatus'
           description: success
@@ -521,6 +522,7 @@ paths:
                 $ref: '#/components/schemas/RevocationRequest'
               type: array
         description: Certificate references to revoke
+        required: true
       responses:
         "204":
           description: successfully submitted revocation request
@@ -952,28 +954,28 @@ components:
     RevocationReason:
       description: Revocation reason
       enum:
-      - UNUSED
-      - KEY_COMPROMISE
-      - C_A_COMPROMISE
-      - AFFILIATION_CHANGED
-      - SUPERSEDED
-      - CESSATION_OF_OPERATION
-      - CERTIFICATE_HOLD
-      - REMOVE_FROM_CRL
-      - PRIVILEGE_WITHDRAWN
-      - A_A_COMPROMISE
-      example: UNUSED
+      - unused
+      - keyCompromise
+      - cACompromise
+      - affiliationChanged
+      - superseded
+      - cessationOfOperation
+      - certificateHold
+      - removeFromCRL
+      - privilegeWithdrawn
+      - aACompromise
+      example: unused
       nullable: false
       readOnly: true
       type: string
     ClientDomainValidationStatus:
       description: Status of the domain pre validation
       enum:
-      - PENDING
-      - EXPIRED
-      - VALID
-      - NOT_VALIDATED
-      example: NOT_VALIDATED
+      - pending
+      - expired
+      - valid
+      - not_validated
+      example: not_validated
       nullable: false
       readOnly: true
       type: string
@@ -981,10 +983,23 @@ components:
       example:
         serialNumber: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
         issuerName: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+        revocationReason: unused
       properties:
         serialNumber:
           description: Certificate serial number (Big Integer HEX encoded)
           example: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+          nullable: false
+          type: string
+        revocationReason:
+          description: Revocation reason
+          enum:
+          - unused
+          - keyCompromise
+          - affiliationChanged
+          - superseded
+          - cessationOfOperation
+          - privilegeWithdrawn
+          example: unused
           nullable: false
           type: string
         issuerName:
@@ -994,31 +1009,32 @@ components:
           type: string
       required:
       - issuerName
+      - revocationReason
       - serialNumber
       type: object
     KeyType:
       description: Key generation type
       enum:
-      - RSA_2048
-      - RSA_3072
-      - RSA_4096
-      - RSA_8192
-      - EC_secp224k1
-      - EC_secp224r1
-      - EC_secp256k1
-      - EC_secp256r1
-      - EC_secp384r1
-      - EC_secp521r1
-      - EC_x962p239v1
-      - EC_x962p239v2
-      - EC_x962p239v3
-      - EC_brainpool224r1
-      - EC_brainpool256r1
-      - EC_brainpool320r1
-      - EC_brainpool384r1
-      - EC_brainpool512r1
-      - EC_frp256v1
-      example: RSA_4096
+      - rsa_2048
+      - rsa_3072
+      - rsa_4096
+      - rsa_8192
+      - ec_secp224k1
+      - ec_secp224r1
+      - ec_secp256k1
+      - ec_secp256r1
+      - ec_secp384r1
+      - ec_secp521r1
+      - ec_x962p239v1
+      - ec_x962p239v2
+      - ec_x962p239v3
+      - ec_brainpool224r1
+      - ec_brainpool256r1
+      - ec_brainpool320r1
+      - ec_brainpool384r1
+      - ec_brainpool512r1
+      - ec_frp256v1
+      example: rsa_2048
       nullable: false
       readOnly: true
       type: string
@@ -1033,7 +1049,7 @@ components:
         revocationNotification: false
         issuanceNotification: false
         clientPublishCertificateOverrideDefault: false
-        keyType: RSA_4096
+        keyType: rsa_2048
         clientPublishCertificateOverride: false
         productDescription: SSL NCP policy with domain validation
         expirationDate: 2022-02-15T00:00:00.000+00:00
@@ -1062,6 +1078,10 @@ components:
           enum:
           - PKCS10
           - PKCS12
+          - PKCS12withPIN
+          - PKCS10or12withPIN
+          - HSM
+          - CNG
           example: PKCS10
           nullable: false
           readOnly: true
@@ -1134,22 +1154,22 @@ components:
     CertificateOrderStatus:
       description: Status of the certificate Order
       enum:
-      - NEW
-      - KEY_VALIDATION
-      - PRE_VALIDATION
-      - GENERATE_TBS
-      - PENDING_AUTH
-      - PRE_ISSUE
-      - ISSUE
-      - POST_VALIDATION
-      - FINALIZE_ISSUANCE
-      - ISSUED
-      - REVOKED
-      - FAILED
-      - REJECTED
-      - PENDING_CSR_RENEWAL
-      - UNKNOWN
-      example: ISSUED
+      - new
+      - key_validation
+      - pre_validation
+      - generate_tbs
+      - pending_auth
+      - pre_issue
+      - issue
+      - post_validation
+      - finalize_issuance
+      - issued
+      - revoked
+      - failed
+      - rejected
+      - pending_csr_renewal
+      - unknown
+      example: issued
       nullable: false
       readOnly: true
       type: string
@@ -1162,12 +1182,12 @@ components:
         startBefore: 2002-01-18T00:00:00.000+00:00
         orderReference: ord-f0725b50-c533-4802-a844-de57bfb7a80e
         orderStatus:
-        - ISSUED
-        - ISSUED
+        - issued
+        - issued
         attribute: s?me@emai* or 2.5.4.r or streetAddress
         revocationReason:
-        - UNUSED
-        - UNUSED
+        - unused
+        - unused
       properties:
         orderReference:
           description: Certificate Order reference
@@ -1232,10 +1252,10 @@ components:
         timeExpired: 2022-01-12T23:20:50.52Z
         expired: false
         validated: true
-        validationMethod: CABDNS
+        validationMethod: cabdns
         domain: xn--dj-kia8a.vu.com
         randomValueTimeExpire: 2022-01-12T23:20:50.52Z
-        status: NOT_VALIDATED
+        status: not_validated
       properties:
         uuid:
           description: Pre validated client domain reference
@@ -1277,7 +1297,11 @@ components:
           readOnly: true
           type: string
         validationMethod:
-          $ref: '#/components/schemas/DNSOwnerCheck'
+          description: DNS validation type
+          example: cabdns
+          nullable: false
+          readOnly: true
+          type: string
         randomValue:
           description: The random value to add to the DNS TXT record for the domain
           example: ""
@@ -1339,61 +1363,50 @@ components:
     JobStatus:
       description: Status of the certificate Order Task
       enum:
-      - WAITING
-      - PENDING
-      - PROCESSING
-      - SUCCESS
-      - FAILED
-      - SCHEDULE_REQUEST
-      - SCHEDULE_RESPONSE
-      - RETRY
-      - UNKNOWN
-      example: SUCCESS
+      - waiting
+      - pending
+      - processing
+      - success
+      - failed
+      - schedule_request
+      - schedule_response
+      - retry
+      - connection_or_channel_closed
+      - unknown
+      example: success
       nullable: false
-      readOnly: true
-      type: string
-    DNSOwnerCheck:
-      description: Type of DNS owner check method
-      enum:
-      - CABDNS
-      - CABHTTP
-      - CONSTRUCTEDEMAIL
-      - EMAILCONFIRMATION
-      - UNKNOWN
-      example: CABDNS
-      nullable: true
       readOnly: true
       type: string
     JobType:
       description: Certificate Order Task Type
       enum:
-      - ISSUE_SUBMIT_CERTIFICATE_ORDER_JOB
-      - ISSUE_CERTIFICATE_RENEWAL_VALIDATION_JOB
-      - ISSUE_KEY_VALIDATION_JOB
-      - ISSUE_PRE_VALIDATION_JOB
-      - ISSUE_GENERATE_TBS_JOB
-      - ISSUE_POLICY_VALIDATION_JOB
-      - ISSUE_CAA_CHECK_VALIDATION_JOB
-      - ISSUE_DOMAIN_OWNER_CHECK_VALIDATION_JOB
-      - ISSUE_END_USER_EMAIL_VALIDATION_JOB
-      - ISSUE_PRE_LINTING_JOB
-      - ISSUE_PRE_ISSUE_CERTIFICATE_JOB
-      - ISSUE_CT_LOG_PRE_CERT_PUBLICATION_JOB
-      - ISSUE_ISSUE_CERTIFICATE_JOB
-      - ISSUE_POST_ISSUE_CERTIFICATE_JOB
-      - ISSUE_FINALIZE_ISSUE_CERTIFICATE_JOB
-      - ISSUE_POST_LINTING_CERTIFICATE_JOB
-      - PUBLISH_POST_CERTIFICATE_JOB
-      - ISSUE_CT_LOG_PUBLICATION_JOB
-      - ISSUE_AUTHORIZATION_JOB
-      - ISSUE_NOTIFY_ISSUED_JOB
-      - ISSUE_NOTIFY_RENEWAL_JOB
-      - ISSUE_UPDATE_RENEWAL_JOB
-      - ISSUE_REVOKE_RENEWED_CERTIFICATE_JOB
-      - ISSUE_NOTIFY_P12_RETRIEVAL_JOB
-      - ISSUE_NOTIFY_HSM_RETRIEVAL_JOB
-      - ISSUE_SET_P12_PIN_JOB
-      example: ISSUE_GENERATE_TBS_JOB
+      - SubmitCertificateOrderJob
+      - CertificateRenewalValidationJob
+      - KeyValidationJob
+      - PreValidationParentJob
+      - GenerateTBSJob
+      - PolicyValidationJob
+      - CAACheckValidationJob
+      - DomainOwnerCheckValidationJob
+      - EndUserEmailValidationJob
+      - PreLintingCertificateJob
+      - PreIssueCertificateParentJob
+      - CTLogPrecertPublicationJob
+      - IssueCertificateJob
+      - PostIssueCertificateParentJob
+      - FinalizeIssueCertificateParentJob
+      - PostLintingCertificateJob
+      - PostPublishCertificateJob
+      - CTLogPublicationJob
+      - CertificateOrderAuthorizationJob
+      - NotifyIssuedCertificateJob
+      - NotifyRenewalCertificateJob
+      - UpdateRenewalCertificateJob
+      - RevokeRenewedCertificateJob
+      - NotifyRenewalP12CertificateJob
+      - NotifyRenewalHsmCertificateJob
+      - SetP12PinJob
+      example: CTLogPublicationJob
       nullable: false
       readOnly: true
       type: string
@@ -1401,11 +1414,21 @@ components:
       example:
         issuedBy: some@email.org
         clientReference: cli-123e4567-e89b-12d3-a456-426614174000
-        certificate: null
+        certificate:
+          serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+          endValidity: 2023-01-12T23:20:50.52Z
+          subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+          revocationStatus:
+            revokedOn: 2022-02-12T05:10:50.52Z
+            reason: unused
+            revokedBy: some@email.org
+          startValidity: 2022-01-12T23:20:50.52Z
+          certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+          issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
         productReference: pma-123e4567-e89b-12d3-a456-426614174000
         uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
         createdOn: 2022-02-12T05:10:50.52Z
-        status: ISSUED
+        status: issued
       properties:
         uuid:
           description: Certificate Order reference
@@ -1436,7 +1459,7 @@ components:
           readOnly: true
           type: string
         certificate:
-          $ref: '#/components/schemas/CertificateOrder_certificate'
+          $ref: '#/components/schemas/Certificate'
         issuedBy:
           description: email of the person who created the order
           example: some@email.org
@@ -1458,11 +1481,11 @@ components:
         timeStarted: 2022-02-12T05:10:50.52Z
         timeFinished: 2022-02-12T05:10:50.52Z
         numberOfExecutions: 2
-        type: ISSUE_GENERATE_TBS_JOB
+        type: CTLogPublicationJob
         error: Error processing xyz ...
         uuid: job-f0725b50-c533-4802-a844-de57bfb7a80e
         createdOn: 2022-02-12T05:10:50.52Z
-        status: SUCCESS
+        status: success
       properties:
         uuid:
           description: Certificate Order Task reference
@@ -1530,6 +1553,10 @@ components:
       - uuid
       type: object
     RevocationStatus:
+      example:
+        revokedOn: 2022-02-12T05:10:50.52Z
+        reason: unused
+        revokedBy: some@email.org
       properties:
         revokedOn:
           description: Revocation date in UTC
@@ -1552,12 +1579,6 @@ components:
       - revokedBy
       - revokedOn
       type: object
-    null_type:
-      description: for adding nullability to a ref
-      enum:
-      - null
-      title: OpenAPI 3.0 null-type ref
-      type: string
     APIError:
       properties:
         uuid:
@@ -1601,7 +1622,7 @@ components:
           revocationNotification: false
           issuanceNotification: false
           clientPublishCertificateOverrideDefault: false
-          keyType: RSA_4096
+          keyType: rsa_2048
           clientPublishCertificateOverride: false
           productDescription: SSL NCP policy with domain validation
           expirationDate: 2022-02-15T00:00:00.000+00:00
@@ -1614,7 +1635,7 @@ components:
           revocationNotification: false
           issuanceNotification: false
           clientPublishCertificateOverrideDefault: false
-          keyType: RSA_4096
+          keyType: rsa_2048
           clientPublishCertificateOverride: false
           productDescription: SSL NCP policy with domain validation
           expirationDate: 2022-02-15T00:00:00.000+00:00
@@ -1650,6 +1671,17 @@ components:
       - uuid
       type: object
     Certificate:
+      example:
+        serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+        endValidity: 2023-01-12T23:20:50.52Z
+        subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+        revocationStatus:
+          revokedOn: 2022-02-12T05:10:50.52Z
+          reason: unused
+          revokedBy: some@email.org
+        startValidity: 2022-01-12T23:20:50.52Z
+        certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+        issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
       properties:
         subject:
           description: Certificate Subject Distinguished Name
@@ -1685,12 +1717,12 @@ components:
           type: string
         certificate:
           description: base64 encoded DER certificate
-          format: binary
+          example: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
           nullable: false
           readOnly: true
           type: string
         revocationStatus:
-          $ref: '#/components/schemas/Certificate_revocationStatus'
+          $ref: '#/components/schemas/RevocationStatus'
       required:
       - certificate
       - endValidity
@@ -1706,18 +1738,6 @@ components:
       required:
       - userSecret
       type: object
-    CertificateOrder_certificate:
-      anyOf:
-      - $ref: '#/components/schemas/Certificate'
-      - $ref: '#/components/schemas/null_type'
-      description: Certificate reference
-      readOnly: true
-    Certificate_revocationStatus:
-      anyOf:
-      - $ref: '#/components/schemas/RevocationStatus'
-      - $ref: '#/components/schemas/null_type'
-      description: Certificate revocation
-      readOnly: true
   securitySchemes:
     ApiKeyAuth:
       in: header

@@ -3,25 +3,25 @@
 ## Enum
 
 
-* `UNUSED` (value: `"UNUSED"`)
+* `UNUSED` (value: `"unused"`)
 
-* `KEY_COMPROMISE` (value: `"KEY_COMPROMISE"`)
+* `KEY_COMPROMISE` (value: `"keyCompromise"`)
 
-* `C_A_COMPROMISE` (value: `"C_A_COMPROMISE"`)
+* `C_A_COMPROMISE` (value: `"cACompromise"`)
 
-* `AFFILIATION_CHANGED` (value: `"AFFILIATION_CHANGED"`)
+* `AFFILIATION_CHANGED` (value: `"affiliationChanged"`)
 
-* `SUPERSEDED` (value: `"SUPERSEDED"`)
+* `SUPERSEDED` (value: `"superseded"`)
 
-* `CESSATION_OF_OPERATION` (value: `"CESSATION_OF_OPERATION"`)
+* `CESSATION_OF_OPERATION` (value: `"cessationOfOperation"`)
 
-* `CERTIFICATE_HOLD` (value: `"CERTIFICATE_HOLD"`)
+* `CERTIFICATE_HOLD` (value: `"certificateHold"`)
 
-* `REMOVE_FROM_CRL` (value: `"REMOVE_FROM_CRL"`)
+* `REMOVE_FROM_CRL` (value: `"removeFromCRL"`)
 
-* `PRIVILEGE_WITHDRAWN` (value: `"PRIVILEGE_WITHDRAWN"`)
+* `PRIVILEGE_WITHDRAWN` (value: `"privilegeWithdrawn"`)
 
-* `A_A_COMPROMISE` (value: `"A_A_COMPROMISE"`)
+* `A_A_COMPROMISE` (value: `"aACompromise"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

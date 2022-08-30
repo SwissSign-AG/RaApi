@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.0
+API version: 2.0.207
 Contact: opensource@swisssign.com
 */
 
@@ -27,7 +27,7 @@ type CertificateOrder struct {
 	ClientReference string `json:"clientReference"`
 	// Product reference UUID
 	ProductReference string `json:"productReference"`
-	Certificate *CertificateOrderCertificate `json:"certificate,omitempty"`
+	Certificate *Certificate `json:"certificate,omitempty"`
 	// email of the person who created the order
 	IssuedBy *string `json:"issuedBy,omitempty"`
 }
@@ -175,9 +175,9 @@ func (o *CertificateOrder) SetProductReference(v string) {
 }
 
 // GetCertificate returns the Certificate field value if set, zero value otherwise.
-func (o *CertificateOrder) GetCertificate() CertificateOrderCertificate {
+func (o *CertificateOrder) GetCertificate() Certificate {
 	if o == nil || o.Certificate == nil {
-		var ret CertificateOrderCertificate
+		var ret Certificate
 		return ret
 	}
 	return *o.Certificate
@@ -185,7 +185,7 @@ func (o *CertificateOrder) GetCertificate() CertificateOrderCertificate {
 
 // GetCertificateOk returns a tuple with the Certificate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CertificateOrder) GetCertificateOk() (*CertificateOrderCertificate, bool) {
+func (o *CertificateOrder) GetCertificateOk() (*Certificate, bool) {
 	if o == nil || o.Certificate == nil {
 		return nil, false
 	}
@@ -201,8 +201,8 @@ func (o *CertificateOrder) HasCertificate() bool {
 	return false
 }
 
-// SetCertificate gets a reference to the given CertificateOrderCertificate and assigns it to the Certificate field.
-func (o *CertificateOrder) SetCertificate(v CertificateOrderCertificate) {
+// SetCertificate gets a reference to the given Certificate and assigns it to the Certificate field.
+func (o *CertificateOrder) SetCertificate(v Certificate) {
 	o.Certificate = &v
 }
 

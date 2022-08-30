@@ -12,7 +12,7 @@
 |**status** | **CertificateOrderStatus** |  |  |
 |**clientReference** | **String** | Client reference UUID |  [readonly] |
 |**productReference** | **String** | Product reference UUID |  [readonly] |
-|**certificate** | [**CertificateOrderCertificate**](CertificateOrderCertificate.md) |  |  [optional] |
+|**certificate** | [**Certificate**](Certificate.md) |  |  [optional] |
 |**issuedBy** | **String** | email of the person who created the order |  [optional] [readonly] |
 
 

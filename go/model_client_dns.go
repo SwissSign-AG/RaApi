@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.0
+API version: 2.0.207
 Contact: opensource@swisssign.com
 */
 
@@ -30,7 +30,8 @@ type ClientDNS struct {
 	TrustedDomain bool `json:"trustedDomain"`
 	// Indicates when the domain got validated
 	TimeValidated NullableTime `json:"timeValidated,omitempty"`
-	ValidationMethod NullableDNSOwnerCheck `json:"validationMethod"`
+	// DNS validation type
+	ValidationMethod string `json:"validationMethod"`
 	// The random value to add to the DNS TXT record for the domain
 	RandomValue NullableString `json:"randomValue,omitempty"`
 	// Indicates when the random value was created
@@ -52,7 +53,7 @@ type ClientDNS struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewClientDNS(uuid string, domain string, domainUnicode string, validated bool, trustedDomain bool, validationMethod NullableDNSOwnerCheck, expired bool, randomValueTimeExpired bool) *ClientDNS {
+func NewClientDNS(uuid string, domain string, domainUnicode string, validated bool, trustedDomain bool, validationMethod string, expired bool, randomValueTimeExpired bool) *ClientDNS {
 	this := ClientDNS{}
 	this.Uuid = uuid
 	this.Domain = domain
@@ -236,29 +237,27 @@ func (o *ClientDNS) UnsetTimeValidated() {
 }
 
 // GetValidationMethod returns the ValidationMethod field value
-// If the value is explicit nil, the zero value for DNSOwnerCheck will be returned
-func (o *ClientDNS) GetValidationMethod() DNSOwnerCheck {
-	if o == nil || o.ValidationMethod.Get() == nil {
-		var ret DNSOwnerCheck
+func (o *ClientDNS) GetValidationMethod() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
 
-	return *o.ValidationMethod.Get()
+	return o.ValidationMethod
 }
 
 // GetValidationMethodOk returns a tuple with the ValidationMethod field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ClientDNS) GetValidationMethodOk() (*DNSOwnerCheck, bool) {
+func (o *ClientDNS) GetValidationMethodOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.ValidationMethod.Get(), o.ValidationMethod.IsSet()
+	return &o.ValidationMethod, true
 }
 
 // SetValidationMethod sets field value
-func (o *ClientDNS) SetValidationMethod(v DNSOwnerCheck) {
-	o.ValidationMethod.Set(&v)
+func (o *ClientDNS) SetValidationMethod(v string) {
+	o.ValidationMethod = v
 }
 
 // GetRandomValue returns the RandomValue field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -552,7 +551,7 @@ func (o ClientDNS) MarshalJSON() ([]byte, error) {
 		toSerialize["timeValidated"] = o.TimeValidated.Get()
 	}
 	if true {
-		toSerialize["validationMethod"] = o.ValidationMethod.Get()
+		toSerialize["validationMethod"] = o.ValidationMethod
 	}
 	if o.RandomValue.IsSet() {
 		toSerialize["randomValue"] = o.RandomValue.Get()

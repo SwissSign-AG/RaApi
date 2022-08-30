@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Status** | [**CertificateOrderStatus**](CertificateOrderStatus.md) |  | 
 **ClientReference** | **string** | Client reference UUID | [readonly] 
 **ProductReference** | **string** | Product reference UUID | [readonly] 
-**Certificate** | Pointer to [**CertificateOrderCertificate**](CertificateOrderCertificate.md) |  | [optional] 
+**Certificate** | Pointer to [**Certificate**](Certificate.md) |  | [optional] 
 **IssuedBy** | Pointer to **string** | email of the person who created the order | [optional] [readonly] 
 
 ## Methods
@@ -133,20 +133,20 @@ SetProductReference sets ProductReference field to given value.
 
 ### GetCertificate
 
-`func (o *CertificateOrder) GetCertificate() CertificateOrderCertificate`
+`func (o *CertificateOrder) GetCertificate() Certificate`
 
 GetCertificate returns the Certificate field if non-nil, zero value otherwise.
 
 ### GetCertificateOk
 
-`func (o *CertificateOrder) GetCertificateOk() (*CertificateOrderCertificate, bool)`
+`func (o *CertificateOrder) GetCertificateOk() (*Certificate, bool)`
 
 GetCertificateOk returns a tuple with the Certificate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCertificate
 
-`func (o *CertificateOrder) SetCertificate(v CertificateOrderCertificate)`
+`func (o *CertificateOrder) SetCertificate(v Certificate)`
 
 SetCertificate sets Certificate field to given value.
 

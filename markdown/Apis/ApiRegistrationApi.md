@@ -184,7 +184,7 @@ Retrieve a Certificate Order status given the Order reference
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+- **Accept**: application/json
 
 <a name="getCertificateOrderTasks"></a>
 # **getCertificateOrderTasks**
@@ -334,7 +334,7 @@ Issue certificate using CSR
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **productReference** | **String**| Certificate product reference UUID | [default to null] |
-| **body** | **String**| Certificate Request in Base64 with start/end beacon | [optional] |
+| **body** | **String**| Certificate Request in Base64 with start/end beacon | |
 
 ### Return type
 
@@ -346,7 +346,7 @@ Issue certificate using CSR
 
 ### HTTP request headers
 
-- **Content-Type**: text/plain
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 <a name="jwt"></a>
@@ -375,7 +375,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/x-www-form-urlencoded
-- **Accept**: text/plain, application/json
+- **Accept**: application/json
 
 <a name="resetClientPrevalidatedDomain"></a>
 # **resetClientPrevalidatedDomain**
@@ -416,7 +416,7 @@ Revoke certificates
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **RevocationRequest** | [**List**](../Models/RevocationRequest.md)| Certificate references to revoke | [optional] |
+| **RevocationRequest** | [**List**](../Models/RevocationRequest.md)| Certificate references to revoke | |
 
 ### Return type
 

@@ -5,13 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SerialNumber** | **string** | Certificate serial number (Big Integer HEX encoded) | 
+**RevocationReason** | **string** | Revocation reason | 
 **IssuerName** | **string** | Certificate issuer distinguished name | 
 
 ## Methods
 
 ### NewRevocationRequest
 
-`func NewRevocationRequest(serialNumber string, issuerName string, ) *RevocationRequest`
+`func NewRevocationRequest(serialNumber string, revocationReason string, issuerName string, ) *RevocationRequest`
 
 NewRevocationRequest instantiates a new RevocationRequest object
 This constructor will assign default values to properties that have it defined,
@@ -44,6 +45,26 @@ and a boolean to check if the value has been set.
 `func (o *RevocationRequest) SetSerialNumber(v string)`
 
 SetSerialNumber sets SerialNumber field to given value.
+
+
+### GetRevocationReason
+
+`func (o *RevocationRequest) GetRevocationReason() string`
+
+GetRevocationReason returns the RevocationReason field if non-nil, zero value otherwise.
+
+### GetRevocationReasonOk
+
+`func (o *RevocationRequest) GetRevocationReasonOk() (*string, bool)`
+
+GetRevocationReasonOk returns a tuple with the RevocationReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRevocationReason
+
+`func (o *RevocationRequest) SetRevocationReason(v string)`
+
+SetRevocationReason sets RevocationReason field to given value.
 
 
 ### GetIssuerName

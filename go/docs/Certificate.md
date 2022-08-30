@@ -9,14 +9,14 @@ Name | Type | Description | Notes
 **Serial** | **string** | Certificate serial number (Big Integer HEX encoded) | [readonly] 
 **StartValidity** | **time.Time** | Certificate start validity in UTC | [readonly] 
 **EndValidity** | **time.Time** | Certificate start validity in UTC | [readonly] 
-**Certificate** | ***os.File** | base64 encoded DER certificate | [readonly] 
-**RevocationStatus** | Pointer to [**CertificateRevocationStatus**](CertificateRevocationStatus.md) |  | [optional] 
+**Certificate** | **string** | base64 encoded DER certificate | [readonly] 
+**RevocationStatus** | Pointer to [**RevocationStatus**](RevocationStatus.md) |  | [optional] 
 
 ## Methods
 
 ### NewCertificate
 
-`func NewCertificate(subject string, issuer string, serial string, startValidity time.Time, endValidity time.Time, certificate *os.File, ) *Certificate`
+`func NewCertificate(subject string, issuer string, serial string, startValidity time.Time, endValidity time.Time, certificate string, ) *Certificate`
 
 NewCertificate instantiates a new Certificate object
 This constructor will assign default values to properties that have it defined,
@@ -133,40 +133,40 @@ SetEndValidity sets EndValidity field to given value.
 
 ### GetCertificate
 
-`func (o *Certificate) GetCertificate() *os.File`
+`func (o *Certificate) GetCertificate() string`
 
 GetCertificate returns the Certificate field if non-nil, zero value otherwise.
 
 ### GetCertificateOk
 
-`func (o *Certificate) GetCertificateOk() (**os.File, bool)`
+`func (o *Certificate) GetCertificateOk() (*string, bool)`
 
 GetCertificateOk returns a tuple with the Certificate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCertificate
 
-`func (o *Certificate) SetCertificate(v *os.File)`
+`func (o *Certificate) SetCertificate(v string)`
 
 SetCertificate sets Certificate field to given value.
 
 
 ### GetRevocationStatus
 
-`func (o *Certificate) GetRevocationStatus() CertificateRevocationStatus`
+`func (o *Certificate) GetRevocationStatus() RevocationStatus`
 
 GetRevocationStatus returns the RevocationStatus field if non-nil, zero value otherwise.
 
 ### GetRevocationStatusOk
 
-`func (o *Certificate) GetRevocationStatusOk() (*CertificateRevocationStatus, bool)`
+`func (o *Certificate) GetRevocationStatusOk() (*RevocationStatus, bool)`
 
 GetRevocationStatusOk returns a tuple with the RevocationStatus field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRevocationStatus
 
-`func (o *Certificate) SetRevocationStatus(v CertificateRevocationStatus)`
+`func (o *Certificate) SetRevocationStatus(v RevocationStatus)`
 
 SetRevocationStatus sets RevocationStatus field to given value.
 

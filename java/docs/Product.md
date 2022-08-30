@@ -29,6 +29,10 @@
 |---- | -----|
 | PKCS10 | &quot;PKCS10&quot; |
 | PKCS12 | &quot;PKCS12&quot; |
+| PKCS12WITHPIN | &quot;PKCS12withPIN&quot; |
+| PKCS10OR12WITHPIN | &quot;PKCS10or12withPIN&quot; |
+| HSM | &quot;HSM&quot; |
+| CNG | &quot;CNG&quot; |
 
 
 

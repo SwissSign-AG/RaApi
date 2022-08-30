@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.0
+API version: 2.0.207
 Contact: opensource@swisssign.com
 */
 
@@ -21,30 +21,30 @@ type RevocationReason string
 
 // List of RevocationReason
 const (
-	UNUSED RevocationReason = "UNUSED"
-	KEY_COMPROMISE RevocationReason = "KEY_COMPROMISE"
-	C_A_COMPROMISE RevocationReason = "C_A_COMPROMISE"
-	AFFILIATION_CHANGED RevocationReason = "AFFILIATION_CHANGED"
-	SUPERSEDED RevocationReason = "SUPERSEDED"
-	CESSATION_OF_OPERATION RevocationReason = "CESSATION_OF_OPERATION"
-	CERTIFICATE_HOLD RevocationReason = "CERTIFICATE_HOLD"
-	REMOVE_FROM_CRL RevocationReason = "REMOVE_FROM_CRL"
-	PRIVILEGE_WITHDRAWN RevocationReason = "PRIVILEGE_WITHDRAWN"
-	A_A_COMPROMISE RevocationReason = "A_A_COMPROMISE"
+	UNUSED RevocationReason = "unused"
+	KEY_COMPROMISE RevocationReason = "keyCompromise"
+	C_A_COMPROMISE RevocationReason = "cACompromise"
+	AFFILIATION_CHANGED RevocationReason = "affiliationChanged"
+	SUPERSEDED RevocationReason = "superseded"
+	CESSATION_OF_OPERATION RevocationReason = "cessationOfOperation"
+	CERTIFICATE_HOLD RevocationReason = "certificateHold"
+	REMOVE_FROM_CRL RevocationReason = "removeFromCRL"
+	PRIVILEGE_WITHDRAWN RevocationReason = "privilegeWithdrawn"
+	A_A_COMPROMISE RevocationReason = "aACompromise"
 )
 
 // All allowed values of RevocationReason enum
 var AllowedRevocationReasonEnumValues = []RevocationReason{
-	"UNUSED",
-	"KEY_COMPROMISE",
-	"C_A_COMPROMISE",
-	"AFFILIATION_CHANGED",
-	"SUPERSEDED",
-	"CESSATION_OF_OPERATION",
-	"CERTIFICATE_HOLD",
-	"REMOVE_FROM_CRL",
-	"PRIVILEGE_WITHDRAWN",
-	"A_A_COMPROMISE",
+	"unused",
+	"keyCompromise",
+	"cACompromise",
+	"affiliationChanged",
+	"superseded",
+	"cessationOfOperation",
+	"certificateHold",
+	"removeFromCRL",
+	"privilegeWithdrawn",
+	"aACompromise",
 }
 
 func (v *RevocationReason) UnmarshalJSON(src []byte) error {

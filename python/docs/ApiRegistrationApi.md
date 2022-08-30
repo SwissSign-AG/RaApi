@@ -507,7 +507,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
@@ -649,10 +649,10 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
         order_reference="ord-f0725b50-c533-4802-a844-de57bfb7a80e",
         serial_number="3893409CB*66E1F09?",
         order_status=[
-            CertificateOrderStatus("ISSUED"),
+            CertificateOrderStatus("issued"),
         ],
         revocation_reason=[
-            RevocationReason("UNUSED"),
+            RevocationReason("unused"),
         ],
         client_references=["cli-123e4567-e89b-12d3-a456-426614174000"],
         start_after=dateutil_parser('Fri Mar 15 00:00:00 UTC 2002').date(),
@@ -952,7 +952,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **issue_certificate**
-> CertificateOrder issue_certificate(product_reference)
+> CertificateOrder issue_certificate(product_reference, body)
 
 Issue certificate using CSR
 
@@ -996,21 +996,12 @@ MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
 ... [snipped] ...
 6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP
 -----END CERTIFICATE REQUEST-----
-''' # str | Certificate Request in Base64 with start/end beacon (optional)
+''' # str | Certificate Request in Base64 with start/end beacon
 
     # example passing only required values which don't have defaults set
     try:
         # Issue certificate using CSR
-        api_response = api_instance.issue_certificate(product_reference)
-        pprint(api_response)
-    except swisssign_ra_api.v2.ApiException as e:
-        print("Exception when calling ApiRegistrationApi->issue_certificate: %s\n" % e)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
-    try:
-        # Issue certificate using CSR
-        api_response = api_instance.issue_certificate(product_reference, body=body)
+        api_response = api_instance.issue_certificate(product_reference, body)
         pprint(api_response)
     except swisssign_ra_api.v2.ApiException as e:
         print("Exception when calling ApiRegistrationApi->issue_certificate: %s\n" % e)
@@ -1022,7 +1013,7 @@ MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **product_reference** | **str**| Certificate product reference UUID |
- **body** | **str**| Certificate Request in Base64 with start/end beacon | [optional]
+ **body** | **str**| Certificate Request in Base64 with start/end beacon |
 
 ### Return type
 
@@ -1034,7 +1025,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: text/plain
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1108,7 +1099,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: text/plain, application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
@@ -1207,7 +1198,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **revoke_certificates**
-> revoke_certificates()
+> revoke_certificates(revocation_request)
 
 Revoke certificates
 
@@ -1248,15 +1239,15 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
     revocation_request = [
         RevocationRequest(
             serial_number="3893409CB666E1F092B7B6F28E1EAF4582AA7F21",
+            revocation_reason="unused",
             issuer_name="DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA",
         ),
-    ] # [RevocationRequest] | Certificate references to revoke (optional)
+    ] # [RevocationRequest] | Certificate references to revoke
 
     # example passing only required values which don't have defaults set
-    # and optional values
     try:
         # Revoke certificates
-        api_instance.revoke_certificates(revocation_request=revocation_request)
+        api_instance.revoke_certificates(revocation_request)
     except swisssign_ra_api.v2.ApiException as e:
         print("Exception when calling ApiRegistrationApi->revoke_certificates: %s\n" % e)
 ```
@@ -1266,7 +1257,7 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **revocation_request** | [**[RevocationRequest]**](RevocationRequest.md)| Certificate references to revoke | [optional]
+ **revocation_request** | [**[RevocationRequest]**](RevocationRequest.md)| Certificate references to revoke |
 
 ### Return type
 

@@ -34,12 +34,9 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
  - [CertificateOrder](./Models/CertificateOrder.md)
  - [CertificateOrderStatus](./Models/CertificateOrderStatus.md)
  - [CertificateOrderTask](./Models/CertificateOrderTask.md)
- - [CertificateOrder_certificate](./Models/CertificateOrder_certificate.md)
- - [Certificate_revocationStatus](./Models/Certificate_revocationStatus.md)
  - [Client](./Models/Client.md)
  - [ClientDNS](./Models/ClientDNS.md)
  - [ClientDomainValidationStatus](./Models/ClientDomainValidationStatus.md)
- - [DNSOwnerCheck](./Models/DNSOwnerCheck.md)
  - [JobStatus](./Models/JobStatus.md)
  - [JobType](./Models/JobType.md)
  - [KeyType](./Models/KeyType.md)
@@ -48,7 +45,6 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
  - [RevocationRequest](./Models/RevocationRequest.md)
  - [RevocationStatus](./Models/RevocationStatus.md)
  - [SearchCertificateOrder](./Models/SearchCertificateOrder.md)
- - [null_type](./Models/null_type.md)
 
 
 <a name="documentation-for-authorization"></a>

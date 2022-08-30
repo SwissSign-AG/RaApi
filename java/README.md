@@ -1,8 +1,8 @@
 # openapi-java-client
 
 SwissSign RA REST API
-- API version: 2.0.0
-  - Build date: 2022-08-19T14:53:24.706389Z[Etc/UTC]
+- API version: 2.0.207
+  - Build date: 2022-08-30T11:25:36.821265Z[Etc/UTC]
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.207</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -56,7 +56,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "org.openapitools:openapi-java-client:2.0.0"
+     implementation "org.openapitools:openapi-java-client:2.0.207"
   }
 ```
 
@@ -70,7 +70,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-2.0.0.jar`
+* `target/openapi-java-client-2.0.207.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -146,18 +146,14 @@ Class | Method | HTTP request | Description
  - [APIError](docs/APIError.md)
  - [Certificate](docs/Certificate.md)
  - [CertificateOrder](docs/CertificateOrder.md)
- - [CertificateOrderCertificate](docs/CertificateOrderCertificate.md)
  - [CertificateOrderStatus](docs/CertificateOrderStatus.md)
  - [CertificateOrderTask](docs/CertificateOrderTask.md)
- - [CertificateRevocationStatus](docs/CertificateRevocationStatus.md)
  - [Client](docs/Client.md)
  - [ClientDNS](docs/ClientDNS.md)
  - [ClientDomainValidationStatus](docs/ClientDomainValidationStatus.md)
- - [DNSOwnerCheck](docs/DNSOwnerCheck.md)
  - [JobStatus](docs/JobStatus.md)
  - [JobType](docs/JobType.md)
  - [KeyType](docs/KeyType.md)
- - [NullType](docs/NullType.md)
  - [Product](docs/Product.md)
  - [RevocationReason](docs/RevocationReason.md)
  - [RevocationRequest](docs/RevocationRequest.md)

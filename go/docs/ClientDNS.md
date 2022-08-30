@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **Validated** | **bool** | Indicates if the domain is validated | [readonly] 
 **TrustedDomain** | **bool** | Indicates if the domain is a trusted domain (for private PKIs). This setting is linked to the certificate product DNS validation rule for Private PKIs. | 
 **TimeValidated** | Pointer to **NullableTime** | Indicates when the domain got validated | [optional] [readonly] 
-**ValidationMethod** | [**NullableDNSOwnerCheck**](DNSOwnerCheck.md) |  | 
+**ValidationMethod** | **string** | DNS validation type | [readonly] 
 **RandomValue** | Pointer to **NullableString** | The random value to add to the DNS TXT record for the domain | [optional] [readonly] 
 **RandomValueTimeCreated** | Pointer to **time.Time** | Indicates when the random value was created | [optional] [readonly] 
 **RandomValueTimeExpire** | Pointer to **time.Time** | Indicates when the random value expires | [optional] [readonly] 
@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewClientDNS
 
-`func NewClientDNS(uuid string, domain string, domainUnicode string, validated bool, trustedDomain bool, validationMethod NullableDNSOwnerCheck, expired bool, randomValueTimeExpired bool, ) *ClientDNS`
+`func NewClientDNS(uuid string, domain string, domainUnicode string, validated bool, trustedDomain bool, validationMethod string, expired bool, randomValueTimeExpired bool, ) *ClientDNS`
 
 NewClientDNS instantiates a new ClientDNS object
 This constructor will assign default values to properties that have it defined,
@@ -176,34 +176,24 @@ HasTimeValidated returns a boolean if a field has been set.
 UnsetTimeValidated ensures that no value is present for TimeValidated, not even an explicit nil
 ### GetValidationMethod
 
-`func (o *ClientDNS) GetValidationMethod() DNSOwnerCheck`
+`func (o *ClientDNS) GetValidationMethod() string`
 
 GetValidationMethod returns the ValidationMethod field if non-nil, zero value otherwise.
 
 ### GetValidationMethodOk
 
-`func (o *ClientDNS) GetValidationMethodOk() (*DNSOwnerCheck, bool)`
+`func (o *ClientDNS) GetValidationMethodOk() (*string, bool)`
 
 GetValidationMethodOk returns a tuple with the ValidationMethod field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetValidationMethod
 
-`func (o *ClientDNS) SetValidationMethod(v DNSOwnerCheck)`
+`func (o *ClientDNS) SetValidationMethod(v string)`
 
 SetValidationMethod sets ValidationMethod field to given value.
 
 
-### SetValidationMethodNil
-
-`func (o *ClientDNS) SetValidationMethodNil(b bool)`
-
- SetValidationMethodNil sets the value for ValidationMethod to be an explicit nil
-
-### UnsetValidationMethod
-`func (o *ClientDNS) UnsetValidationMethod()`
-
-UnsetValidationMethod ensures that no value is present for ValidationMethod, not even an explicit nil
 ### GetRandomValue
 
 `func (o *ClientDNS) GetRandomValue() string`
