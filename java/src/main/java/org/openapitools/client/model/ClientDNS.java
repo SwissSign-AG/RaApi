@@ -50,7 +50,7 @@ import org.openapitools.client.JSON;
 /**
  * ClientDNS
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-30T11:25:36.821265Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-09-05T06:42:10.771388Z[Etc/UTC]")
 public class ClientDNS {
   public static final String SERIALIZED_NAME_UUID = "uuid";
   @SerializedName(SERIALIZED_NAME_UUID)
