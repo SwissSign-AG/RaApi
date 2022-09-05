@@ -49,7 +49,7 @@ __/v2/jwt/{userName}__
 
 Helper method to generate a `JWT` for authenticating subsequent calls.
 
-The generated JWT has a valid of 8 hours. If you plan to generate the JWT
+The generated JWT has a validity of 8 hours. If you plan to generate the JWT
 yourself, you need to set the following attributes and `HMAC256` sign the
 JWT with your API Key.
              
@@ -67,7 +67,7 @@ __Prerequisites__
 This method requires a valid RA Operator account and API Key. The API Key is
 obtained from your RA Operator 
 user account (_requires permissions to manage API Keys. Login to your RA
-Account and from the 'My Account' generate an API Key_) or is provided to
+Account and retrieve the API Key from 'My Account'_) or is provided to
 you via your CA Operator.
              
 __Example__
@@ -268,20 +268,15 @@ curl -X 'POST' \
 Client domain owner check management is available to the RA Operator API for
 Public Trust domain validation.
 
- Edit/Delete: For Private Trust, the domain owner check management is handled by the CA Operator by setting private domain validation rules on the certificte products. Private Trust domain owner check validation do not necessarely require _dns-01_ or _https-01_ domain validation.
-
-
 Using the RA Operator API for Public Trust domain validation, you can
 register domain names for clients which require domain 
-owner check validation based on _dns-01_ only. You generate tokens for the
+owner check validation based on DNS only. You generate tokens for the
 client domain names you register as TXT records on the DNS server.
 
 The generated tokens are valid for a 30 days period during which you can
-issue certificates for the corresponding client
+enter them in the DNS TXT record in order to proof the ownership of the according domain.
 
-domain names.
-
-For example, registering a client domain _déjà.vu.com_ for doman owner check
+For example, registering a client domain _déjà.vu.com_ for domain owner check
 pre validation would generate
 
 a token _swiss-pki=CTvhWIvNCuEjIynG574gD5Jeopo_ to register in the DNS with
@@ -432,7 +427,7 @@ attribute information
 
 |Attributes    | Value/description                                                                                              |
 |--------------|----------------------------------------------------------------------------------------------------------------|
-|uuid          |A correlation UUID linked to the server error code. You can
+|uuid          |A correlation UUID (Universally Unique Identifer), i.e. a unique identifier for the server error code. You can
 use this correlation value when contacting support. |             
 |errorCode     |An error code represented in the form _<module.section.error>_ as in _<001.002.0003>_                           |
 |errorMessages |A list of error messages |
@@ -467,7 +462,7 @@ use this correlation value when contacting support. |
 
 |Error codes                  |Code|
 |-----------------------------|----|
-|AUTHENTICAION                | 0223|             
+|AUTHENTICATION               | 0223|             
 |ACCESS_DENIED                | 0224|             
 |RUNTIME                      | 0225|             
 |VALIDATION                   | 0226|             
