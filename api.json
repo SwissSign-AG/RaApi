@@ -4,39 +4,40 @@
       "RevocationReason": {
         "type": "string",
         "enum": [
-          "UNUSED",
-          "KEY_COMPROMISE",
-          "C_A_COMPROMISE",
-          "AFFILIATION_CHANGED",
-          "SUPERSEDED",
-          "CESSATION_OF_OPERATION",
-          "CERTIFICATE_HOLD",
-          "REMOVE_FROM_CRL",
-          "PRIVILEGE_WITHDRAWN",
-          "A_A_COMPROMISE"
+          "unused",
+          "keyCompromise",
+          "cACompromise",
+          "affiliationChanged",
+          "superseded",
+          "cessationOfOperation",
+          "certificateHold",
+          "removeFromCRL",
+          "privilegeWithdrawn",
+          "aACompromise"
         ],
         "nullable": false,
         "readOnly": true,
         "description": "Revocation reason",
-        "example": "UNUSED"
+        "example": "unused"
       },
       "ClientDomainValidationStatus": {
         "type": "string",
         "readOnly": true,
         "enum": [
-          "PENDING",
-          "EXPIRED",
-          "VALID",
-          "NOT_VALIDATED"
+          "pending",
+          "expired",
+          "valid",
+          "not_validated"
         ],
         "nullable": false,
         "description": "Status of the domain pre validation",
-        "example": "NOT_VALIDATED"
+        "example": "not_validated"
       },
       "RevocationRequest": {
         "type": "object",
         "required": [
           "serialNumber",
+          "revocationReason",
           "issuerName"
         ],
         "properties": {
@@ -45,6 +46,20 @@
             "nullable": false,
             "description": "Certificate serial number (Big Integer HEX encoded)",
             "example": "3893409CB666E1F092B7B6F28E1EAF4582AA7F21"
+          },
+          "revocationReason": {
+            "type": "string",
+            "enum": [
+              "unused",
+              "keyCompromise",
+              "affiliationChanged",
+              "superseded",
+              "cessationOfOperation",
+              "privilegeWithdrawn"
+            ],
+            "nullable": false,
+            "description": "Revocation reason",
+            "example": "unused"
           },
           "issuerName": {
             "type": "string",
@@ -59,27 +74,27 @@
         "readOnly": true,
         "nullable": false,
         "description": "Key generation type",
-        "example": "RSA_4096",
+        "example": "rsa_2048",
         "enum": [
-          "RSA_2048",
-          "RSA_3072",
-          "RSA_4096",
-          "RSA_8192",
-          "EC_secp224k1",
-          "EC_secp224r1",
-          "EC_secp256k1",
-          "EC_secp256r1",
-          "EC_secp384r1",
-          "EC_secp521r1",
-          "EC_x962p239v1",
-          "EC_x962p239v2",
-          "EC_x962p239v3",
-          "EC_brainpool224r1",
-          "EC_brainpool256r1",
-          "EC_brainpool320r1",
-          "EC_brainpool384r1",
-          "EC_brainpool512r1",
-          "EC_frp256v1"
+          "rsa_2048",
+          "rsa_3072",
+          "rsa_4096",
+          "rsa_8192",
+          "ec_secp224k1",
+          "ec_secp224r1",
+          "ec_secp256k1",
+          "ec_secp256r1",
+          "ec_secp384r1",
+          "ec_secp521r1",
+          "ec_x962p239v1",
+          "ec_x962p239v2",
+          "ec_x962p239v3",
+          "ec_brainpool224r1",
+          "ec_brainpool256r1",
+          "ec_brainpool320r1",
+          "ec_brainpool384r1",
+          "ec_brainpool512r1",
+          "ec_frp256v1"
         ]
       },
       "Product": {
@@ -124,7 +139,11 @@
             "type": "string",
             "enum": [
               "PKCS10",
-              "PKCS12"
+              "PKCS12",
+              "PKCS12withPIN",
+              "PKCS10or12withPIN",
+              "HSM",
+              "CNG"
             ],
             "readOnly": true,
             "nullable": false,
@@ -197,25 +216,25 @@
         "type": "string",
         "readOnly": true,
         "enum": [
-          "NEW",
-          "KEY_VALIDATION",
-          "PRE_VALIDATION",
-          "GENERATE_TBS",
-          "PENDING_AUTH",
-          "PRE_ISSUE",
-          "ISSUE",
-          "POST_VALIDATION",
-          "FINALIZE_ISSUANCE",
-          "ISSUED",
-          "REVOKED",
-          "FAILED",
-          "REJECTED",
-          "PENDING_CSR_RENEWAL",
-          "UNKNOWN"
+          "new",
+          "key_validation",
+          "pre_validation",
+          "generate_tbs",
+          "pending_auth",
+          "pre_issue",
+          "issue",
+          "post_validation",
+          "finalize_issuance",
+          "issued",
+          "revoked",
+          "failed",
+          "rejected",
+          "pending_csr_renewal",
+          "unknown"
         ],
         "nullable": false,
         "description": "Status of the certificate Order",
-        "example": "ISSUED"
+        "example": "issued"
       },
       "SearchCertificateOrder": {
         "type": "object",
@@ -339,7 +358,11 @@
             "example": "2022-01-12T23:20:50.52Z"
           },
           "validationMethod": {
-            "$ref": "#/components/schemas/DNSOwnerCheck"
+            "type": "string",
+            "nullable": false,
+            "readOnly": true,
+            "description": "DNS validation type",
+            "example": "cabdns"
           },
           "randomValue": {
             "type": "string",
@@ -402,68 +425,55 @@
         "type": "string",
         "readOnly": true,
         "enum": [
-          "WAITING",
-          "PENDING",
-          "PROCESSING",
-          "SUCCESS",
-          "FAILED",
-          "SCHEDULE_REQUEST",
-          "SCHEDULE_RESPONSE",
-          "RETRY",
-          "UNKNOWN"
+          "waiting",
+          "pending",
+          "processing",
+          "success",
+          "failed",
+          "schedule_request",
+          "schedule_response",
+          "retry",
+          "connection_or_channel_closed",
+          "unknown"
         ],
         "nullable": false,
         "description": "Status of the certificate Order Task",
-        "example": "SUCCESS"
-      },
-      "DNSOwnerCheck": {
-        "type": "string",
-        "readOnly": true,
-        "enum": [
-          "CABDNS",
-          "CABHTTP",
-          "CONSTRUCTEDEMAIL",
-          "EMAILCONFIRMATION",
-          "UNKNOWN"
-        ],
-        "nullable": true,
-        "description": "Type of DNS owner check method",
-        "example": "CABDNS"
+        "example": "success"
       },
       "JobType": {
         "type": "string",
         "readOnly": true,
         "enum": [
-          "ISSUE_SUBMIT_CERTIFICATE_ORDER_JOB",
-          "ISSUE_CERTIFICATE_RENEWAL_VALIDATION_JOB",
-          "ISSUE_KEY_VALIDATION_JOB",
-          "ISSUE_PRE_VALIDATION_JOB",
-          "ISSUE_GENERATE_TBS_JOB",
-          "ISSUE_POLICY_VALIDATION_JOB",
-          "ISSUE_CAA_CHECK_VALIDATION_JOB",
-          "ISSUE_DOMAIN_OWNER_CHECK_VALIDATION_JOB",
-          "ISSUE_END_USER_EMAIL_VALIDATION_JOB",
-          "ISSUE_PRE_LINTING_JOB",
-          "ISSUE_PRE_ISSUE_CERTIFICATE_JOB",
-          "ISSUE_CT_LOG_PRE_CERT_PUBLICATION_JOB",
-          "ISSUE_ISSUE_CERTIFICATE_JOB",
-          "ISSUE_POST_ISSUE_CERTIFICATE_JOB",
-          "ISSUE_FINALIZE_ISSUE_CERTIFICATE_JOB",
-          "ISSUE_POST_LINTING_CERTIFICATE_JOB",
-          "PUBLISH_POST_CERTIFICATE_JOB",
-          "ISSUE_CT_LOG_PUBLICATION_JOB",
-          "ISSUE_AUTHORIZATION_JOB",
-          "ISSUE_NOTIFY_ISSUED_JOB",
-          "ISSUE_NOTIFY_RENEWAL_JOB",
-          "ISSUE_UPDATE_RENEWAL_JOB",
-          "ISSUE_REVOKE_RENEWED_CERTIFICATE_JOB",
-          "ISSUE_NOTIFY_P12_RETRIEVAL_JOB",
-          "ISSUE_NOTIFY_HSM_RETRIEVAL_JOB",
-          "ISSUE_SET_P12_PIN_JOB"
+          "SubmitCertificateOrderJob",
+          "CertificateRenewalValidationJob",
+          "KeyValidationJob",
+          "PreValidationParentJob",
+          "GenerateTBSJob",
+          "PolicyValidationJob",
+          "CAACheckValidationJob",
+          "DomainOwnerCheckValidationJob",
+          "EndUserEmailValidationJob",
+          "PreLintingCertificateJob",
+          "PreIssueCertificateParentJob",
+          "CTLogPrecertPublicationJob",
+          "IssueCertificateJob",
+          "PostIssueCertificateParentJob",
+          "FinalizeIssueCertificateParentJob",
+          "PostLintingCertificateJob",
+          "PostPublishCertificateJob",
+          "CTLogPublicationJob",
+          "CertificateOrderAuthorizationJob",
+          "NotifyIssuedCertificateJob",
+          "NotifyRenewalCertificateJob",
+          "UpdateRenewalCertificateJob",
+          "RevokeRenewedCertificateJob",
+          "NotifyRenewalP12CertificateJob",
+          "NotifyRenewalHsmCertificateJob",
+          "SetP12PinJob"
         ],
         "nullable": false,
         "description": "Certificate Order Task Type",
-        "example": "ISSUE_GENERATE_TBS_JOB"
+        "example": "CTLogPublicationJob"
       },
       "CertificateOrder": {
         "type": "object",
@@ -510,15 +520,9 @@
           },
           "certificate": {
             "readOnly": true,
+            "nullable": true,
             "description": "Certificate reference",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/Certificate"
-              },
-              {
-                "$ref": "#/components/schemas/null_type"
-              }
-            ]
+            "$ref": "#/components/schemas/Certificate"
           },
           "issuedBy": {
             "type": "string",
@@ -638,13 +642,6 @@
             "example": "some@email.org"
           }
         }
-      },
-      "null_type": {
-        "title": "OpenAPI 3.0 null-type ref",
-        "description": "for adding nullability to a ref",
-        "enum": [
-          null
-        ]
       },
       "APIError": {
         "type": "object",
@@ -771,7 +768,6 @@
           },
           "certificate": {
             "type": "string",
-            "format": "binary",
             "readOnly": true,
             "nullable": false,
             "description": "base64 encoded DER certificate",
@@ -779,15 +775,9 @@
           },
           "revocationStatus": {
             "readOnly": true,
+            "nullable": true,
             "description": "Certificate revocation",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/RevocationStatus"
-              },
-              {
-                "$ref": "#/components/schemas/null_type"
-              }
-            ]
+            "$ref": "#/components/schemas/RevocationStatus"
           }
         }
       }
@@ -843,7 +833,7 @@
           "200": {
             "description": "success",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
                   "type": "string",
                   "readOnly": true
@@ -1099,8 +1089,9 @@
         ],
         "requestBody": {
           "description": "Certificate Request in Base64 with start/end beacon",
+          "required": true,
           "content": {
-            "text/plain": {
+            "application/json": {
               "schema": {
                 "type": "string"
               },
@@ -1192,7 +1183,7 @@
           "200": {
             "description": "success",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CertificateOrderStatus"
                 }
@@ -1587,6 +1578,7 @@
         ],
         "requestBody": {
           "description": "Certificate references to revoke",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -2240,7 +2232,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.0.0",
+    "version": "2.0.207",
     "contact": {
       "name": "SwissSign Support",
       "email": "opensource@swisssign.com"

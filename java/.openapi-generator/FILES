@@ -1,5 +1,6 @@
 .github/workflows/maven.yml
 .gitignore
+.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -66,3 +67,20 @@ src/main/java/org/openapitools/client/model/RevocationReason.java
 src/main/java/org/openapitools/client/model/RevocationRequest.java
 src/main/java/org/openapitools/client/model/RevocationStatus.java
 src/main/java/org/openapitools/client/model/SearchCertificateOrder.java
+src/test/java/org/openapitools/client/api/ApiRegistrationApiTest.java
+src/test/java/org/openapitools/client/model/APIErrorTest.java
+src/test/java/org/openapitools/client/model/CertificateOrderStatusTest.java
+src/test/java/org/openapitools/client/model/CertificateOrderTaskTest.java
+src/test/java/org/openapitools/client/model/CertificateOrderTest.java
+src/test/java/org/openapitools/client/model/CertificateTest.java
+src/test/java/org/openapitools/client/model/ClientDNSTest.java
+src/test/java/org/openapitools/client/model/ClientDomainValidationStatusTest.java
+src/test/java/org/openapitools/client/model/ClientTest.java
+src/test/java/org/openapitools/client/model/JobStatusTest.java
+src/test/java/org/openapitools/client/model/JobTypeTest.java
+src/test/java/org/openapitools/client/model/KeyTypeTest.java
+src/test/java/org/openapitools/client/model/ProductTest.java
+src/test/java/org/openapitools/client/model/RevocationReasonTest.java
+src/test/java/org/openapitools/client/model/RevocationRequestTest.java
+src/test/java/org/openapitools/client/model/RevocationStatusTest.java
+src/test/java/org/openapitools/client/model/SearchCertificateOrderTest.java

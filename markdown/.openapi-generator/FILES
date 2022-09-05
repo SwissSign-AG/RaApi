@@ -1,3 +1,4 @@
+.openapi-generator-ignore
 Apis/ApiRegistrationApi.md
 Models/APIError.md
 Models/Certificate.md
