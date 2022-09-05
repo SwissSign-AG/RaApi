@@ -53,18 +53,18 @@ The generated JWT has a validity of 8 hours. If you plan to generate the JWT
 yourself, you need to set the following attributes and `HMAC256` sign the
 JWT with your API Key.
              
-|JWT attribute       |Value/description|
-|--------------------|-----------------|
-|Issuer      (_iss_) |Swiss PKI        |             
-|Audience    (_aud_) |REST API         |             
-|Subject     (_sub_) |_user account_   |             
-|Issued at   (_iat_) |Date/Time UTC    |             
-|Not before  (_nbf_) |Date/Time UTC    |             
-|Expires at  (_exp_) |Date/Time UTC    |
+|JWT attribute       |Value            |Description      |
+|--------------------|-----------------|-----------------|
+|Issuer      (_iss_) |Swiss PKI        |The JWT was issued by the SwissSign CA platform.|
+|Audience    (_aud_) |REST API         |The JWT is to be consumed by the OpenAPI v3 RA API.|
+|Subject     (_sub_) |_user account_   |The (technical) account the token was issued to.|             
+|Issued at   (_iat_) |Date/Time UTC    |issueance date of the token|             
+|Not before  (_nbf_) |Date/Time UTC    |Start date of validity|            
+|Expires at  (_exp_) |Date/Time UTC    |End date of validity|
              
 __Prerequisites__
 
-This method requies a valid RA Operator account and API Key. The API Key is
+This method requires a valid RA Operator account and API Key. The API Key is
 obtained from your RA Operator 
 user account (_requires permissions to manage API Keys. Login to your RA
 Account and retrieve the API Key from 'My Account'_) or is provided to
@@ -87,7 +87,7 @@ curl -X 'POST' \
 
 __/v2/clients__
 
-Search for Clients and their associated prodcuts. Returns a list of all
+Search for Clients and their associated products. Returns a list of all
 available Clients and associated certificate products you can issue.
 
 Each client product has a unique product reference (pma-_uuid_) which you
@@ -182,6 +182,7 @@ Retrieve the Certificate Order status given an order reference (ord-_uuid_).
 Certificate order processing is an asynchronous process and the issuance of
 a certificate may enter wait states until all validation rules (e.g. DNS
 validation) are successfully executed.
+Please refer to chapter 3.5 of the SwissSign RA Operator Handbook for a list of certificate order statuses and their descriptions.
 
 __Example__
 
@@ -201,7 +202,7 @@ curl -X 'POST' \
 
 __/v2/orders__
 
-Retrieve the Certificate Order  given an order reference (ord-_uuid_). 
+Retrieve the Certificate Order given an order reference (ord-_uuid_). 
 
 __Example__
 

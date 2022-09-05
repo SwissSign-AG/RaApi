@@ -53,7 +53,7 @@ import org.openapitools.client.JSON;
 /**
  * SearchCertificateOrder
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-09-05T07:02:52.920964Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-09-05T07:08:13.714957Z[Etc/UTC]")
 public class SearchCertificateOrder {
   public static final String SERIALIZED_NAME_ORDER_REFERENCE = "orderReference";
   @SerializedName(SERIALIZED_NAME_ORDER_REFERENCE)
