@@ -50,7 +50,7 @@ import org.openapitools.client.JSON;
 /**
  * APIError
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-09-05T06:42:10.771388Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-09-05T06:43:22.218632Z[Etc/UTC]")
 public class APIError {
   public static final String SERIALIZED_NAME_UUID = "uuid";
   @SerializedName(SERIALIZED_NAME_UUID)
