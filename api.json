@@ -54,8 +54,7 @@
               "keyCompromise",
               "affiliationChanged",
               "superseded",
-              "cessationOfOperation",
-              "privilegeWithdrawn"
+              "cessationOfOperation"
             ],
             "nullable": false,
             "description": "Revocation reason",
@@ -2232,7 +2231,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.0.207",
+    "version": "2.0.209",
     "contact": {
       "name": "SwissSign Support",
       "email": "opensource@swisssign.com"

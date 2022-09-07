@@ -22,7 +22,6 @@
 | AFFILIATIONCHANGED | &quot;affiliationChanged&quot; |
 | SUPERSEDED | &quot;superseded&quot; |
 | CESSATIONOFOPERATION | &quot;cessationOfOperation&quot; |
-| PRIVILEGEWITHDRAWN | &quot;privilegeWithdrawn&quot; |
 
 
 
