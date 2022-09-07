@@ -11,7 +11,7 @@
 """
 
 
-__version__ = "2.0.0"
+__version__ = "1.0.0"
 
 # import ApiClient
 from swisssign_ra_api.v2.api_client import ApiClient
