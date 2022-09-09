@@ -148,5 +148,5 @@ Each of these functions takes a value of the given basic type and returns a poin
 
 ## Author
 
-opensource@swisssign.com
+ssc@swisssign.com
 
