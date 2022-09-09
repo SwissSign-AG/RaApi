@@ -150,7 +150,7 @@ Class | Method | HTTP request | Description
 
 ## Author
 
-opensource@swisssign.com
+ssc@swisssign.com
 
 
 ## Notes for Large OpenAPI documents
