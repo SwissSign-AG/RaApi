@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.0.207
+  version: 2.0.209
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch/v2
@@ -1020,7 +1020,6 @@ components:
           - affiliationChanged
           - superseded
           - cessationOfOperation
-          - privilegeWithdrawn
           example: unused
           nullable: false
           type: string
