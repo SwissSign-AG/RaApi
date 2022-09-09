@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   contact:
-    email: opensource@swisssign.com
+    email: ssc@swisssign.com
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
