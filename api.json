@@ -782,10 +782,10 @@
       }
     },
     "securitySchemes": {
-      "ApiKeyAuth": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "Authorization"
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
@@ -903,7 +903,7 @@
         "description": "Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries.\nThe Client information includes the list of assigned certificate products.\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -986,7 +986,7 @@
         "description": "Get a client given its reference UUID\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1068,7 +1068,7 @@
         "description": "Issue a certificate based on the Product reference (CSR)\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1162,7 +1162,7 @@
         "description": "Retrieve a certificate order status given the order reference identifier.\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1242,7 +1242,7 @@
         "description": "Retrieve a certificate order given the order reference identifier.\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1322,7 +1322,7 @@
         "description": "Retrieve the certificate chain base64 encoded text. First element in list is leaf certificate, last element is Root certificate.\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1406,7 +1406,7 @@
         "description": "Retrieve a certificate order tasks given the order reference identifier.\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1490,7 +1490,7 @@
         "description": "Search for Certificate Orders given search parameters\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "requestBody": {
@@ -1572,7 +1572,7 @@
         "description": "Revoke one or more certificates\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "requestBody": {
@@ -1646,7 +1646,7 @@
         "description": "Retrieve the list of pre validated domains and their status for the selected client\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1732,7 +1732,7 @@
         "description": "Create and issue domains pre validation tokens for the selected client\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1835,7 +1835,7 @@
         "description": "Get pre validatied domain token for the selected identifier\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1917,7 +1917,7 @@
         "description": "Pre validate domain token for the selected identifier\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -1999,7 +1999,7 @@
         "description": "Delete pre validated domain\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -2074,7 +2074,7 @@
         "description": "Reset pre validated domain token\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -2156,7 +2156,7 @@
         "description": "Delete pre validated domain token\n",
         "security": [
           {
-            "ApiKeyAuth": []
+            "BearerAuth": []
           }
         ],
         "parameters": [
@@ -2231,7 +2231,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.0.214",
+    "version": "2.0.223",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"

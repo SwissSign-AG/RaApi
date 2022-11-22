@@ -50,10 +50,8 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 <a name="documentation-for-authorization"></a>
 ## Documentation for Authorization
 
-<a name="ApiKeyAuth"></a>
-### ApiKeyAuth
+<a name="BearerAuth"></a>
+### BearerAuth
 
-- **Type**: API key
-- **API key parameter name**: Authorization
-- **Location**: HTTP header
+- **Type**: HTTP basic authentication
 

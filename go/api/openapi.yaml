@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.0.214
+  version: 2.0.223
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch/v2
@@ -122,7 +122,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Search Clients available to the RA Operator
       tags:
       - api_registration
@@ -176,7 +176,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get a client given its reference Id
       tags:
       - api_registration
@@ -240,7 +240,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Issue certificate using CSR
       tags:
       - api_registration
@@ -292,7 +292,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Retrieve a Certificate Order status given the Order reference
       tags:
       - api_registration
@@ -344,7 +344,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Retrieve a Certificate Order given the Order reference
       tags:
       - api_registration
@@ -399,7 +399,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Retrieve the certificate chain for the given Order reference
       tags:
       - api_registration
@@ -454,7 +454,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Retrieve a Certificate Order Tasks given the Order reference
       tags:
       - api_registration
@@ -505,7 +505,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Search Certificate Orders
       tags:
       - api_registration
@@ -551,7 +551,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Revoke certificates
       tags:
       - api_registration
@@ -608,7 +608,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get the list of prevalidated domains for the selected client given
         its reference Id
       tags:
@@ -678,7 +678,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Register new prevalidated domains for the selected client given its
         reference Id
       tags:
@@ -733,7 +733,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get prevalidated domains for the selected domain reference Id
       tags:
       - api_registration
@@ -787,7 +787,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Prevalidate domain for the selected domain reference Id
       tags:
       - api_registration
@@ -837,7 +837,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Delete prevalidated domain for the selected reference Id
       tags:
       - api_registration
@@ -891,7 +891,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Reset prevalidated domain token for the selected reference Id
       tags:
       - api_registration
@@ -945,7 +945,7 @@ paths:
                 $ref: '#/components/schemas/APIError'
           description: Internal server error
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Delete prevalidated domain token for the selected reference Id
       tags:
       - api_registration
@@ -1738,7 +1738,7 @@ components:
       - userSecret
       type: object
   securitySchemes:
-    ApiKeyAuth:
-      in: header
-      name: Authorization
-      type: apiKey
+    BearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http

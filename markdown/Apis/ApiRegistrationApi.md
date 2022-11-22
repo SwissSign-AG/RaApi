@@ -44,7 +44,7 @@ Register new prevalidated domains for the selected client given its reference Id
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -71,7 +71,7 @@ null (empty response body)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -98,7 +98,7 @@ Delete prevalidated domain token for the selected reference Id
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -125,7 +125,7 @@ Retrieve the certificate chain for the given Order reference
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -152,7 +152,7 @@ Retrieve a Certificate Order given the Order reference
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -179,7 +179,7 @@ Retrieve a Certificate Order status given the Order reference
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -206,7 +206,7 @@ Retrieve a Certificate Order Tasks given the Order reference
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -233,7 +233,7 @@ Search Certificate Orders
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -260,7 +260,7 @@ Get a client given its reference Id
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -287,7 +287,7 @@ Get prevalidated domains for the selected domain reference Id
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -314,7 +314,7 @@ Get the list of prevalidated domains for the selected client given its reference
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -342,7 +342,7 @@ Issue certificate using CSR
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -397,7 +397,7 @@ Reset prevalidated domain token for the selected reference Id
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -424,7 +424,7 @@ null (empty response body)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -451,7 +451,7 @@ Search Clients available to the RA Operator
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -478,7 +478,7 @@ Prevalidate domain for the selected domain reference Id
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 

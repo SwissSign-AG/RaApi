@@ -32,7 +32,7 @@ Create and issue domains pre validation tokens for the selected client
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -52,11 +52,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -90,7 +89,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -119,7 +118,7 @@ Delete pre validated domain
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -138,11 +137,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -171,7 +169,7 @@ void (empty response body)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -200,7 +198,7 @@ Delete pre validated domain token
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -220,11 +218,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -254,7 +251,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -283,7 +280,7 @@ Retrieve the certificate chain base64 encoded text. First element in list is lea
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -302,11 +299,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -336,7 +332,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -365,7 +361,7 @@ Retrieve a certificate order given the order reference identifier.
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -385,11 +381,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -419,7 +414,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -448,7 +443,7 @@ Retrieve a certificate order status given the order reference identifier.
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -468,11 +463,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -502,7 +496,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -531,7 +525,7 @@ Retrieve a certificate order tasks given the order reference identifier.
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -551,11 +545,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -585,7 +578,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -614,7 +607,7 @@ Search for Certificate Orders given search parameters
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -635,11 +628,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -682,7 +674,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -711,7 +703,7 @@ Get a client given its reference UUID
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -731,11 +723,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -765,7 +756,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -794,7 +785,7 @@ Get pre validatied domain token for the selected identifier
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -814,11 +805,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -848,7 +838,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -877,7 +867,7 @@ Retrieve the list of pre validated domains and their status for the selected cli
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -897,11 +887,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -931,7 +920,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -960,7 +949,7 @@ Issue a certificate based on the Product reference (CSR)
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -980,11 +969,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -1021,7 +1009,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1123,7 +1111,7 @@ Reset pre validated domain token
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -1143,11 +1131,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -1177,7 +1164,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1206,7 +1193,7 @@ Revoke one or more certificates
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -1226,11 +1213,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -1265,7 +1251,7 @@ void (empty response body)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1294,7 +1280,7 @@ Search for clients for which the RA Operator can issue, revoke or pre validate D
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -1314,11 +1300,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -1349,7 +1334,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1378,7 +1363,7 @@ Pre validate domain token for the selected identifier
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
 
 ```python
 import time
@@ -1398,11 +1383,10 @@ configuration = swisssign_ra_api.v2.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
 
 # Enter a context with an instance of the API client
 with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
@@ -1432,7 +1416,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
