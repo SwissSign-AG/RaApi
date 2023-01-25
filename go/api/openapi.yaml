@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.0.224
+  version: 2.0.230
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch/v2
@@ -1177,8 +1177,8 @@ components:
         serialNumber: 3893409CB*66E1F09?
         clientReferences:
         - cli-123e4567-e89b-12d3-a456-426614174000
-        startAfter: 2002-03-15T00:00:00.000+00:00
-        startBefore: 2002-01-18T00:00:00.000+00:00
+        startAfter: 2000-01-23
+        startBefore: 2000-01-23
         orderReference: ord-f0725b50-c533-4802-a844-de57bfb7a80e
         orderStatus:
         - issued
@@ -1221,13 +1221,11 @@ components:
           type: array
         startAfter:
           description: End Validity not starting after Date
-          example: 2002-03-15
           format: date
           nullable: true
           type: string
         startBefore:
           description: Validity not starting before Date
-          example: 2002-01-18
           format: date
           nullable: true
           type: string

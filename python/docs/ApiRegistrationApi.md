@@ -647,8 +647,8 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
             RevocationReason("unused"),
         ],
         client_references=["cli-123e4567-e89b-12d3-a456-426614174000"],
-        start_after=dateutil_parser('Fri Mar 15 00:00:00 UTC 2002').date(),
-        start_before=dateutil_parser('Fri Jan 18 00:00:00 UTC 2002').date(),
+        start_after=dateutil_parser('1970-01-01').date(),
+        start_before=dateutil_parser('1970-01-01').date(),
         attribute="s?me@emai* or 2.5.4.r or streetAddress",
     ) # SearchCertificateOrder | Certificate order search options
 
