@@ -116,23 +116,14 @@ curl -X 'POST' \
 
 __/v2/client/{clientReference}__
 
-Search for Clients and their associated prodcuts. Returns a list of all
-available Clients and associated certificate products you can issue.
+Fetch a client description by reference, including the assigned products.
 
-Each client product has a unique product reference (pma-_uuid_) which you
-reference for issuing certificates for the selected certificate product.
-
-You can also access a client directly by using the client reference
-(cli-_uuid_).
-
-Optionally, you may search for specific clients by providing a search
-parameter value.
 
 __Example__
 
 ```
 curl -X 'POST' \
-'https://api.ra.swisssign.ch/v2/clients?search=Client%2A' \
+'https://api.ra.swisssign.ch/v2/client/cli-xxxx' \
 -H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._
 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
@@ -208,7 +199,7 @@ __Example__
 
 ```
 curl -X 'POST' \
-'https://api.ra.swisssign.ch/v2/orders' \
+'https://api.ra.swisssign.ch/v2/order/order-uuid' \
 -H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._
 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
@@ -224,7 +215,7 @@ Retrieve a certificate chain given its Order reference identifier (ord-uuid)
 
 __/v2/order/{orderReference}/certificate/chain__
 
-Retrieve the certificate chain in PKCS#7 base64 encoded given an order reference (ord-uuid).
+Retrieve the certificate chain as a list of certificates, given an order reference (ord-uuid).
 
 __Example__
 
@@ -256,6 +247,7 @@ curl -X 'POST' \
       {
         "serialNumber": "3893409CB666E1F092B7B6F28E1EAF4582AA7F21",
         "issuerName": "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+        "revocationReason": "superseded"
       }
     ]' \
 | python -m json.tool
