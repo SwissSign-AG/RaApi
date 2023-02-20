@@ -17,7 +17,7 @@
   * Trigger instant validation: [/v2/client/domain/{prevalidatedDomainReference}/validate](https://github.com/SwissSign-AG/RaApi#validate-a-client-domain)
 * Generate private key and CSR
 * Send CSR through API for the desired product: [/v2/issue/csr/{productReference}](https://github.com/SwissSign-AG/RaApi#issue-a-certificate-using-a-csr-for-the-selected-certificate-product-identifier-pma-uuid) to create a Certificate Order.
-* Poll Order Status until "ISSUED" or "FAILED": [/v2/order/{orderReference}/status](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-order-status-given-its-reference-identifier-ord-uuid)
+* Poll Order Status until "issued" or "failed": [/v2/order/{orderReference}/status](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-order-status-given-its-reference-identifier-ord-uuid)
 * Download Certificate with chain as pkcs7: [/v2/order/{orderReference}/certificate/chain](#todo)
 
 ## Table of Contents
@@ -55,7 +55,7 @@ JWT with your API Key.
              
 |JWT attribute       |Value            |Description      |
 |--------------------|-----------------|-----------------|
-|Issuer      (_iss_) |Swiss PKI        |The JWT was issued by the SwissSign CA platform.|
+|Issuer      (_iss_) |SwissPKI         |The JWT was issued by the SwissSign CA platform.|
 |Audience    (_aud_) |REST API         |The JWT is to be consumed by the OpenAPI v3 RA API.|
 |Subject     (_sub_) |_user account_   |The (technical) account the token was issued to.|             
 |Issued at   (_iat_) |Date/Time UTC    |issueance date of the token|             
@@ -75,7 +75,7 @@ __Example__
 ```
 curl -X 'POST' \
 'https://api.ra.swisssign.ch/v2/jwt/service.account' \
--H 'accept: text/plain' \
+-H 'accept: application/json' \
 -H 'Content-Type: application/x-www-form-urlencoded' \
 -d
 'userSecret=n1dNUaDMoOJSG4AkMlMNnOR5C6LtGNm0dfeSdPKy8x1ddyhWqJCmuekK6k41j88w'
@@ -116,7 +116,7 @@ curl -X 'POST' \
 
 __/v2/client/{clientReference}__
 
-Search for Clients and their associated prodcuts. Returns a list of all
+Search for Clients and their associated products. Returns a list of all
 available Clients and associated certificate products you can issue.
 
 Each client product has a unique product reference (pma-_uuid_) which you
@@ -190,7 +190,7 @@ __Example__
 curl -X 'POST' \
 'https://api.ra.swisssign.ch/v2/order/ord-157e726e-cf28-44cc-bfbe-485c0a5abe7b/status'
 \
--H 'accept: text/json' \
+-H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._
 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk' \
 | python -m json.tool
@@ -231,7 +231,7 @@ __Example__
 ```
 curl -X 'POST' \
 'https://host:port/api/ra/v2/order/ord-157e726e-cf28-44cc-bfbe-485c0a5abe7b/certificate/chain' \
--H 'accept: text/json' \
+-H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._ 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
 ```
 
