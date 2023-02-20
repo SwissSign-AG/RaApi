@@ -116,23 +116,14 @@ curl -X 'POST' \
 
 __/v2/client/{clientReference}__
 
-Search for Clients and their associated prodcuts. Returns a list of all
-available Clients and associated certificate products you can issue.
+Fetch a client description by reference, including the assigned products.
 
-Each client product has a unique product reference (pma-_uuid_) which you
-reference for issuing certificates for the selected certificate product.
-
-You can also access a client directly by using the client reference
-(cli-_uuid_).
-
-Optionally, you may search for specific clients by providing a search
-parameter value.
 
 __Example__
 
 ```
 curl -X 'POST' \
-'https://api.ra.swisssign.ch/v2/clients?search=Client%2A' \
+'https://api.ra.swisssign.ch/v2/client/cli-xxxx' \
 -H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._
 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
