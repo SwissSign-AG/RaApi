@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.231
+API version: 2.1.5
 Contact: ssc@swisssign.com
 */
 
@@ -1667,7 +1667,7 @@ func (a *ApiRegistrationApiService) IssueCertificateExecute(r ApiIssueCertificat
 	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentTypes := []string{"text/plain"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1834,7 +1834,7 @@ func (a *ApiRegistrationApiService) JwtExecute(r ApiJwtRequest) (string, *http.R
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"text/plain", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)

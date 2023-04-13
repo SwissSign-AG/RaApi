@@ -57,5 +57,13 @@
 
 * `SETP12PINJOB` (value: `"SetP12PinJob"`)
 
+* `RAOAUTHORIZECERTIFICATEREVOKEJOB` (value: `"RAOAuthorizeCertificateRevokeJob"`)
+
+* `PUBLISHCERTIFICATEORDERJOB` (value: `"PublishCertificateOrderJob"`)
+
+* `SENDEMAILJOB` (value: `"SendEmailJob"`)
+
+* `REVOKECERTIFICATEJOB` (value: `"RevokeCertificateJob"`)
+
 
 

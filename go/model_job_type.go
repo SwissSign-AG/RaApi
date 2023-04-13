@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.0.231
+API version: 2.1.5
 Contact: ssc@swisssign.com
 */
 
@@ -47,6 +47,10 @@ const (
 	NOTIFY_RENEWAL_P12_CERTIFICATE_JOB JobType = "NotifyRenewalP12CertificateJob"
 	NOTIFY_RENEWAL_HSM_CERTIFICATE_JOB JobType = "NotifyRenewalHsmCertificateJob"
 	SET_P12_PIN_JOB JobType = "SetP12PinJob"
+	RAO_AUTHORIZE_CERTIFICATE_REVOKE_JOB JobType = "RAOAuthorizeCertificateRevokeJob"
+	PUBLISH_CERTIFICATE_ORDER_JOB JobType = "PublishCertificateOrderJob"
+	SEND_EMAIL_JOB JobType = "SendEmailJob"
+	REVOKE_CERTIFICATE_JOB JobType = "RevokeCertificateJob"
 )
 
 // All allowed values of JobType enum
@@ -77,6 +81,10 @@ var AllowedJobTypeEnumValues = []JobType{
 	"NotifyRenewalP12CertificateJob",
 	"NotifyRenewalHsmCertificateJob",
 	"SetP12PinJob",
+	"RAOAuthorizeCertificateRevokeJob",
+	"PublishCertificateOrderJob",
+	"SendEmailJob",
+	"RevokeCertificateJob",
 }
 
 func (v *JobType) UnmarshalJSON(src []byte) error {

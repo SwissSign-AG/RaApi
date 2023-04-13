@@ -871,7 +871,7 @@ MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: text/plain
  - **Accept**: application/json
 
 ### HTTP response details
@@ -940,7 +940,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/json
+ - **Accept**: text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |

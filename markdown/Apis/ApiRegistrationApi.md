@@ -346,7 +346,7 @@ Issue certificate using CSR
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: text/plain
 - **Accept**: application/json
 
 <a name="jwt"></a>
@@ -375,7 +375,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: text/plain, application/json
 
 <a name="resetClientPrevalidatedDomain"></a>
 # **resetClientPrevalidatedDomain**

@@ -55,6 +55,14 @@
 
 * `SET_P12_PIN_JOB` (value: `"SetP12PinJob"`)
 
+* `RAO_AUTHORIZE_CERTIFICATE_REVOKE_JOB` (value: `"RAOAuthorizeCertificateRevokeJob"`)
+
+* `PUBLISH_CERTIFICATE_ORDER_JOB` (value: `"PublishCertificateOrderJob"`)
+
+* `SEND_EMAIL_JOB` (value: `"SendEmailJob"`)
+
+* `REVOKE_CERTIFICATE_JOB` (value: `"RevokeCertificateJob"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
