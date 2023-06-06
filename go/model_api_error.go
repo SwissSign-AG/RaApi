@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.1.5
+API version: 2.2.1
 Contact: ssc@swisssign.com
 */
 

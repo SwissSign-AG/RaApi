@@ -12,8 +12,8 @@
 |**orderStatus** | **List&lt;CertificateOrderStatus&gt;** |  |  [optional] |
 |**revocationReason** | **List&lt;RevocationReason&gt;** |  |  [optional] |
 |**clientReferences** | **List&lt;String&gt;** | Client reference UUID |  [optional] |
-|**startAfter** | **LocalDate** | End Validity not starting after Date |  [optional] |
-|**startBefore** | **LocalDate** | Validity not starting before Date |  [optional] |
+|**startAfter** | **LocalDate** | Certificate Order not starting after Date |  [optional] |
+|**startBefore** | **LocalDate** | Certificate Order not starting before Date |  [optional] |
 |**attribute** | **String** | Any certificate attribute OID or value with optional wildcard attributes ? and/or * |  [optional] |
 
 

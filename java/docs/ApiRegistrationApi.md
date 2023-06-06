@@ -4,7 +4,9 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**addCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#addCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/add/recipients | Add additional recipients to Certificate Order |
 | [**createClientPrevalidatedDomains**](ApiRegistrationApi.md#createClientPrevalidatedDomains) | **POST** /v2/client/domain/{clientReference}/register | Register new prevalidated domains for the selected client given its reference Id |
+| [**deleteCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#deleteCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/delete/recipients | Delete additional recipients to Certificate Order |
 | [**deleteClientPrevalidatedDomain**](ApiRegistrationApi.md#deleteClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/delete | Delete prevalidated domain for the selected reference Id |
 | [**deleteClientPrevalidatedDomainToken**](ApiRegistrationApi.md#deleteClientPrevalidatedDomainToken) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/delete | Delete prevalidated domain token for the selected reference Id |
 | [**getCertificateChain**](ApiRegistrationApi.md#getCertificateChain) | **POST** /v2/order/{orderReference}/certificate/chain | Retrieve the certificate chain for the given Order reference |
@@ -16,12 +18,89 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 | [**getClientPrevalidatedDomain**](ApiRegistrationApi.md#getClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference} | Get prevalidated domains for the selected domain reference Id |
 | [**getClientPrevalidatedDomains**](ApiRegistrationApi.md#getClientPrevalidatedDomains) | **POST** /v2/client/domain/{clientReference}/list | Get the list of prevalidated domains for the selected client given its reference Id |
 | [**issueCertificate**](ApiRegistrationApi.md#issueCertificate) | **POST** /v2/issue/csr/{productReference} | Issue certificate using CSR |
+| [**issueCertificateV22**](ApiRegistrationApi.md#issueCertificateV22) | **POST** /v2/issue | Issue certificate using extended request attributes |
 | [**jwt**](ApiRegistrationApi.md#jwt) | **POST** /v2/jwt/{userName} | Produce a user JWT |
+| [**listCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#listCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients |
+| [**publishCertificate**](ApiRegistrationApi.md#publishCertificate) | **POST** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order |
 | [**resetClientPrevalidatedDomain**](ApiRegistrationApi.md#resetClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id |
 | [**revokeCertificates**](ApiRegistrationApi.md#revokeCertificates) | **POST** /v2/revoke | Revoke certificates |
 | [**searchClients**](ApiRegistrationApi.md#searchClients) | **POST** /v2/clients | Search Clients available to the RA Operator |
+| [**unpublishCertificate**](ApiRegistrationApi.md#unpublishCertificate) | **POST** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order |
 | [**validateClientPrevalidatedDomain**](ApiRegistrationApi.md#validateClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id |
 
+
+<a name="addCertificateOrderAdditionalRecipients"></a>
+# **addCertificateOrderAdditionalRecipients**
+> List&lt;AdditionalRecipient&gt; addCertificateOrderAdditionalRecipients(orderReference, additionalRecipient)
+
+Add additional recipients to Certificate Order
+
+Add additional recipients to Certificate Order. Existing users are skipped. Retuns list of effectively added additional recipients. 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    String orderReference = "ord-f0725b50-c533-4802-a844-de57bfb7a80e"; // String | 
+    List<AdditionalRecipient> additionalRecipient = Arrays.asList(); // List<AdditionalRecipient> | Array of additional recipients
+    try {
+      List<AdditionalRecipient> result = apiInstance.addCertificateOrderAdditionalRecipients(orderReference, additionalRecipient);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#addCertificateOrderAdditionalRecipients");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orderReference** | **String**|  | |
+| **additionalRecipient** | [**List&lt;AdditionalRecipient&gt;**](AdditionalRecipient.md)| Array of additional recipients | |
+
+### Return type
+
+[**List&lt;AdditionalRecipient&gt;**](AdditionalRecipient.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
 
 <a name="createClientPrevalidatedDomains"></a>
 # **createClientPrevalidatedDomains**
@@ -77,6 +156,79 @@ public class Example {
 ### Return type
 
 [**List&lt;ClientDNS&gt;**](ClientDNS.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
+
+<a name="deleteCertificateOrderAdditionalRecipients"></a>
+# **deleteCertificateOrderAdditionalRecipients**
+> List&lt;AdditionalRecipient&gt; deleteCertificateOrderAdditionalRecipients(orderReference, additionalRecipient)
+
+Delete additional recipients to Certificate Order
+
+Delete additional recipients to Certificate Order. Unknown users are skipped. Retuns list of effectively deleted additional recipients. 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    String orderReference = "ord-f0725b50-c533-4802-a844-de57bfb7a80e"; // String | 
+    List<AdditionalRecipient> additionalRecipient = Arrays.asList(); // List<AdditionalRecipient> | Array of additional recipients to delete
+    try {
+      List<AdditionalRecipient> result = apiInstance.deleteCertificateOrderAdditionalRecipients(orderReference, additionalRecipient);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#deleteCertificateOrderAdditionalRecipients");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orderReference** | **String**|  | |
+| **additionalRecipient** | [**List&lt;AdditionalRecipient&gt;**](AdditionalRecipient.md)| Array of additional recipients to delete | |
+
+### Return type
+
+[**List&lt;AdditionalRecipient&gt;**](AdditionalRecipient.md)
 
 ### Authorization
 
@@ -871,7 +1023,78 @@ MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
 
 ### HTTP request headers
 
- - **Content-Type**: text/plain
+ - **Content-Type**: text/plain, application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
+
+<a name="issueCertificateV22"></a>
+# **issueCertificateV22**
+> CertificateOrder issueCertificateV22(issueRequest)
+
+Issue certificate using extended request attributes
+
+Issue a certificate based on the Product reference with extended attributes and CSR 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    IssueRequest issueRequest = new IssueRequest(); // IssueRequest | Issue Request
+    try {
+      CertificateOrder result = apiInstance.issueCertificateV22(issueRequest);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#issueCertificateV22");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **issueRequest** | [**IssueRequest**](IssueRequest.md)| Issue Request | |
+
+### Return type
+
+[**CertificateOrder**](CertificateOrder.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -946,6 +1169,147 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
+
+<a name="listCertificateOrderAdditionalRecipients"></a>
+# **listCertificateOrderAdditionalRecipients**
+> List&lt;AdditionalRecipient&gt; listCertificateOrderAdditionalRecipients(orderReference)
+
+Obtain a list of additional Certificate Order recipients
+
+List additional Certificate Order recipients 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    String orderReference = "ord-f0725b50-c533-4802-a844-de57bfb7a80e"; // String | 
+    try {
+      List<AdditionalRecipient> result = apiInstance.listCertificateOrderAdditionalRecipients(orderReference);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#listCertificateOrderAdditionalRecipients");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orderReference** | **String**|  | |
+
+### Return type
+
+[**List&lt;AdditionalRecipient&gt;**](AdditionalRecipient.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
+
+<a name="publishCertificate"></a>
+# **publishCertificate**
+> publishCertificate(orderReference)
+
+Send a certificate publication request for selected Certificate Order
+
+Publish or republish a certificate to the external source (LDAP, SFTP or file system). Publication rule must be enabled on the issued certificate. An error is raised if the certificate is already published. 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    String orderReference = "ord-f0725b50-c533-4802-a844-de57bfb7a80e"; // String | 
+    try {
+      apiInstance.publishCertificate(orderReference);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#publishCertificate");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orderReference** | **String**|  | |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | success |  -  |
 | **400** | bad request |  -  |
 | **401** | Unauthorized |  -  |
 | **404** | not found |  -  |
@@ -1158,6 +1522,76 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
+
+<a name="unpublishCertificate"></a>
+# **unpublishCertificate**
+> unpublishCertificate(orderReference)
+
+Send a certificate un-publication request for selected Certificate Order
+
+Remove the certificate from the external source (LDAP, SFTP or file system). Publication rule must be enabled on the issued certificate. An error is raised if the certificate is already un published. 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    String orderReference = "ord-f0725b50-c533-4802-a844-de57bfb7a80e"; // String | 
+    try {
+      apiInstance.unpublishCertificate(orderReference);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#unpublishCertificate");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orderReference** | **String**|  | |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | success |  -  |
 | **400** | bad request |  -  |
 | **401** | Unauthorized |  -  |
 | **404** | not found |  -  |

@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **ClientReference** | **string** | Client reference UUID | [readonly] 
 **ProductReference** | **string** | Product reference UUID | [readonly] 
 **Certificate** | Pointer to [**Certificate**](Certificate.md) |  | [optional] 
+**AdditionalRecipients** | Pointer to [**[]AdditionalRecipient**](AdditionalRecipient.md) |  | [optional] 
 **IssuedBy** | Pointer to **string** | email of the person who created the order | [optional] [readonly] 
 
 ## Methods
@@ -155,6 +156,31 @@ SetCertificate sets Certificate field to given value.
 `func (o *CertificateOrder) HasCertificate() bool`
 
 HasCertificate returns a boolean if a field has been set.
+
+### GetAdditionalRecipients
+
+`func (o *CertificateOrder) GetAdditionalRecipients() []AdditionalRecipient`
+
+GetAdditionalRecipients returns the AdditionalRecipients field if non-nil, zero value otherwise.
+
+### GetAdditionalRecipientsOk
+
+`func (o *CertificateOrder) GetAdditionalRecipientsOk() (*[]AdditionalRecipient, bool)`
+
+GetAdditionalRecipientsOk returns a tuple with the AdditionalRecipients field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAdditionalRecipients
+
+`func (o *CertificateOrder) SetAdditionalRecipients(v []AdditionalRecipient)`
+
+SetAdditionalRecipients sets AdditionalRecipients field to given value.
+
+### HasAdditionalRecipients
+
+`func (o *CertificateOrder) HasAdditionalRecipients() bool`
+
+HasAdditionalRecipients returns a boolean if a field has been set.
 
 ### GetIssuedBy
 

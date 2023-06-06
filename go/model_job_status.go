@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.1.5
+API version: 2.2.1
 Contact: ssc@swisssign.com
 */
 
@@ -21,30 +21,30 @@ type JobStatus string
 
 // List of JobStatus
 const (
-	WAITING JobStatus = "waiting"
-	PENDING JobStatus = "pending"
-	PROCESSING JobStatus = "processing"
-	SUCCESS JobStatus = "success"
-	FAILED JobStatus = "failed"
-	SCHEDULE_REQUEST JobStatus = "schedule_request"
-	SCHEDULE_RESPONSE JobStatus = "schedule_response"
-	RETRY JobStatus = "retry"
-	CONNECTION_OR_CHANNEL_CLOSED JobStatus = "connection_or_channel_closed"
-	UNKNOWN JobStatus = "unknown"
+	WAITING JobStatus = "WAITING"
+	PENDING JobStatus = "PENDING"
+	PROCESSING JobStatus = "PROCESSING"
+	SUCCESS JobStatus = "SUCCESS"
+	FAILED JobStatus = "FAILED"
+	SCHEDULE_REQUEST JobStatus = "SCHEDULE_REQUEST"
+	SCHEDULE_RESPONSE JobStatus = "SCHEDULE_RESPONSE"
+	RETRY JobStatus = "RETRY"
+	CONNECTION_OR_CHANNEL_CLOSED JobStatus = "CONNECTION_OR_CHANNEL_CLOSED"
+	UNKNOWN JobStatus = "UNKNOWN"
 )
 
 // All allowed values of JobStatus enum
 var AllowedJobStatusEnumValues = []JobStatus{
-	"waiting",
-	"pending",
-	"processing",
-	"success",
-	"failed",
-	"schedule_request",
-	"schedule_response",
-	"retry",
-	"connection_or_channel_closed",
-	"unknown",
+	"WAITING",
+	"PENDING",
+	"PROCESSING",
+	"SUCCESS",
+	"FAILED",
+	"SCHEDULE_REQUEST",
+	"SCHEDULE_RESPONSE",
+	"RETRY",
+	"CONNECTION_OR_CHANNEL_CLOSED",
+	"UNKNOWN",
 }
 
 func (v *JobStatus) UnmarshalJSON(src []byte) error {

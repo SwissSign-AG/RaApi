@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.1.5
+API version: 2.2.1
 Contact: ssc@swisssign.com
 */
 
@@ -21,40 +21,40 @@ type CertificateOrderStatus string
 
 // List of CertificateOrderStatus
 const (
-	NEW CertificateOrderStatus = "new"
-	KEY_VALIDATION CertificateOrderStatus = "key_validation"
-	PRE_VALIDATION CertificateOrderStatus = "pre_validation"
-	GENERATE_TBS CertificateOrderStatus = "generate_tbs"
-	PENDING_AUTH CertificateOrderStatus = "pending_auth"
-	PRE_ISSUE CertificateOrderStatus = "pre_issue"
-	ISSUE CertificateOrderStatus = "issue"
-	POST_VALIDATION CertificateOrderStatus = "post_validation"
-	FINALIZE_ISSUANCE CertificateOrderStatus = "finalize_issuance"
-	ISSUED CertificateOrderStatus = "issued"
-	REVOKED CertificateOrderStatus = "revoked"
-	FAILED CertificateOrderStatus = "failed"
-	REJECTED CertificateOrderStatus = "rejected"
-	PENDING_CSR_RENEWAL CertificateOrderStatus = "pending_csr_renewal"
-	UNKNOWN CertificateOrderStatus = "unknown"
+	NEW CertificateOrderStatus = "NEW"
+	KEY_VALIDATION CertificateOrderStatus = "KEY_VALIDATION"
+	PRE_VALIDATION CertificateOrderStatus = "PRE_VALIDATION"
+	GENERATE_TBS CertificateOrderStatus = "GENERATE_TBS"
+	PENDING_AUTH CertificateOrderStatus = "PENDING_AUTH"
+	PRE_ISSUE CertificateOrderStatus = "PRE_ISSUE"
+	ISSUE CertificateOrderStatus = "ISSUE"
+	POST_VALIDATION CertificateOrderStatus = "POST_VALIDATION"
+	FINALIZE_ISSUANCE CertificateOrderStatus = "FINALIZE_ISSUANCE"
+	ISSUED CertificateOrderStatus = "ISSUED"
+	REVOKED CertificateOrderStatus = "REVOKED"
+	FAILED CertificateOrderStatus = "FAILED"
+	REJECTED CertificateOrderStatus = "REJECTED"
+	PENDING_CSR_RENEWAL CertificateOrderStatus = "PENDING_CSR_RENEWAL"
+	UNKNOWN CertificateOrderStatus = "UNKNOWN"
 )
 
 // All allowed values of CertificateOrderStatus enum
 var AllowedCertificateOrderStatusEnumValues = []CertificateOrderStatus{
-	"new",
-	"key_validation",
-	"pre_validation",
-	"generate_tbs",
-	"pending_auth",
-	"pre_issue",
-	"issue",
-	"post_validation",
-	"finalize_issuance",
-	"issued",
-	"revoked",
-	"failed",
-	"rejected",
-	"pending_csr_renewal",
-	"unknown",
+	"NEW",
+	"KEY_VALIDATION",
+	"PRE_VALIDATION",
+	"GENERATE_TBS",
+	"PENDING_AUTH",
+	"PRE_ISSUE",
+	"ISSUE",
+	"POST_VALIDATION",
+	"FINALIZE_ISSUANCE",
+	"ISSUED",
+	"REVOKED",
+	"FAILED",
+	"REJECTED",
+	"PENDING_CSR_RENEWAL",
+	"UNKNOWN",
 }
 
 func (v *CertificateOrderStatus) UnmarshalJSON(src []byte) error {

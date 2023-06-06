@@ -17,11 +17,11 @@
 
 | Name | Value |
 |---- | -----|
-| UNUSED | &quot;unused&quot; |
-| KEYCOMPROMISE | &quot;keyCompromise&quot; |
-| AFFILIATIONCHANGED | &quot;affiliationChanged&quot; |
-| SUPERSEDED | &quot;superseded&quot; |
-| CESSATIONOFOPERATION | &quot;cessationOfOperation&quot; |
+| UNUSED | &quot;UNUSED&quot; |
+| KEY_COMPROMISE | &quot;KEY_COMPROMISE&quot; |
+| AFFILIATION_CHANGED | &quot;AFFILIATION_CHANGED&quot; |
+| SUPERSEDED | &quot;SUPERSEDED&quot; |
+| CESSATION_OF_OPERATION | &quot;CESSATION_OF_OPERATION&quot; |
 
 
 

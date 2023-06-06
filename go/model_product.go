@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.1.5
+API version: 2.2.1
 Contact: ssc@swisssign.com
 */
 
@@ -42,13 +42,44 @@ type Product struct {
 	ClientPublishCertificateOverrideDefault bool `json:"clientPublishCertificateOverrideDefault"`
 	// Indicate if the certificate product has an expiration date
 	ExpirationDate NullableString `json:"expirationDate,omitempty"`
+	// When enabled, additional certificate issuance notification recipients can be added to the certificate order. Additional recipients are skipped when disabled.
+	AllowAdditionalIssuanceNotificationRecipients bool `json:"allowAdditionalIssuanceNotificationRecipients"`
+	// When enabled, additional certificate revocation notification recipients can be added to the certificate order. Additional recipients are skipped when disabled.
+	AllowAdditionalRevocationNotificationRecipients bool `json:"allowAdditionalRevocationNotificationRecipients"`
+	// When enabled, additional certificate renewal notification recipients can be added to the certificate order. Additional recipients are skipped when disabled.
+	AllowAdditionalRenewalNotificationRecipients bool `json:"allowAdditionalRenewalNotificationRecipients"`
+	// When enabled, additional authorization notification recipients can be added to the certificate order. Additional recipients are skipped when disabled.
+	AllowAdditionalAuthorizationNotificationRecipients bool `json:"allowAdditionalAuthorizationNotificationRecipients"`
+	// When enabled, additional authorization notification recipients (for accepted requests) can be added to the certificate order. Additional recipients are skipped when disabled.
+	AllowAdditionalAuthorizationAcceptedNotificationRecipients bool `json:"allowAdditionalAuthorizationAcceptedNotificationRecipients"`
+	// When enabled, additional authorization notification recipients (for rejected requests) can be added to the certificate order. Additional recipients are skipped when disabled.
+	AllowAdditionalAuthorizationRejectedNotificationRecipients bool `json:"allowAdditionalAuthorizationRejectedNotificationRecipients"`
+	// When enabled, indicates CAB DNS or HTTP domain validation is required.
+	IsCABDNSValidationRequired bool `json:"isCABDNSValidationRequired"`
+	// When enabled, indicates that additional notification recipients can be added to the certificate order. Additional recipients are skipped when disabled.
+	AllowAdditionalCABDNSNotificationRecipients bool `json:"allowAdditionalCABDNSNotificationRecipients"`
+	// When enabled, indicates CAB DNS via constructed email link to domain owner is required.
+	IsCABDNSEmailLinkValidationRequired bool `json:"isCABDNSEmailLinkValidationRequired"`
+	// When enabled, indicates that the recipient must validate the email box via a link.
+	IsEmailBoxValidationRequired bool `json:"isEmailBoxValidationRequired"`
+	// When enabled, registration documents must provided with the certificate order. Documents are skipped when disabled.
+	RequiresRegistrationDocuments bool `json:"requiresRegistrationDocuments"`
+	// When enabled, registration documents must provided when submitting the certificate order. When disabled, documents can be added to the certificate order at a later time via the RA UI.
+	RequiresRegistrationDocumentsOnRegister bool `json:"requiresRegistrationDocumentsOnRegister"`
+	// PDF registration document are allowed.
+	AllowRegistrationDocumentsPDF bool `json:"allowRegistrationDocumentsPDF"`
+	// JPG/PNG registration images are allowed.
+	AllowRegistrationDocumentsJPG bool `json:"allowRegistrationDocumentsJPG"`
+	// Indicates if a revocation code is issued for the recipient (link to self service revocation).
+	IsGenerateRevocationCode bool `json:"isGenerateRevocationCode"`
+	ProductValidity *ProductValidity `json:"productValidity,omitempty"`
 }
 
 // NewProduct instantiates a new Product object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProduct(uuid string, keyGenerationType string, keyType KeyType, issuanceNotification bool, revocationNotification bool, authorization bool, renewalRule bool, publishCertificate bool, clientPublishCertificateOverride bool, clientPublishCertificateOverrideDefault bool) *Product {
+func NewProduct(uuid string, keyGenerationType string, keyType KeyType, issuanceNotification bool, revocationNotification bool, authorization bool, renewalRule bool, publishCertificate bool, clientPublishCertificateOverride bool, clientPublishCertificateOverrideDefault bool, allowAdditionalIssuanceNotificationRecipients bool, allowAdditionalRevocationNotificationRecipients bool, allowAdditionalRenewalNotificationRecipients bool, allowAdditionalAuthorizationNotificationRecipients bool, allowAdditionalAuthorizationAcceptedNotificationRecipients bool, allowAdditionalAuthorizationRejectedNotificationRecipients bool, isCABDNSValidationRequired bool, allowAdditionalCABDNSNotificationRecipients bool, isCABDNSEmailLinkValidationRequired bool, isEmailBoxValidationRequired bool, requiresRegistrationDocuments bool, requiresRegistrationDocumentsOnRegister bool, allowRegistrationDocumentsPDF bool, allowRegistrationDocumentsJPG bool, isGenerateRevocationCode bool) *Product {
 	this := Product{}
 	this.Uuid = uuid
 	this.KeyGenerationType = keyGenerationType
@@ -60,6 +91,21 @@ func NewProduct(uuid string, keyGenerationType string, keyType KeyType, issuance
 	this.PublishCertificate = publishCertificate
 	this.ClientPublishCertificateOverride = clientPublishCertificateOverride
 	this.ClientPublishCertificateOverrideDefault = clientPublishCertificateOverrideDefault
+	this.AllowAdditionalIssuanceNotificationRecipients = allowAdditionalIssuanceNotificationRecipients
+	this.AllowAdditionalRevocationNotificationRecipients = allowAdditionalRevocationNotificationRecipients
+	this.AllowAdditionalRenewalNotificationRecipients = allowAdditionalRenewalNotificationRecipients
+	this.AllowAdditionalAuthorizationNotificationRecipients = allowAdditionalAuthorizationNotificationRecipients
+	this.AllowAdditionalAuthorizationAcceptedNotificationRecipients = allowAdditionalAuthorizationAcceptedNotificationRecipients
+	this.AllowAdditionalAuthorizationRejectedNotificationRecipients = allowAdditionalAuthorizationRejectedNotificationRecipients
+	this.IsCABDNSValidationRequired = isCABDNSValidationRequired
+	this.AllowAdditionalCABDNSNotificationRecipients = allowAdditionalCABDNSNotificationRecipients
+	this.IsCABDNSEmailLinkValidationRequired = isCABDNSEmailLinkValidationRequired
+	this.IsEmailBoxValidationRequired = isEmailBoxValidationRequired
+	this.RequiresRegistrationDocuments = requiresRegistrationDocuments
+	this.RequiresRegistrationDocumentsOnRegister = requiresRegistrationDocumentsOnRegister
+	this.AllowRegistrationDocumentsPDF = allowRegistrationDocumentsPDF
+	this.AllowRegistrationDocumentsJPG = allowRegistrationDocumentsJPG
+	this.IsGenerateRevocationCode = isGenerateRevocationCode
 	return &this
 }
 
@@ -427,6 +473,398 @@ func (o *Product) UnsetExpirationDate() {
 	o.ExpirationDate.Unset()
 }
 
+// GetAllowAdditionalIssuanceNotificationRecipients returns the AllowAdditionalIssuanceNotificationRecipients field value
+func (o *Product) GetAllowAdditionalIssuanceNotificationRecipients() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowAdditionalIssuanceNotificationRecipients
+}
+
+// GetAllowAdditionalIssuanceNotificationRecipientsOk returns a tuple with the AllowAdditionalIssuanceNotificationRecipients field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowAdditionalIssuanceNotificationRecipientsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowAdditionalIssuanceNotificationRecipients, true
+}
+
+// SetAllowAdditionalIssuanceNotificationRecipients sets field value
+func (o *Product) SetAllowAdditionalIssuanceNotificationRecipients(v bool) {
+	o.AllowAdditionalIssuanceNotificationRecipients = v
+}
+
+// GetAllowAdditionalRevocationNotificationRecipients returns the AllowAdditionalRevocationNotificationRecipients field value
+func (o *Product) GetAllowAdditionalRevocationNotificationRecipients() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowAdditionalRevocationNotificationRecipients
+}
+
+// GetAllowAdditionalRevocationNotificationRecipientsOk returns a tuple with the AllowAdditionalRevocationNotificationRecipients field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowAdditionalRevocationNotificationRecipientsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowAdditionalRevocationNotificationRecipients, true
+}
+
+// SetAllowAdditionalRevocationNotificationRecipients sets field value
+func (o *Product) SetAllowAdditionalRevocationNotificationRecipients(v bool) {
+	o.AllowAdditionalRevocationNotificationRecipients = v
+}
+
+// GetAllowAdditionalRenewalNotificationRecipients returns the AllowAdditionalRenewalNotificationRecipients field value
+func (o *Product) GetAllowAdditionalRenewalNotificationRecipients() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowAdditionalRenewalNotificationRecipients
+}
+
+// GetAllowAdditionalRenewalNotificationRecipientsOk returns a tuple with the AllowAdditionalRenewalNotificationRecipients field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowAdditionalRenewalNotificationRecipientsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowAdditionalRenewalNotificationRecipients, true
+}
+
+// SetAllowAdditionalRenewalNotificationRecipients sets field value
+func (o *Product) SetAllowAdditionalRenewalNotificationRecipients(v bool) {
+	o.AllowAdditionalRenewalNotificationRecipients = v
+}
+
+// GetAllowAdditionalAuthorizationNotificationRecipients returns the AllowAdditionalAuthorizationNotificationRecipients field value
+func (o *Product) GetAllowAdditionalAuthorizationNotificationRecipients() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowAdditionalAuthorizationNotificationRecipients
+}
+
+// GetAllowAdditionalAuthorizationNotificationRecipientsOk returns a tuple with the AllowAdditionalAuthorizationNotificationRecipients field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowAdditionalAuthorizationNotificationRecipientsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowAdditionalAuthorizationNotificationRecipients, true
+}
+
+// SetAllowAdditionalAuthorizationNotificationRecipients sets field value
+func (o *Product) SetAllowAdditionalAuthorizationNotificationRecipients(v bool) {
+	o.AllowAdditionalAuthorizationNotificationRecipients = v
+}
+
+// GetAllowAdditionalAuthorizationAcceptedNotificationRecipients returns the AllowAdditionalAuthorizationAcceptedNotificationRecipients field value
+func (o *Product) GetAllowAdditionalAuthorizationAcceptedNotificationRecipients() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowAdditionalAuthorizationAcceptedNotificationRecipients
+}
+
+// GetAllowAdditionalAuthorizationAcceptedNotificationRecipientsOk returns a tuple with the AllowAdditionalAuthorizationAcceptedNotificationRecipients field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowAdditionalAuthorizationAcceptedNotificationRecipientsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowAdditionalAuthorizationAcceptedNotificationRecipients, true
+}
+
+// SetAllowAdditionalAuthorizationAcceptedNotificationRecipients sets field value
+func (o *Product) SetAllowAdditionalAuthorizationAcceptedNotificationRecipients(v bool) {
+	o.AllowAdditionalAuthorizationAcceptedNotificationRecipients = v
+}
+
+// GetAllowAdditionalAuthorizationRejectedNotificationRecipients returns the AllowAdditionalAuthorizationRejectedNotificationRecipients field value
+func (o *Product) GetAllowAdditionalAuthorizationRejectedNotificationRecipients() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowAdditionalAuthorizationRejectedNotificationRecipients
+}
+
+// GetAllowAdditionalAuthorizationRejectedNotificationRecipientsOk returns a tuple with the AllowAdditionalAuthorizationRejectedNotificationRecipients field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowAdditionalAuthorizationRejectedNotificationRecipientsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowAdditionalAuthorizationRejectedNotificationRecipients, true
+}
+
+// SetAllowAdditionalAuthorizationRejectedNotificationRecipients sets field value
+func (o *Product) SetAllowAdditionalAuthorizationRejectedNotificationRecipients(v bool) {
+	o.AllowAdditionalAuthorizationRejectedNotificationRecipients = v
+}
+
+// GetIsCABDNSValidationRequired returns the IsCABDNSValidationRequired field value
+func (o *Product) GetIsCABDNSValidationRequired() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsCABDNSValidationRequired
+}
+
+// GetIsCABDNSValidationRequiredOk returns a tuple with the IsCABDNSValidationRequired field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetIsCABDNSValidationRequiredOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsCABDNSValidationRequired, true
+}
+
+// SetIsCABDNSValidationRequired sets field value
+func (o *Product) SetIsCABDNSValidationRequired(v bool) {
+	o.IsCABDNSValidationRequired = v
+}
+
+// GetAllowAdditionalCABDNSNotificationRecipients returns the AllowAdditionalCABDNSNotificationRecipients field value
+func (o *Product) GetAllowAdditionalCABDNSNotificationRecipients() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowAdditionalCABDNSNotificationRecipients
+}
+
+// GetAllowAdditionalCABDNSNotificationRecipientsOk returns a tuple with the AllowAdditionalCABDNSNotificationRecipients field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowAdditionalCABDNSNotificationRecipientsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowAdditionalCABDNSNotificationRecipients, true
+}
+
+// SetAllowAdditionalCABDNSNotificationRecipients sets field value
+func (o *Product) SetAllowAdditionalCABDNSNotificationRecipients(v bool) {
+	o.AllowAdditionalCABDNSNotificationRecipients = v
+}
+
+// GetIsCABDNSEmailLinkValidationRequired returns the IsCABDNSEmailLinkValidationRequired field value
+func (o *Product) GetIsCABDNSEmailLinkValidationRequired() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsCABDNSEmailLinkValidationRequired
+}
+
+// GetIsCABDNSEmailLinkValidationRequiredOk returns a tuple with the IsCABDNSEmailLinkValidationRequired field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetIsCABDNSEmailLinkValidationRequiredOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsCABDNSEmailLinkValidationRequired, true
+}
+
+// SetIsCABDNSEmailLinkValidationRequired sets field value
+func (o *Product) SetIsCABDNSEmailLinkValidationRequired(v bool) {
+	o.IsCABDNSEmailLinkValidationRequired = v
+}
+
+// GetIsEmailBoxValidationRequired returns the IsEmailBoxValidationRequired field value
+func (o *Product) GetIsEmailBoxValidationRequired() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsEmailBoxValidationRequired
+}
+
+// GetIsEmailBoxValidationRequiredOk returns a tuple with the IsEmailBoxValidationRequired field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetIsEmailBoxValidationRequiredOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsEmailBoxValidationRequired, true
+}
+
+// SetIsEmailBoxValidationRequired sets field value
+func (o *Product) SetIsEmailBoxValidationRequired(v bool) {
+	o.IsEmailBoxValidationRequired = v
+}
+
+// GetRequiresRegistrationDocuments returns the RequiresRegistrationDocuments field value
+func (o *Product) GetRequiresRegistrationDocuments() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.RequiresRegistrationDocuments
+}
+
+// GetRequiresRegistrationDocumentsOk returns a tuple with the RequiresRegistrationDocuments field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetRequiresRegistrationDocumentsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RequiresRegistrationDocuments, true
+}
+
+// SetRequiresRegistrationDocuments sets field value
+func (o *Product) SetRequiresRegistrationDocuments(v bool) {
+	o.RequiresRegistrationDocuments = v
+}
+
+// GetRequiresRegistrationDocumentsOnRegister returns the RequiresRegistrationDocumentsOnRegister field value
+func (o *Product) GetRequiresRegistrationDocumentsOnRegister() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.RequiresRegistrationDocumentsOnRegister
+}
+
+// GetRequiresRegistrationDocumentsOnRegisterOk returns a tuple with the RequiresRegistrationDocumentsOnRegister field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetRequiresRegistrationDocumentsOnRegisterOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RequiresRegistrationDocumentsOnRegister, true
+}
+
+// SetRequiresRegistrationDocumentsOnRegister sets field value
+func (o *Product) SetRequiresRegistrationDocumentsOnRegister(v bool) {
+	o.RequiresRegistrationDocumentsOnRegister = v
+}
+
+// GetAllowRegistrationDocumentsPDF returns the AllowRegistrationDocumentsPDF field value
+func (o *Product) GetAllowRegistrationDocumentsPDF() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowRegistrationDocumentsPDF
+}
+
+// GetAllowRegistrationDocumentsPDFOk returns a tuple with the AllowRegistrationDocumentsPDF field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowRegistrationDocumentsPDFOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowRegistrationDocumentsPDF, true
+}
+
+// SetAllowRegistrationDocumentsPDF sets field value
+func (o *Product) SetAllowRegistrationDocumentsPDF(v bool) {
+	o.AllowRegistrationDocumentsPDF = v
+}
+
+// GetAllowRegistrationDocumentsJPG returns the AllowRegistrationDocumentsJPG field value
+func (o *Product) GetAllowRegistrationDocumentsJPG() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowRegistrationDocumentsJPG
+}
+
+// GetAllowRegistrationDocumentsJPGOk returns a tuple with the AllowRegistrationDocumentsJPG field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetAllowRegistrationDocumentsJPGOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowRegistrationDocumentsJPG, true
+}
+
+// SetAllowRegistrationDocumentsJPG sets field value
+func (o *Product) SetAllowRegistrationDocumentsJPG(v bool) {
+	o.AllowRegistrationDocumentsJPG = v
+}
+
+// GetIsGenerateRevocationCode returns the IsGenerateRevocationCode field value
+func (o *Product) GetIsGenerateRevocationCode() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsGenerateRevocationCode
+}
+
+// GetIsGenerateRevocationCodeOk returns a tuple with the IsGenerateRevocationCode field value
+// and a boolean to check if the value has been set.
+func (o *Product) GetIsGenerateRevocationCodeOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsGenerateRevocationCode, true
+}
+
+// SetIsGenerateRevocationCode sets field value
+func (o *Product) SetIsGenerateRevocationCode(v bool) {
+	o.IsGenerateRevocationCode = v
+}
+
+// GetProductValidity returns the ProductValidity field value if set, zero value otherwise.
+func (o *Product) GetProductValidity() ProductValidity {
+	if o == nil || o.ProductValidity == nil {
+		var ret ProductValidity
+		return ret
+	}
+	return *o.ProductValidity
+}
+
+// GetProductValidityOk returns a tuple with the ProductValidity field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Product) GetProductValidityOk() (*ProductValidity, bool) {
+	if o == nil || o.ProductValidity == nil {
+		return nil, false
+	}
+	return o.ProductValidity, true
+}
+
+// HasProductValidity returns a boolean if a field has been set.
+func (o *Product) HasProductValidity() bool {
+	if o != nil && o.ProductValidity != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetProductValidity gets a reference to the given ProductValidity and assigns it to the ProductValidity field.
+func (o *Product) SetProductValidity(v ProductValidity) {
+	o.ProductValidity = &v
+}
+
 func (o Product) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -467,6 +905,54 @@ func (o Product) MarshalJSON() ([]byte, error) {
 	}
 	if o.ExpirationDate.IsSet() {
 		toSerialize["expirationDate"] = o.ExpirationDate.Get()
+	}
+	if true {
+		toSerialize["allowAdditionalIssuanceNotificationRecipients"] = o.AllowAdditionalIssuanceNotificationRecipients
+	}
+	if true {
+		toSerialize["allowAdditionalRevocationNotificationRecipients"] = o.AllowAdditionalRevocationNotificationRecipients
+	}
+	if true {
+		toSerialize["allowAdditionalRenewalNotificationRecipients"] = o.AllowAdditionalRenewalNotificationRecipients
+	}
+	if true {
+		toSerialize["allowAdditionalAuthorizationNotificationRecipients"] = o.AllowAdditionalAuthorizationNotificationRecipients
+	}
+	if true {
+		toSerialize["allowAdditionalAuthorizationAcceptedNotificationRecipients"] = o.AllowAdditionalAuthorizationAcceptedNotificationRecipients
+	}
+	if true {
+		toSerialize["allowAdditionalAuthorizationRejectedNotificationRecipients"] = o.AllowAdditionalAuthorizationRejectedNotificationRecipients
+	}
+	if true {
+		toSerialize["isCABDNSValidationRequired"] = o.IsCABDNSValidationRequired
+	}
+	if true {
+		toSerialize["allowAdditionalCABDNSNotificationRecipients"] = o.AllowAdditionalCABDNSNotificationRecipients
+	}
+	if true {
+		toSerialize["isCABDNSEmailLinkValidationRequired"] = o.IsCABDNSEmailLinkValidationRequired
+	}
+	if true {
+		toSerialize["isEmailBoxValidationRequired"] = o.IsEmailBoxValidationRequired
+	}
+	if true {
+		toSerialize["requiresRegistrationDocuments"] = o.RequiresRegistrationDocuments
+	}
+	if true {
+		toSerialize["requiresRegistrationDocumentsOnRegister"] = o.RequiresRegistrationDocumentsOnRegister
+	}
+	if true {
+		toSerialize["allowRegistrationDocumentsPDF"] = o.AllowRegistrationDocumentsPDF
+	}
+	if true {
+		toSerialize["allowRegistrationDocumentsJPG"] = o.AllowRegistrationDocumentsJPG
+	}
+	if true {
+		toSerialize["isGenerateRevocationCode"] = o.IsGenerateRevocationCode
+	}
+	if o.ProductValidity != nil {
+		toSerialize["productValidity"] = o.ProductValidity
 	}
 	return json.Marshal(toSerialize)
 }

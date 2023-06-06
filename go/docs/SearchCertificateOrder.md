@@ -9,8 +9,8 @@ Name | Type | Description | Notes
 **OrderStatus** | Pointer to [**[]CertificateOrderStatus**](CertificateOrderStatus.md) |  | [optional] 
 **RevocationReason** | Pointer to [**[]RevocationReason**](RevocationReason.md) |  | [optional] 
 **ClientReferences** | Pointer to **[]string** | Client reference UUID | [optional] 
-**StartAfter** | Pointer to **NullableString** | End Validity not starting after Date | [optional] 
-**StartBefore** | Pointer to **NullableString** | Validity not starting before Date | [optional] 
+**StartAfter** | Pointer to **NullableString** | Certificate Order not starting after Date | [optional] 
+**StartBefore** | Pointer to **NullableString** | Certificate Order not starting before Date | [optional] 
 **Attribute** | Pointer to **NullableString** | Any certificate attribute OID or value with optional wildcard attributes ? and/or * | [optional] 
 
 ## Methods

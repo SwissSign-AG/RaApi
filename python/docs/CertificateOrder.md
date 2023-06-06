@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **client_reference** | **str** | Client reference UUID | [readonly] 
 **product_reference** | **str** | Product reference UUID | [readonly] 
 **certificate** | [**Certificate**](Certificate.md) |  | [optional] 
+**additional_recipients** | [**[AdditionalRecipient]**](AdditionalRecipient.md) |  | [optional] 
 **issued_by** | **str** | email of the person who created the order | [optional] [readonly] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 

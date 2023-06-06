@@ -5,25 +5,25 @@
 ## Enum
 
 
-* `WAITING` (value: `"waiting"`)
+* `WAITING` (value: `"WAITING"`)
 
-* `PENDING` (value: `"pending"`)
+* `PENDING` (value: `"PENDING"`)
 
-* `PROCESSING` (value: `"processing"`)
+* `PROCESSING` (value: `"PROCESSING"`)
 
-* `SUCCESS` (value: `"success"`)
+* `SUCCESS` (value: `"SUCCESS"`)
 
-* `FAILED` (value: `"failed"`)
+* `FAILED` (value: `"FAILED"`)
 
-* `SCHEDULE_REQUEST` (value: `"schedule_request"`)
+* `SCHEDULE_REQUEST` (value: `"SCHEDULE_REQUEST"`)
 
-* `SCHEDULE_RESPONSE` (value: `"schedule_response"`)
+* `SCHEDULE_RESPONSE` (value: `"SCHEDULE_RESPONSE"`)
 
-* `RETRY` (value: `"retry"`)
+* `RETRY` (value: `"RETRY"`)
 
-* `CONNECTION_OR_CHANNEL_CLOSED` (value: `"connection_or_channel_closed"`)
+* `CONNECTION_OR_CHANNEL_CLOSED` (value: `"CONNECTION_OR_CHANNEL_CLOSED"`)
 
-* `UNKNOWN` (value: `"unknown"`)
+* `UNKNOWN` (value: `"UNKNOWN"`)
 
 
 

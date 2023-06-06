@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.1.5
+API version: 2.2.1
 Contact: ssc@swisssign.com
 */
 
@@ -28,6 +28,7 @@ type CertificateOrder struct {
 	// Product reference UUID
 	ProductReference string `json:"productReference"`
 	Certificate *Certificate `json:"certificate,omitempty"`
+	AdditionalRecipients []AdditionalRecipient `json:"additionalRecipients,omitempty"`
 	// email of the person who created the order
 	IssuedBy *string `json:"issuedBy,omitempty"`
 }
@@ -206,6 +207,38 @@ func (o *CertificateOrder) SetCertificate(v Certificate) {
 	o.Certificate = &v
 }
 
+// GetAdditionalRecipients returns the AdditionalRecipients field value if set, zero value otherwise.
+func (o *CertificateOrder) GetAdditionalRecipients() []AdditionalRecipient {
+	if o == nil || o.AdditionalRecipients == nil {
+		var ret []AdditionalRecipient
+		return ret
+	}
+	return o.AdditionalRecipients
+}
+
+// GetAdditionalRecipientsOk returns a tuple with the AdditionalRecipients field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CertificateOrder) GetAdditionalRecipientsOk() ([]AdditionalRecipient, bool) {
+	if o == nil || o.AdditionalRecipients == nil {
+		return nil, false
+	}
+	return o.AdditionalRecipients, true
+}
+
+// HasAdditionalRecipients returns a boolean if a field has been set.
+func (o *CertificateOrder) HasAdditionalRecipients() bool {
+	if o != nil && o.AdditionalRecipients != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAdditionalRecipients gets a reference to the given []AdditionalRecipient and assigns it to the AdditionalRecipients field.
+func (o *CertificateOrder) SetAdditionalRecipients(v []AdditionalRecipient) {
+	o.AdditionalRecipients = v
+}
+
 // GetIssuedBy returns the IssuedBy field value if set, zero value otherwise.
 func (o *CertificateOrder) GetIssuedBy() string {
 	if o == nil || o.IssuedBy == nil {
@@ -257,6 +290,9 @@ func (o CertificateOrder) MarshalJSON() ([]byte, error) {
 	}
 	if o.Certificate != nil {
 		toSerialize["certificate"] = o.Certificate
+	}
+	if o.AdditionalRecipients != nil {
+		toSerialize["additionalRecipients"] = o.AdditionalRecipients
 	}
 	if o.IssuedBy != nil {
 		toSerialize["issuedBy"] = o.IssuedBy

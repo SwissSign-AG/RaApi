@@ -3,13 +3,13 @@
 ## Enum
 
 
-* `PENDING` (value: `"pending"`)
+* `PENDING` (value: `"PENDING"`)
 
-* `EXPIRED` (value: `"expired"`)
+* `EXPIRED` (value: `"EXPIRED"`)
 
-* `VALID` (value: `"valid"`)
+* `VALID` (value: `"VALID"`)
 
-* `NOT_VALIDATED` (value: `"not_validated"`)
+* `NOT_VALIDATED` (value: `"NOT_VALIDATED"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

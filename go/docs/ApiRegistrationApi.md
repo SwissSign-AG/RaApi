@@ -4,7 +4,9 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AddCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#AddCertificateOrderAdditionalRecipients) | **Post** /v2/order/{orderReference}/add/recipients | Add additional recipients to Certificate Order
 [**CreateClientPrevalidatedDomains**](ApiRegistrationApi.md#CreateClientPrevalidatedDomains) | **Post** /v2/client/domain/{clientReference}/register | Register new prevalidated domains for the selected client given its reference Id
+[**DeleteCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#DeleteCertificateOrderAdditionalRecipients) | **Post** /v2/order/{orderReference}/delete/recipients | Delete additional recipients to Certificate Order
 [**DeleteClientPrevalidatedDomain**](ApiRegistrationApi.md#DeleteClientPrevalidatedDomain) | **Post** /v2/client/domain/{prevalidatedDomainReference}/delete | Delete prevalidated domain for the selected reference Id
 [**DeleteClientPrevalidatedDomainToken**](ApiRegistrationApi.md#DeleteClientPrevalidatedDomainToken) | **Post** /v2/client/domain/{prevalidatedDomainReference}/token/delete | Delete prevalidated domain token for the selected reference Id
 [**GetCertificateChain**](ApiRegistrationApi.md#GetCertificateChain) | **Post** /v2/order/{orderReference}/certificate/chain | Retrieve the certificate chain for the given Order reference
@@ -16,12 +18,88 @@ Method | HTTP request | Description
 [**GetClientPrevalidatedDomain**](ApiRegistrationApi.md#GetClientPrevalidatedDomain) | **Post** /v2/client/domain/{prevalidatedDomainReference} | Get prevalidated domains for the selected domain reference Id
 [**GetClientPrevalidatedDomains**](ApiRegistrationApi.md#GetClientPrevalidatedDomains) | **Post** /v2/client/domain/{clientReference}/list | Get the list of prevalidated domains for the selected client given its reference Id
 [**IssueCertificate**](ApiRegistrationApi.md#IssueCertificate) | **Post** /v2/issue/csr/{productReference} | Issue certificate using CSR
+[**IssueCertificateV22**](ApiRegistrationApi.md#IssueCertificateV22) | **Post** /v2/issue | Issue certificate using extended request attributes
 [**Jwt**](ApiRegistrationApi.md#Jwt) | **Post** /v2/jwt/{userName} | Produce a user JWT
+[**ListCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#ListCertificateOrderAdditionalRecipients) | **Post** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients
+[**PublishCertificate**](ApiRegistrationApi.md#PublishCertificate) | **Post** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order
 [**ResetClientPrevalidatedDomain**](ApiRegistrationApi.md#ResetClientPrevalidatedDomain) | **Post** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id
 [**RevokeCertificates**](ApiRegistrationApi.md#RevokeCertificates) | **Post** /v2/revoke | Revoke certificates
 [**SearchClients**](ApiRegistrationApi.md#SearchClients) | **Post** /v2/clients | Search Clients available to the RA Operator
+[**UnpublishCertificate**](ApiRegistrationApi.md#UnpublishCertificate) | **Post** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order
 [**ValidateClientPrevalidatedDomain**](ApiRegistrationApi.md#ValidateClientPrevalidatedDomain) | **Post** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id
 
+
+
+## AddCertificateOrderAdditionalRecipients
+
+> []AdditionalRecipient AddCertificateOrderAdditionalRecipients(ctx, orderReference).AdditionalRecipient(additionalRecipient).Execute()
+
+Add additional recipients to Certificate Order
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    orderReference := "ord-f0725b50-c533-4802-a844-de57bfb7a80e" // string | 
+    additionalRecipient := []openapiclient.AdditionalRecipient{*openapiclient.NewAdditionalRecipient("shared.mailbox@sample.org", "DNS_OWNER_CHECK_EMAIL_LINK", "NEUTRAL")} // []AdditionalRecipient | Array of additional recipients
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.AddCertificateOrderAdditionalRecipients(context.Background(), orderReference).AdditionalRecipient(additionalRecipient).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.AddCertificateOrderAdditionalRecipients``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `AddCertificateOrderAdditionalRecipients`: []AdditionalRecipient
+    fmt.Fprintf(os.Stdout, "Response from `ApiRegistrationApi.AddCertificateOrderAdditionalRecipients`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orderReference** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAddCertificateOrderAdditionalRecipientsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **additionalRecipient** | [**[]AdditionalRecipient**](AdditionalRecipient.md) | Array of additional recipients | 
+
+### Return type
+
+[**[]AdditionalRecipient**](AdditionalRecipient.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateClientPrevalidatedDomains
@@ -81,6 +159,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]ClientDNS**](ClientDNS.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteCertificateOrderAdditionalRecipients
+
+> []AdditionalRecipient DeleteCertificateOrderAdditionalRecipients(ctx, orderReference).AdditionalRecipient(additionalRecipient).Execute()
+
+Delete additional recipients to Certificate Order
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    orderReference := "ord-f0725b50-c533-4802-a844-de57bfb7a80e" // string | 
+    additionalRecipient := []openapiclient.AdditionalRecipient{*openapiclient.NewAdditionalRecipient("shared.mailbox@sample.org", "DNS_OWNER_CHECK_EMAIL_LINK", "NEUTRAL")} // []AdditionalRecipient | Array of additional recipients to delete
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.DeleteCertificateOrderAdditionalRecipients(context.Background(), orderReference).AdditionalRecipient(additionalRecipient).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.DeleteCertificateOrderAdditionalRecipients``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `DeleteCertificateOrderAdditionalRecipients`: []AdditionalRecipient
+    fmt.Fprintf(os.Stdout, "Response from `ApiRegistrationApi.DeleteCertificateOrderAdditionalRecipients`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orderReference** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteCertificateOrderAdditionalRecipientsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **additionalRecipient** | [**[]AdditionalRecipient**](AdditionalRecipient.md) | Array of additional recipients to delete | 
+
+### Return type
+
+[**[]AdditionalRecipient**](AdditionalRecipient.md)
 
 ### Authorization
 
@@ -859,7 +1009,73 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: text/plain
+- **Content-Type**: text/plain, application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## IssueCertificateV22
+
+> CertificateOrder IssueCertificateV22(ctx).IssueRequest(issueRequest).Execute()
+
+Issue certificate using extended request attributes
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    issueRequest := *openapiclient.NewIssueRequest("pma-10877aec-412f-4b96-a5d4-f5f95da8634e") // IssueRequest | Issue Request
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.IssueCertificateV22(context.Background()).IssueRequest(issueRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.IssueCertificateV22``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `IssueCertificateV22`: CertificateOrder
+    fmt.Fprintf(os.Stdout, "Response from `ApiRegistrationApi.IssueCertificateV22`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiIssueCertificateV22Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **issueRequest** | [**IssueRequest**](IssueRequest.md) | Issue Request | 
+
+### Return type
+
+[**CertificateOrder**](CertificateOrder.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -933,6 +1149,144 @@ No authorization required
 
 - **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: text/plain, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListCertificateOrderAdditionalRecipients
+
+> []AdditionalRecipient ListCertificateOrderAdditionalRecipients(ctx, orderReference).Execute()
+
+Obtain a list of additional Certificate Order recipients
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    orderReference := "ord-f0725b50-c533-4802-a844-de57bfb7a80e" // string | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.ListCertificateOrderAdditionalRecipients(context.Background(), orderReference).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.ListCertificateOrderAdditionalRecipients``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ListCertificateOrderAdditionalRecipients`: []AdditionalRecipient
+    fmt.Fprintf(os.Stdout, "Response from `ApiRegistrationApi.ListCertificateOrderAdditionalRecipients`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orderReference** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListCertificateOrderAdditionalRecipientsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]AdditionalRecipient**](AdditionalRecipient.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PublishCertificate
+
+> PublishCertificate(ctx, orderReference).Execute()
+
+Send a certificate publication request for selected Certificate Order
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    orderReference := "ord-f0725b50-c533-4802-a844-de57bfb7a80e" // string | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.PublishCertificate(context.Background(), orderReference).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.PublishCertificate``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orderReference** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPublishCertificateRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1030,7 +1384,7 @@ import (
 )
 
 func main() {
-    revocationRequest := []openapiclient.RevocationRequest{*openapiclient.NewRevocationRequest("3893409CB666E1F092B7B6F28E1EAF4582AA7F21", "unused", "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA")} // []RevocationRequest | Certificate references to revoke
+    revocationRequest := []openapiclient.RevocationRequest{*openapiclient.NewRevocationRequest("3893409CB666E1F092B7B6F28E1EAF4582AA7F21", "CESSATION_OF_OPERATION", "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA")} // []RevocationRequest | Certificate references to revoke
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1124,6 +1478,74 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]Client**](Client.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UnpublishCertificate
+
+> UnpublishCertificate(ctx, orderReference).Execute()
+
+Send a certificate un-publication request for selected Certificate Order
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    orderReference := "ord-f0725b50-c533-4802-a844-de57bfb7a80e" // string | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.UnpublishCertificate(context.Background(), orderReference).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.UnpublishCertificate``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orderReference** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUnpublishCertificateRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
 
 ### Authorization
 

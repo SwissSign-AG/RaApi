@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.1.5
+API version: 2.2.1
 Contact: ssc@swisssign.com
 */
 
@@ -25,9 +25,9 @@ type SearchCertificateOrder struct {
 	RevocationReason []RevocationReason `json:"revocationReason,omitempty"`
 	// Client reference UUID
 	ClientReferences []string `json:"clientReferences,omitempty"`
-	// End Validity not starting after Date
+	// Certificate Order not starting after Date
 	StartAfter NullableString `json:"startAfter,omitempty"`
-	// Validity not starting before Date
+	// Certificate Order not starting before Date
 	StartBefore NullableString `json:"startBefore,omitempty"`
 	// Any certificate attribute OID or value with optional wildcard attributes ? and/or *
 	Attribute NullableString `json:"attribute,omitempty"`

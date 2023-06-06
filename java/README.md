@@ -1,7 +1,7 @@
 # openapi-java-client
 
 SwissSign RA REST API
-- API version: 2.1.5
+- API version: 2.2.1
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
@@ -39,7 +39,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>2.1.5</version>
+  <version>2.2.1</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -55,7 +55,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "org.openapitools:openapi-java-client:2.1.5"
+     implementation "org.openapitools:openapi-java-client:2.2.1"
   }
 ```
 
@@ -69,7 +69,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-2.1.5.jar`
+* `target/openapi-java-client-2.2.1.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -96,13 +96,13 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
-    String clientReference = "cli-123e4567-e89b-12d3-a456-426614174000"; // String | Client reference UUID
-    List<String> requestBody = Arrays.asList(); // List<String> | Client domains
+    String orderReference = "ord-f0725b50-c533-4802-a844-de57bfb7a80e"; // String | 
+    List<AdditionalRecipient> additionalRecipient = Arrays.asList(); // List<AdditionalRecipient> | Array of additional recipients
     try {
-      List<ClientDNS> result = apiInstance.createClientPrevalidatedDomains(clientReference, requestBody);
+      List<AdditionalRecipient> result = apiInstance.addCertificateOrderAdditionalRecipients(orderReference, additionalRecipient);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling ApiRegistrationApi#createClientPrevalidatedDomains");
+      System.err.println("Exception when calling ApiRegistrationApi#addCertificateOrderAdditionalRecipients");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -119,7 +119,9 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*ApiRegistrationApi* | [**addCertificateOrderAdditionalRecipients**](docs/ApiRegistrationApi.md#addCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/add/recipients | Add additional recipients to Certificate Order
 *ApiRegistrationApi* | [**createClientPrevalidatedDomains**](docs/ApiRegistrationApi.md#createClientPrevalidatedDomains) | **POST** /v2/client/domain/{clientReference}/register | Register new prevalidated domains for the selected client given its reference Id
+*ApiRegistrationApi* | [**deleteCertificateOrderAdditionalRecipients**](docs/ApiRegistrationApi.md#deleteCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/delete/recipients | Delete additional recipients to Certificate Order
 *ApiRegistrationApi* | [**deleteClientPrevalidatedDomain**](docs/ApiRegistrationApi.md#deleteClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/delete | Delete prevalidated domain for the selected reference Id
 *ApiRegistrationApi* | [**deleteClientPrevalidatedDomainToken**](docs/ApiRegistrationApi.md#deleteClientPrevalidatedDomainToken) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/delete | Delete prevalidated domain token for the selected reference Id
 *ApiRegistrationApi* | [**getCertificateChain**](docs/ApiRegistrationApi.md#getCertificateChain) | **POST** /v2/order/{orderReference}/certificate/chain | Retrieve the certificate chain for the given Order reference
@@ -131,16 +133,22 @@ Class | Method | HTTP request | Description
 *ApiRegistrationApi* | [**getClientPrevalidatedDomain**](docs/ApiRegistrationApi.md#getClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference} | Get prevalidated domains for the selected domain reference Id
 *ApiRegistrationApi* | [**getClientPrevalidatedDomains**](docs/ApiRegistrationApi.md#getClientPrevalidatedDomains) | **POST** /v2/client/domain/{clientReference}/list | Get the list of prevalidated domains for the selected client given its reference Id
 *ApiRegistrationApi* | [**issueCertificate**](docs/ApiRegistrationApi.md#issueCertificate) | **POST** /v2/issue/csr/{productReference} | Issue certificate using CSR
+*ApiRegistrationApi* | [**issueCertificateV22**](docs/ApiRegistrationApi.md#issueCertificateV22) | **POST** /v2/issue | Issue certificate using extended request attributes
 *ApiRegistrationApi* | [**jwt**](docs/ApiRegistrationApi.md#jwt) | **POST** /v2/jwt/{userName} | Produce a user JWT
+*ApiRegistrationApi* | [**listCertificateOrderAdditionalRecipients**](docs/ApiRegistrationApi.md#listCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients
+*ApiRegistrationApi* | [**publishCertificate**](docs/ApiRegistrationApi.md#publishCertificate) | **POST** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order
 *ApiRegistrationApi* | [**resetClientPrevalidatedDomain**](docs/ApiRegistrationApi.md#resetClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id
 *ApiRegistrationApi* | [**revokeCertificates**](docs/ApiRegistrationApi.md#revokeCertificates) | **POST** /v2/revoke | Revoke certificates
 *ApiRegistrationApi* | [**searchClients**](docs/ApiRegistrationApi.md#searchClients) | **POST** /v2/clients | Search Clients available to the RA Operator
+*ApiRegistrationApi* | [**unpublishCertificate**](docs/ApiRegistrationApi.md#unpublishCertificate) | **POST** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order
 *ApiRegistrationApi* | [**validateClientPrevalidatedDomain**](docs/ApiRegistrationApi.md#validateClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id
 
 
 ## Documentation for Models
 
  - [APIError](docs/APIError.md)
+ - [AdditionalRecipient](docs/AdditionalRecipient.md)
+ - [AdditionalRecipientType](docs/AdditionalRecipientType.md)
  - [Certificate](docs/Certificate.md)
  - [CertificateOrder](docs/CertificateOrder.md)
  - [CertificateOrderStatus](docs/CertificateOrderStatus.md)
@@ -148,10 +156,19 @@ Class | Method | HTTP request | Description
  - [Client](docs/Client.md)
  - [ClientDNS](docs/ClientDNS.md)
  - [ClientDomainValidationStatus](docs/ClientDomainValidationStatus.md)
+ - [DNS](docs/DNS.md)
+ - [IssueRequest](docs/IssueRequest.md)
  - [JobStatus](docs/JobStatus.md)
  - [JobType](docs/JobType.md)
  - [KeyType](docs/KeyType.md)
  - [Product](docs/Product.md)
+ - [ProductValidity](docs/ProductValidity.md)
+ - [RegistrationDocument](docs/RegistrationDocument.md)
+ - [RequestDNS](docs/RequestDNS.md)
+ - [RequestExtensions](docs/RequestExtensions.md)
+ - [RequestOverrides](docs/RequestOverrides.md)
+ - [RequestRFC822](docs/RequestRFC822.md)
+ - [RequestUPN](docs/RequestUPN.md)
  - [RevocationReason](docs/RevocationReason.md)
  - [RevocationRequest](docs/RevocationRequest.md)
  - [RevocationStatus](docs/RevocationStatus.md)

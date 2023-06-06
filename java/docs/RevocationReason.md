@@ -5,25 +5,25 @@
 ## Enum
 
 
-* `UNUSED` (value: `"unused"`)
+* `UNUSED` (value: `"UNUSED"`)
 
-* `KEYCOMPROMISE` (value: `"keyCompromise"`)
+* `KEY_COMPROMISE` (value: `"KEY_COMPROMISE"`)
 
-* `CACOMPROMISE` (value: `"cACompromise"`)
+* `C_A_COMPROMISE` (value: `"C_A_COMPROMISE"`)
 
-* `AFFILIATIONCHANGED` (value: `"affiliationChanged"`)
+* `AFFILIATION_CHANGED` (value: `"AFFILIATION_CHANGED"`)
 
-* `SUPERSEDED` (value: `"superseded"`)
+* `SUPERSEDED` (value: `"SUPERSEDED"`)
 
-* `CESSATIONOFOPERATION` (value: `"cessationOfOperation"`)
+* `CESSATION_OF_OPERATION` (value: `"CESSATION_OF_OPERATION"`)
 
-* `CERTIFICATEHOLD` (value: `"certificateHold"`)
+* `CERTIFICATE_HOLD` (value: `"CERTIFICATE_HOLD"`)
 
-* `REMOVEFROMCRL` (value: `"removeFromCRL"`)
+* `REMOVE_FROM_CRL` (value: `"REMOVE_FROM_CRL"`)
 
-* `PRIVILEGEWITHDRAWN` (value: `"privilegeWithdrawn"`)
+* `PRIVILEGE_WITHDRAWN` (value: `"PRIVILEGE_WITHDRAWN"`)
 
-* `AACOMPROMISE` (value: `"aACompromise"`)
+* `A_A_COMPROMISE` (value: `"A_A_COMPROMISE"`)
 
 
 
