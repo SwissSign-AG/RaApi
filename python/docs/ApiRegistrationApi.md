@@ -835,7 +835,7 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
         client_references=["cli-123e4567-e89b-12d3-a456-426614174000"],
         start_after=dateutil_parser('Tue Mar 20 00:00:00 UTC 2018').date(),
         start_before=dateutil_parser('Sun Mar 25 00:00:00 UTC 2018').date(),
-        attribute="s?me@emai* or 2.5.4.r or streetAddress",
+        attribute="s?me@emai* or 2.5.4.r or street",
     ) # SearchCertificateOrder | Certificate order search options
 
     # example passing only required values which don't have defaults set

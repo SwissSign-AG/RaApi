@@ -464,7 +464,7 @@
             "type": "string",
             "nullable": true,
             "description": "Any certificate attribute OID or value with optional wildcard attributes ? and/or *",
-            "example": "s?me@emai* or 2.5.4.r or streetAddress"
+            "example": "s?me@emai* or 2.5.4.r or street"
           }
         }
       },
@@ -675,7 +675,7 @@
           "subjectDN": {
             "type": "string",
             "nullable": true,
-            "description": "Override the CSR Subject Distinguished Name with user provided value\nSupported attributes are (lower or uppercase):\n  - c (Country)\n  - dc (Domain Controller)\n  - l (Locality)\n  - state (State)\n  - joil (Jurisdiction of Incorporation, Locality)\n  - joist (Jurisdiction of Incorporation, State)\n  - joic (Jurisdiction of Incorporation, Country)\n  - streetAddress (Street Address)\n  - o (Organization)\n  - organizationIdentifier (Organization Identifier)\n  - ou (Organizational Unit)\n  - uid (UID)\n  - uniqueIdentifier (Unique Identifier)\n  - serialnumber (Serial number)\n  - email (Email)\n  - title (Title)\n  - cn (Common Name)\n  - sn (Surname)\n  - gn (Given name)\n  - name (Name)\n  - initials (Initials)\n  - pseudonym (Pseudonym)\n  - postalAddress (Postal Address)\n  - generationQualifier (Generation Qualifier)\n",
+            "description": "Override the CSR Subject Distinguished Name with user provided value\nSupported attributes are (lower or uppercase):\n  - c (Country)\n  - dc (Domain Controller)\n  - l (Locality)\n  - state (State)\n  - joil (Jurisdiction of Incorporation, Locality)\n  - joist (Jurisdiction of Incorporation, State)\n  - joic (Jurisdiction of Incorporation, Country)\n  - street (Street Address)\n  - o (Organization)\n  - organizationIdentifier (Organization Identifier)\n  - ou (Organizational Unit)\n  - uid (UID)\n  - uniqueIdentifier (Unique Identifier)\n  - serialnumber (Serial number)\n  - email (Email)\n  - title (Title)\n  - cn (Common Name)\n  - sn (Surname)\n  - gn (Given name)\n  - name (Name)\n  - initials (Initials)\n  - pseudonym (Pseudonym)\n  - postalAddress (Postal Address)\n  - postalCode (Postal Code)\n  - generationQualifier (Generation Qualifier)\n",
             "example": "c=US,l=Denver,o=Acme Ltd,cn=Sample"
           },
           "validity": {
@@ -3195,7 +3195,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.2.1",
+    "version": "2.2.4",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"

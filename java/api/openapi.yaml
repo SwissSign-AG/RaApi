@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.2.1
+  version: 2.2.4
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch/v2
@@ -1744,7 +1744,7 @@ components:
         orderStatus:
         - ISSUED
         - ISSUED
-        attribute: s?me@emai* or 2.5.4.r or streetAddress
+        attribute: s?me@emai* or 2.5.4.r or street
         revocationReason:
         - SUPERSEDED
         - SUPERSEDED
@@ -1795,7 +1795,7 @@ components:
         attribute:
           description: Any certificate attribute OID or value with optional wildcard
             attributes ? and/or *
-          example: s?me@emai* or 2.5.4.r or streetAddress
+          example: s?me@emai* or 2.5.4.r or street
           nullable: true
           type: string
       type: object
@@ -2097,13 +2097,13 @@ components:
             \  - dc (Domain Controller)\n  - l (Locality)\n  - state (State)\n  -\
             \ joil (Jurisdiction of Incorporation, Locality)\n  - joist (Jurisdiction\
             \ of Incorporation, State)\n  - joic (Jurisdiction of Incorporation, Country)\n\
-            \  - streetAddress (Street Address)\n  - o (Organization)\n  - organizationIdentifier\
+            \  - street (Street Address)\n  - o (Organization)\n  - organizationIdentifier\
             \ (Organization Identifier)\n  - ou (Organizational Unit)\n  - uid (UID)\n\
             \  - uniqueIdentifier (Unique Identifier)\n  - serialnumber (Serial number)\n\
             \  - email (Email)\n  - title (Title)\n  - cn (Common Name)\n  - sn (Surname)\n\
             \  - gn (Given name)\n  - name (Name)\n  - initials (Initials)\n  - pseudonym\
-            \ (Pseudonym)\n  - postalAddress (Postal Address)\n  - generationQualifier\
-            \ (Generation Qualifier)\n"
+            \ (Pseudonym)\n  - postalAddress (Postal Address)\n  - postalCode (Postal\
+            \ Code)\n  - generationQualifier (Generation Qualifier)\n"
           example: "c=US,l=Denver,o=Acme Ltd,cn=Sample"
           nullable: true
           type: string
