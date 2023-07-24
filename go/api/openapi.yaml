@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.2.4
+  version: 2.2.8
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch/v2
@@ -2062,17 +2062,28 @@ components:
       properties:
         subjectDN:
           description: "Override the CSR Subject Distinguished Name with user provided\
-            \ value\nSupported attributes are (lower or uppercase):\n  - c (Country)\n\
-            \  - dc (Domain Controller)\n  - l (Locality)\n  - state (State)\n  -\
-            \ joil (Jurisdiction of Incorporation, Locality)\n  - joist (Jurisdiction\
+            \ value\nSupported attributes are (lower or uppercase):\n  - c, country\
+            \ (Country)\n  - o, organization (Organization)\n  - ou, organizationalUnit\
+            \ (Organizational Unit)\n  - t, title (Title) \n  - cn, commonName (Common\
+            \ Name)\n  - sn, surName (Surname)\n  - gn, givenName (Given name)\n \
+            \ - i, initials (Initials)\n  - street, streetAddress (Street Address)\n\
+            \  - serialnumber (Serial number)\n  - l, locality (Locality)\n  - st,\
+            \ state (State)\n  - e, email, emailAddress (Email)\n  - dc, domainController\
+            \ (Domain Controller)\n  - uid (UID)\n  - generationQualifier, generation\
+            \ (Generation Qualifier)\n  - description (Description)\n  - role (Role)\n\
+            \  - joil (Jurisdiction of Incorporation, Locality)\n  - joist (Jurisdiction\
             \ of Incorporation, State)\n  - joic (Jurisdiction of Incorporation, Country)\n\
-            \  - street (Street Address)\n  - o (Organization)\n  - organizationIdentifier\
-            \ (Organization Identifier)\n  - ou (Organizational Unit)\n  - uid (UID)\n\
-            \  - uniqueIdentifier (Unique Identifier)\n  - serialnumber (Serial number)\n\
-            \  - email (Email)\n  - title (Title)\n  - cn (Common Name)\n  - sn (Surname)\n\
-            \  - gn (Given name)\n  - name (Name)\n  - initials (Initials)\n  - pseudonym\
-            \ (Pseudonym)\n  - postalAddress (Postal Address)\n  - postalCode (Postal\
-            \ Code)\n  - generationQualifier (Generation Qualifier)\n"
+            \  - orgId, organizationIdentifier (Organization Identifier)\n  - uniqueIdentifier\
+            \ (Unique Identifier)\n  - name (Name)\n  - pseudonym (Pseudonym)\n  -\
+            \ postalAddress (Postal Address)\n  - postalCode (Postal Code)\n  - unstructuredaddress\
+            \ (Unstructed Address)\n  - unstructuredname (Unstructed Name)\n  - dn\
+            \ (DN Qualifier)\n  - nameatbirth (Name at Birth)\n  - countryofcitizenship\
+            \ (Country of Citizenship)\n  - countryofresidence (Country of Residence)\n\
+            \  - gender (Gender)\n  - placeofbirth (Place of Birth)\n  - dateofbirth\
+            \ (Date of Birth)\n  - businesscategory (Business Category)\n  - telephonenumber\
+            \ (Telephone Number)\n  - scionisdasnumber (SCION ISD AS Number)\n  -\
+            \ tpmmanufacturer (TPM Manufacturer)\n  - tpmmodel (TPM Model)\n  - tpmversion\
+            \ (TPM Version)\n"
           example: "c=US,l=Denver,o=Acme Ltd,cn=Sample"
           nullable: true
           type: string
