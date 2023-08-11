@@ -94,7 +94,7 @@ class Configuration(object):
                  ):
         """Constructor
         """
-        self._base_path = "https://api.ra.pre.swisssign.ch/v2" if host is None else host
+        self._base_path = "https://api.ra.pre.swisssign.ch" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -400,11 +400,11 @@ class Configuration(object):
         """
         return [
             {
-                'url': "https://api.ra.pre.swisssign.ch/v2",
+                'url': "https://api.ra.pre.swisssign.ch",
                 'description': "Pre Production",
             },
             {
-                'url': "https://api.ra.swisssign.ch/v2",
+                'url': "https://api.ra.swisssign.ch",
                 'description': "Production",
             }
         ]

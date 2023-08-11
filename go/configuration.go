@@ -106,11 +106,11 @@ func NewConfiguration() *Configuration {
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
-				URL: "https://api.ra.pre.swisssign.ch/v2",
+				URL: "https://api.ra.pre.swisssign.ch",
 				Description: "Pre Production",
 			},
 			{
-				URL: "https://api.ra.swisssign.ch/v2",
+				URL: "https://api.ra.swisssign.ch",
 				Description: "Production",
 			},
 		},
