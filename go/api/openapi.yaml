@@ -8,9 +8,9 @@ info:
   version: 2.2.9
 servers:
 - description: Pre Production
-  url: https://api.ra.pre.swisssign.ch/v2
+  url: https://api.ra.pre.swisssign.ch
 - description: Production
-  url: https://api.ra.swisssign.ch/v2
+  url: https://api.ra.swisssign.ch
 paths:
   /v2/jwt/{userName}:
     post:

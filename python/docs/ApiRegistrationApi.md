@@ -1,6 +1,6 @@
 # swisssign_ra_api.v2.ApiRegistrationApi
 
-All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
+All URIs are relative to *https://api.ra.pre.swisssign.ch*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -47,10 +47,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.additional_recipient import AdditionalRecipient
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -137,10 +137,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.client_dns import ClientDNS
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -223,10 +223,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.additional_recipient import AdditionalRecipient
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -312,10 +312,10 @@ import swisssign_ra_api.v2
 from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -393,10 +393,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.client_dns import ClientDNS
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -474,10 +474,10 @@ import swisssign_ra_api.v2
 from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -556,10 +556,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.certificate_order import CertificateOrder
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -638,10 +638,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.certificate_order_status import CertificateOrderStatus
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -720,10 +720,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.certificate_order_task import CertificateOrderTask
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -803,10 +803,10 @@ from swisssign_ra_api.v2.model.certificate_order import CertificateOrder
 from swisssign_ra_api.v2.model.search_certificate_order import SearchCertificateOrder
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -898,10 +898,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.client import Client
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -980,10 +980,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.client_dns import ClientDNS
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1062,10 +1062,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.client_dns import ClientDNS
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1144,10 +1144,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.certificate_order import CertificateOrder
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1234,10 +1234,10 @@ from swisssign_ra_api.v2.model.certificate_order import CertificateOrder
 from swisssign_ra_api.v2.model.issue_request import IssueRequest
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1377,10 +1377,10 @@ import swisssign_ra_api.v2
 from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 
@@ -1452,10 +1452,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.additional_recipient import AdditionalRecipient
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1533,10 +1533,10 @@ import swisssign_ra_api.v2
 from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1614,10 +1614,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.client_dns import ClientDNS
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1696,10 +1696,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.revocation_request import RevocationRequest
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1783,10 +1783,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.client import Client
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1865,10 +1865,10 @@ import swisssign_ra_api.v2
 from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1946,10 +1946,10 @@ from swisssign_ra_api.v2.api import api_registration_api
 from swisssign_ra_api.v2.model.api_error import APIError
 from swisssign_ra_api.v2.model.client_dns import ClientDNS
 from pprint import pprint
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
