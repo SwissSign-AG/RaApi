@@ -60,10 +60,10 @@ from swisssign_ra_api.v2.model.client_dns import ClientDNS
 from swisssign_ra_api.v2.model.issue_request import IssueRequest
 from swisssign_ra_api.v2.model.revocation_request import RevocationRequest
 from swisssign_ra_api.v2.model.search_certificate_order import SearchCertificateOrder
-# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch/v2
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
 # See configuration.py for a list of all supported configuration parameters.
 configuration = swisssign_ra_api.v2.Configuration(
-    host = "https://api.ra.pre.swisssign.ch/v2"
+    host = "https://api.ra.pre.swisssign.ch"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -100,7 +100,7 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
+All URIs are relative to *https://api.ra.pre.swisssign.ch*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

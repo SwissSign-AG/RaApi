@@ -74,7 +74,7 @@ ctx = context.WithValue(context.Background(), swisssign_ra_api.v2.ContextOperati
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
+All URIs are relative to *https://api.ra.pre.swisssign.ch*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

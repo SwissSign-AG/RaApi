@@ -89,7 +89,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -115,7 +115,7 @@ public class Example {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
+All URIs are relative to *https://api.ra.pre.swisssign.ch*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
