@@ -223,7 +223,7 @@ __Example__
 
 ```
 curl -X 'POST' \
-'https://host:port/api/ra/v2/order/ord-157e726e-cf28-44cc-bfbe-485c0a5abe7b/certificate/chain' \
+'https://api.ra.swisssign.ch/v2/order/ord-157e726e-cf28-44cc-bfbe-485c0a5abe7b/certificate/chain' \
 -H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._ 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
 ```
