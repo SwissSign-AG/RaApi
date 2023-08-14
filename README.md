@@ -248,7 +248,7 @@ curl -X 'POST' \
 -d '[
       {
         "serialNumber": "3893409CB666E1F092B7B6F28E1EAF4582AA7F21",
-        "issuerName": "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+        "issuerName": "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA",
         "revocationReason": "superseded"
       }
     ]' \
