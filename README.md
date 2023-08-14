@@ -22,12 +22,13 @@
 
 ## Table of Contents
 
-* [Generate a user JWT given an account and API Key](https://github.com/SwissSign-AG/RaApi#generate-a-user-jwt-given-an-account-and-api-key-a-namejwt)
+* [Generate a user JWT given an account and API Key](https://github.com/SwissSign-AG/RaApi#generate-a-user-jwt-given-an-account-and-api-key)
 * [Search for Clients and associated Products](https://github.com/SwissSign-AG/RaApi#search-for-clients-and-associated-products)
 * [Lookup a Client using its reference identifier (cli-_uuid_)](https://github.com/SwissSign-AG/RaApi#lookup-a-client-using-its-reference-identifier-cli-uuid)
-* [Issue a certificate using a CSR for the selected certificate product](https://github.com/SwissSign-AG/RaApi#issue-a-certificate-using-a-csr-for-the-selected-certificate-product-identifier-pma-uuid)
-* [Retrieve a Certificate Order status given its reference identifier](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-order-status-given-its-reference-identifier-ord-uuid)
+* [Issue a certificate using a CSR for the selected certificate product](https://github.com/SwissSign-AG/RaApi#issue-a-certificate-using-a-csr-for-the-selected-certificate-product)
+* [Retrieve a Certificate Order status given its reference identifier (ord-_uuid_)](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-order-status-given-its-reference-identifier-ord-uuid)
 * [Retrieve a Certificate Order given its reference identifier (ord-_uuid_)](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-order-given-its-reference-identifier-ord-uuid)
+* [Retrieve a certificate chain](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-chain)
 * [Revoke one or multiple issued certificates](https://github.com/SwissSign-AG/RaApi#revoke-one-or-multiple-issued-certificates)
 * [Client domain owner check management](https://github.com/SwissSign-AG/RaApi#client-domain-owner-check-management)
   * [List Client Domains](https://github.com/SwissSign-AG/RaApi#list-client-domains)
@@ -132,6 +133,7 @@ curl -X 'POST' \
 ---
 
 ### Issue a certificate using a CSR for the selected certificate product
+
 identifier (pma-_uuid_)
 
 __/v2/issue/csr/{productReference}__
@@ -162,7 +164,8 @@ Rw==
 
 ---
 
-### Retrieve a Certificate Order status given its reference identifier
+### Retrieve a Certificate Order status given its reference identifier (ord-_uuid_)
+
 (ord-_uuid_)
 
 __/v2/order/{orderReference}/status__
