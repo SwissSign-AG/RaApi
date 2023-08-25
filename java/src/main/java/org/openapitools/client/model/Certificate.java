@@ -79,16 +79,16 @@ public class Certificate {
   @SerializedName(SERIALIZED_NAME_REVOCATION_STATUS)
   private RevocationStatus revocationStatus;
 
-  public Certificate() { 
+  public Certificate() {
   }
 
   
   public Certificate(
-     String subject, 
-     String issuer, 
-     String serial, 
-     OffsetDateTime startValidity, 
-     OffsetDateTime endValidity, 
+     String subject,
+     String issuer,
+     String serial,
+     OffsetDateTime startValidity,
+     OffsetDateTime endValidity,
      String certificate
   ) {
     this();
@@ -324,7 +324,7 @@ public class Certificate {
         throw new IllegalArgumentException(String.format("Expected the field `certificate` to be a primitive type in the JSON string but got `%s`", jsonObj.get("certificate").toString()));
       }
       // validate the optional field `revocationStatus`
-      if (jsonObj.getAsJsonObject("revocationStatus") != null) {
+      if (jsonObj.get("revocationStatus").isJsonObject()) {
         RevocationStatus.validateJsonObject(jsonObj.getAsJsonObject("revocationStatus"));
       }
   }

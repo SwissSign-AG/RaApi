@@ -87,13 +87,13 @@ public class CertificateOrder {
   @SerializedName(SERIALIZED_NAME_ISSUED_BY)
   private String issuedBy;
 
-  public CertificateOrder() { 
+  public CertificateOrder() {
   }
 
   
   public CertificateOrder(
-     String clientReference, 
-     String productReference, 
+     String clientReference,
+     String productReference,
      String issuedBy
   ) {
     this();
@@ -383,7 +383,7 @@ public class CertificateOrder {
         throw new IllegalArgumentException(String.format("Expected the field `productReference` to be a primitive type in the JSON string but got `%s`", jsonObj.get("productReference").toString()));
       }
       // validate the optional field `certificate`
-      if (jsonObj.getAsJsonObject("certificate") != null) {
+      if (jsonObj.get("certificate").isJsonObject()) {
         Certificate.validateJsonObject(jsonObj.getAsJsonObject("certificate"));
       }
       JsonArray jsonArrayadditionalRecipients = jsonObj.getAsJsonArray("additionalRecipients");
