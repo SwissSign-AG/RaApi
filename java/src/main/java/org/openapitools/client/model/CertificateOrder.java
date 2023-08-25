@@ -87,13 +87,13 @@ public class CertificateOrder {
   @SerializedName(SERIALIZED_NAME_ISSUED_BY)
   private String issuedBy;
 
-  public CertificateOrder() {
+  public CertificateOrder() { 
   }
 
   
   public CertificateOrder(
-     String clientReference,
-     String productReference,
+     String clientReference, 
+     String productReference, 
      String issuedBy
   ) {
     this();

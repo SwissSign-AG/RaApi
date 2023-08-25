@@ -79,16 +79,16 @@ public class Certificate {
   @SerializedName(SERIALIZED_NAME_REVOCATION_STATUS)
   private RevocationStatus revocationStatus;
 
-  public Certificate() {
+  public Certificate() { 
   }
 
   
   public Certificate(
-     String subject,
-     String issuer,
-     String serial,
-     OffsetDateTime startValidity,
-     OffsetDateTime endValidity,
+     String subject, 
+     String issuer, 
+     String serial, 
+     OffsetDateTime startValidity, 
+     OffsetDateTime endValidity, 
      String certificate
   ) {
     this();
