@@ -3,7 +3,7 @@
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.ra.pre.swisssign.ch*
+All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 
 | Class | Method | HTTP request | Description |
 |------------ | ------------- | ------------- | -------------|

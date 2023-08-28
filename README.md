@@ -1,8 +1,6 @@
 ## Getting started
 
 
-
-
 ### Basic workflow to generate a certificate via the RA API:
 
 ---
@@ -22,12 +20,13 @@
 
 ## Table of Contents
 
-* [Generate a user JWT given an account and API Key](https://github.com/SwissSign-AG/RaApi#generate-a-user-jwt-given-an-account-and-api-key-a-namejwt)
+* [Generate a user JWT given an account and API Key](https://github.com/SwissSign-AG/RaApi#generate-a-user-jwt-given-an-account-and-api-key)
 * [Search for Clients and associated Products](https://github.com/SwissSign-AG/RaApi#search-for-clients-and-associated-products)
 * [Lookup a Client using its reference identifier (cli-_uuid_)](https://github.com/SwissSign-AG/RaApi#lookup-a-client-using-its-reference-identifier-cli-uuid)
 * [Issue a certificate using a CSR for the selected certificate product](https://github.com/SwissSign-AG/RaApi#issue-a-certificate-using-a-csr-for-the-selected-certificate-product-identifier-pma-uuid)
-* [Retrieve a Certificate Order status given its reference identifier](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-order-status-given-its-reference-identifier-ord-uuid)
+* [Retrieve a Certificate Order status given its reference identifier (ord-_uuid_)](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-order-status-given-its-reference-identifier-ord-uuid)
 * [Retrieve a Certificate Order given its reference identifier (ord-_uuid_)](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-order-given-its-reference-identifier-ord-uuid)
+* [Retrieve a certificate chain](https://github.com/SwissSign-AG/RaApi#retrieve-a-certificate-chain)
 * [Revoke one or multiple issued certificates](https://github.com/SwissSign-AG/RaApi#revoke-one-or-multiple-issued-certificates)
 * [Client domain owner check management](https://github.com/SwissSign-AG/RaApi#client-domain-owner-check-management)
   * [List Client Domains](https://github.com/SwissSign-AG/RaApi#list-client-domains)
@@ -116,13 +115,23 @@ curl -X 'POST' \
 
 __/v2/client/{clientReference}__
 
-Fetch a client description by reference.
+Search for Clients and their associated products. Returns a list of all
+available Clients and associated certificate products you can issue.
+
+Each client product has a unique product reference (pma-_uuid_) which you
+reference for issuing certificates for the selected certificate product.
+
+You can also access a client directly by using the client reference
+(cli-_uuid_).
+
+Optionally, you may search for specific clients by providing a search
+parameter value.
 
 __Example__
 
 ```
 curl -X 'POST' \
-'https://api.ra.swisssign.ch/v2/client/cli-xxxx' \
+'https://api.ra.swisssign.ch/v2/clients?search=Client%2A' \
 -H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._
 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
@@ -131,8 +140,7 @@ curl -X 'POST' \
 
 ---
 
-### Issue a certificate using a CSR for the selected certificate product
-identifier (pma-_uuid_)
+### Issue a certificate using a CSR for the selected certificate product identifier (pma-_uuid_)
 
 __/v2/issue/csr/{productReference}__
 
@@ -162,8 +170,7 @@ Rw==
 
 ---
 
-### Retrieve a Certificate Order status given its reference identifier
-(ord-_uuid_)
+### Retrieve a Certificate Order status given its reference identifier (ord-_uuid_)
 
 __/v2/order/{orderReference}/status__
 
@@ -198,7 +205,7 @@ __Example__
 
 ```
 curl -X 'POST' \
-'https://api.ra.swisssign.ch/v2/order/order-uuid' \
+'https://api.ra.swisssign.ch/v2/orders' \
 -H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._
 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
@@ -214,13 +221,13 @@ Retrieve a certificate chain given its Order reference identifier (ord-uuid)
 
 __/v2/order/{orderReference}/certificate/chain__
 
-Retrieve the certificate chain as a list of certificates, given an order reference (ord-uuid).
+Retrieve the certificate chain in PKCS#7 base64 encoded given an order reference (ord-uuid).
 
 __Example__
 
 ```
 curl -X 'POST' \
-'https://host:port/api/ra/v2/order/ord-157e726e-cf28-44cc-bfbe-485c0a5abe7b/certificate/chain' \
+'https://api.ra.swisssign.ch/v2/order/ord-157e726e-cf28-44cc-bfbe-485c0a5abe7b/certificate/chain' \
 -H 'accept: application/json' \
 -H 'Authorization: Bearer eyJ0eXAi _... [snipped] ..._ 9Vpt_k2BdnTKssp5btKA7MfHkVVEvk'
 ```
@@ -245,7 +252,7 @@ curl -X 'POST' \
 -d '[
       {
         "serialNumber": "3893409CB666E1F092B7B6F28E1EAF4582AA7F21",
-        "issuerName": "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+        "issuerName": "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA",
         "revocationReason": "superseded"
       }
     ]' \
