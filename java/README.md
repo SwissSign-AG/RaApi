@@ -1,7 +1,7 @@
 # openapi-java-client
 
 SwissSign RA REST API
-- API version: 2.2.9
+- API version: 2.3.0
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
@@ -39,7 +39,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>2.2.9</version>
+  <version>2.3.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -55,7 +55,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "org.openapitools:openapi-java-client:2.2.9"
+     implementation "org.openapitools:openapi-java-client:2.3.0"
   }
 ```
 
@@ -69,7 +69,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-2.2.9.jar`
+* `target/openapi-java-client-2.3.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -89,7 +89,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -115,7 +115,7 @@ public class Example {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.ra.pre.swisssign.ch*
+All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

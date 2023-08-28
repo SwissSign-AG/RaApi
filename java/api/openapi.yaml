@@ -5,12 +5,12 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.2.9
+  version: 2.3.0
 servers:
 - description: Pre Production
-  url: https://api.ra.pre.swisssign.ch
+  url: https://api.ra.pre.swisssign.ch/v2
 - description: Production
-  url: https://api.ra.swisssign.ch
+  url: https://api.ra.swisssign.ch/v2
 paths:
   /v2/jwt/{userName}:
     post:

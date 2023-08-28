@@ -1248,11 +1248,11 @@
   },
   "servers": [
     {
-      "url": "https://api.ra.pre.swisssign.ch",
+      "url": "https://api.ra.pre.swisssign.ch/v2",
       "description": "Pre Production"
     },
     {
-      "url": "https://api.ra.swisssign.ch",
+      "url": "https://api.ra.swisssign.ch/v2",
       "description": "Production"
     }
   ],
@@ -3195,7 +3195,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.2.9",
+    "version": "2.3.0",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"
