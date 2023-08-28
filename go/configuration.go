@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.2.9
+API version: 2.3.0
 Contact: ssc@swisssign.com
 */
 
@@ -102,15 +102,15 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "OpenAPI-Generator/2.2.9/go",
+		UserAgent:        "OpenAPI-Generator/2.3.0/go",
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
-				URL: "https://api.ra.pre.swisssign.ch",
+				URL: "https://api.ra.pre.swisssign.ch/v2",
 				Description: "Pre Production",
 			},
 			{
-				URL: "https://api.ra.swisssign.ch",
+				URL: "https://api.ra.swisssign.ch/v2",
 				Description: "Production",
 			},
 		},

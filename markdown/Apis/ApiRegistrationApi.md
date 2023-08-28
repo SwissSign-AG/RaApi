@@ -1,6 +1,6 @@
 # ApiRegistrationApi
 
-All URIs are relative to *https://api.ra.pre.swisssign.ch*
+All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|

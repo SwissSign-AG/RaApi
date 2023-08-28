@@ -1,6 +1,6 @@
 # ApiRegistrationApi
 
-All URIs are relative to *https://api.ra.pre.swisssign.ch*
+All URIs are relative to *https://api.ra.pre.swisssign.ch/v2*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -50,7 +50,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -123,7 +123,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -196,7 +196,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -269,7 +269,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -339,7 +339,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -410,7 +410,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -481,7 +481,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -552,7 +552,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -623,7 +623,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -694,7 +694,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -765,7 +765,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -836,7 +836,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -907,7 +907,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -978,7 +978,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -1056,7 +1056,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -1126,7 +1126,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
 
     ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
     String userName = "userName_example"; // String | 
@@ -1195,7 +1195,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -1266,7 +1266,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -1336,7 +1336,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -1407,7 +1407,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -1477,7 +1477,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -1548,7 +1548,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
@@ -1618,7 +1618,7 @@ import org.openapitools.client.api.ApiRegistrationApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch/v2");
     
     // Configure HTTP bearer authorization: BearerAuth
     HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
