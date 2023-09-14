@@ -5,11 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **str** | Certificate Order Task reference | [readonly] 
-**time_scheduled** | **datetime** | Scheduled date time | [readonly] 
 **status** | [**JobStatus**](JobStatus.md) |  | 
 **type** | [**JobType**](JobType.md) |  | 
 **number_of_executions** | **int** | Number of executions | [readonly] 
-**created_on** | **datetime** | Certificate Order creation date time | [optional] [readonly] 
+**time_created** | **datetime, none_type** | Certificate Order creation date time | [optional] [readonly] 
+**time_scheduled** | **datetime, none_type** | Scheduled date time | [optional] [readonly] 
 **time_started** | **datetime, none_type** | Started date time | [optional] [readonly] 
 **time_finished** | **datetime, none_type** | Finished date time | [optional] [readonly] 
 **response** | **str, none_type** | Response | [optional] [readonly] 

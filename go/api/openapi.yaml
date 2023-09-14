@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.3.0
+  version: 2.3.1
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch
@@ -2176,13 +2176,13 @@ components:
       example:
         timeScheduled: 2022-02-12T05:10:50.52Z
         response: Processed successfully
+        timeCreated: 2022-02-12T05:10:50.52Z
         timeStarted: 2022-02-12T05:10:50.52Z
         timeFinished: 2022-02-12T05:10:50.52Z
         numberOfExecutions: 2
         type: ISSUE_FINALIZE_ISSUE_CERTIFICATE_JOB
         error: Error processing xyz ...
         uuid: job-f0725b50-c533-4802-a844-de57bfb7a80e
-        createdOn: 2022-02-12T05:10:50.52Z
         status: SUCCESS
       properties:
         uuid:
@@ -2192,18 +2192,18 @@ components:
           pattern: "job-[0-9a-f-]{36}"
           readOnly: true
           type: string
-        createdOn:
+        timeCreated:
           description: Certificate Order creation date time
           example: 2022-02-12T05:10:50.52Z
           format: date-time
-          nullable: false
+          nullable: true
           readOnly: true
           type: string
         timeScheduled:
           description: Scheduled date time
           example: 2022-02-12T05:10:50.52Z
           format: date-time
-          nullable: false
+          nullable: true
           readOnly: true
           type: string
         timeStarted:
@@ -2227,6 +2227,7 @@ components:
         numberOfExecutions:
           description: Number of executions
           example: 2
+          minimum: 0
           nullable: false
           readOnly: true
           type: integer
@@ -2245,8 +2246,6 @@ components:
       required:
       - numberOfExecutions
       - status
-      - timeCreated
-      - timeScheduled
       - type
       - uuid
       type: object

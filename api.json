@@ -759,8 +759,6 @@
         "type": "object",
         "required": [
           "uuid",
-          "timeCreated",
-          "timeScheduled",
           "numberOfExecutions",
           "status",
           "type"
@@ -774,10 +772,10 @@
             "description": "Certificate Order Task reference",
             "example": "job-f0725b50-c533-4802-a844-de57bfb7a80e"
           },
-          "createdOn": {
+          "timeCreated": {
             "type": "string",
             "format": "date-time",
-            "nullable": false,
+            "nullable": true,
             "readOnly": true,
             "description": "Certificate Order creation date time",
             "example": "2022-02-12T05:10:50.52Z"
@@ -785,7 +783,7 @@
           "timeScheduled": {
             "type": "string",
             "format": "date-time",
-            "nullable": false,
+            "nullable": true,
             "readOnly": true,
             "description": "Scheduled date time",
             "example": "2022-02-12T05:10:50.52Z"
@@ -817,7 +815,8 @@
             "nullable": false,
             "readOnly": true,
             "description": "Number of executions",
-            "example": 2
+            "example": 2,
+            "minimum": 0
           },
           "response": {
             "type": "string",
@@ -3195,7 +3194,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"

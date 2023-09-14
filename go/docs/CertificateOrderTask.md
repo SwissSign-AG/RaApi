@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Uuid** | **string** | Certificate Order Task reference | [readonly] 
-**CreatedOn** | Pointer to **time.Time** | Certificate Order creation date time | [optional] [readonly] 
-**TimeScheduled** | **time.Time** | Scheduled date time | [readonly] 
+**TimeCreated** | Pointer to **NullableTime** | Certificate Order creation date time | [optional] [readonly] 
+**TimeScheduled** | Pointer to **NullableTime** | Scheduled date time | [optional] [readonly] 
 **TimeStarted** | Pointer to **NullableTime** | Started date time | [optional] [readonly] 
 **TimeFinished** | Pointer to **NullableTime** | Finished date time | [optional] [readonly] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewCertificateOrderTask
 
-`func NewCertificateOrderTask(uuid string, timeScheduled time.Time, status JobStatus, type_ JobType, numberOfExecutions int32, ) *CertificateOrderTask`
+`func NewCertificateOrderTask(uuid string, status JobStatus, type_ JobType, numberOfExecutions int32, ) *CertificateOrderTask`
 
 NewCertificateOrderTask instantiates a new CertificateOrderTask object
 This constructor will assign default values to properties that have it defined,
@@ -54,31 +54,41 @@ and a boolean to check if the value has been set.
 SetUuid sets Uuid field to given value.
 
 
-### GetCreatedOn
+### GetTimeCreated
 
-`func (o *CertificateOrderTask) GetCreatedOn() time.Time`
+`func (o *CertificateOrderTask) GetTimeCreated() time.Time`
 
-GetCreatedOn returns the CreatedOn field if non-nil, zero value otherwise.
+GetTimeCreated returns the TimeCreated field if non-nil, zero value otherwise.
 
-### GetCreatedOnOk
+### GetTimeCreatedOk
 
-`func (o *CertificateOrderTask) GetCreatedOnOk() (*time.Time, bool)`
+`func (o *CertificateOrderTask) GetTimeCreatedOk() (*time.Time, bool)`
 
-GetCreatedOnOk returns a tuple with the CreatedOn field if it's non-nil, zero value otherwise
+GetTimeCreatedOk returns a tuple with the TimeCreated field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreatedOn
+### SetTimeCreated
 
-`func (o *CertificateOrderTask) SetCreatedOn(v time.Time)`
+`func (o *CertificateOrderTask) SetTimeCreated(v time.Time)`
 
-SetCreatedOn sets CreatedOn field to given value.
+SetTimeCreated sets TimeCreated field to given value.
 
-### HasCreatedOn
+### HasTimeCreated
 
-`func (o *CertificateOrderTask) HasCreatedOn() bool`
+`func (o *CertificateOrderTask) HasTimeCreated() bool`
 
-HasCreatedOn returns a boolean if a field has been set.
+HasTimeCreated returns a boolean if a field has been set.
 
+### SetTimeCreatedNil
+
+`func (o *CertificateOrderTask) SetTimeCreatedNil(b bool)`
+
+ SetTimeCreatedNil sets the value for TimeCreated to be an explicit nil
+
+### UnsetTimeCreated
+`func (o *CertificateOrderTask) UnsetTimeCreated()`
+
+UnsetTimeCreated ensures that no value is present for TimeCreated, not even an explicit nil
 ### GetTimeScheduled
 
 `func (o *CertificateOrderTask) GetTimeScheduled() time.Time`
@@ -98,7 +108,22 @@ and a boolean to check if the value has been set.
 
 SetTimeScheduled sets TimeScheduled field to given value.
 
+### HasTimeScheduled
 
+`func (o *CertificateOrderTask) HasTimeScheduled() bool`
+
+HasTimeScheduled returns a boolean if a field has been set.
+
+### SetTimeScheduledNil
+
+`func (o *CertificateOrderTask) SetTimeScheduledNil(b bool)`
+
+ SetTimeScheduledNil sets the value for TimeScheduled to be an explicit nil
+
+### UnsetTimeScheduled
+`func (o *CertificateOrderTask) UnsetTimeScheduled()`
+
+UnsetTimeScheduled ensures that no value is present for TimeScheduled, not even an explicit nil
 ### GetTimeStarted
 
 `func (o *CertificateOrderTask) GetTimeStarted() time.Time`

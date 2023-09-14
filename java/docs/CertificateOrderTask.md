@@ -8,8 +8,8 @@
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 |**uuid** | **String** | Certificate Order Task reference |  [readonly] |
-|**createdOn** | **OffsetDateTime** | Certificate Order creation date time |  [optional] [readonly] |
-|**timeScheduled** | **OffsetDateTime** | Scheduled date time |  [readonly] |
+|**timeCreated** | **OffsetDateTime** | Certificate Order creation date time |  [optional] [readonly] |
+|**timeScheduled** | **OffsetDateTime** | Scheduled date time |  [optional] [readonly] |
 |**timeStarted** | **OffsetDateTime** | Started date time |  [optional] [readonly] |
 |**timeFinished** | **OffsetDateTime** | Finished date time |  [optional] [readonly] |
 |**status** | **JobStatus** |  |  |

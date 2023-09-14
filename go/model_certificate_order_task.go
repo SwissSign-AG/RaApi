@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.3.0
+API version: 2.3.1
 Contact: ssc@swisssign.com
 */
 
@@ -21,9 +21,9 @@ type CertificateOrderTask struct {
 	// Certificate Order Task reference
 	Uuid string `json:"uuid"`
 	// Certificate Order creation date time
-	CreatedOn *time.Time `json:"createdOn,omitempty"`
+	TimeCreated NullableTime `json:"timeCreated,omitempty"`
 	// Scheduled date time
-	TimeScheduled time.Time `json:"timeScheduled"`
+	TimeScheduled NullableTime `json:"timeScheduled,omitempty"`
 	// Started date time
 	TimeStarted NullableTime `json:"timeStarted,omitempty"`
 	// Finished date time
@@ -42,10 +42,9 @@ type CertificateOrderTask struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCertificateOrderTask(uuid string, timeScheduled time.Time, status JobStatus, type_ JobType, numberOfExecutions int32) *CertificateOrderTask {
+func NewCertificateOrderTask(uuid string, status JobStatus, type_ JobType, numberOfExecutions int32) *CertificateOrderTask {
 	this := CertificateOrderTask{}
 	this.Uuid = uuid
-	this.TimeScheduled = timeScheduled
 	this.Status = status
 	this.Type = type_
 	this.NumberOfExecutions = numberOfExecutions
@@ -84,60 +83,88 @@ func (o *CertificateOrderTask) SetUuid(v string) {
 	o.Uuid = v
 }
 
-// GetCreatedOn returns the CreatedOn field value if set, zero value otherwise.
-func (o *CertificateOrderTask) GetCreatedOn() time.Time {
-	if o == nil || o.CreatedOn == nil {
+// GetTimeCreated returns the TimeCreated field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CertificateOrderTask) GetTimeCreated() time.Time {
+	if o == nil || o.TimeCreated.Get() == nil {
 		var ret time.Time
 		return ret
 	}
-	return *o.CreatedOn
+	return *o.TimeCreated.Get()
 }
 
-// GetCreatedOnOk returns a tuple with the CreatedOn field value if set, nil otherwise
+// GetTimeCreatedOk returns a tuple with the TimeCreated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CertificateOrderTask) GetCreatedOnOk() (*time.Time, bool) {
-	if o == nil || o.CreatedOn == nil {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CertificateOrderTask) GetTimeCreatedOk() (*time.Time, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedOn, true
+	return o.TimeCreated.Get(), o.TimeCreated.IsSet()
 }
 
-// HasCreatedOn returns a boolean if a field has been set.
-func (o *CertificateOrderTask) HasCreatedOn() bool {
-	if o != nil && o.CreatedOn != nil {
+// HasTimeCreated returns a boolean if a field has been set.
+func (o *CertificateOrderTask) HasTimeCreated() bool {
+	if o != nil && o.TimeCreated.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCreatedOn gets a reference to the given time.Time and assigns it to the CreatedOn field.
-func (o *CertificateOrderTask) SetCreatedOn(v time.Time) {
-	o.CreatedOn = &v
+// SetTimeCreated gets a reference to the given NullableTime and assigns it to the TimeCreated field.
+func (o *CertificateOrderTask) SetTimeCreated(v time.Time) {
+	o.TimeCreated.Set(&v)
+}
+// SetTimeCreatedNil sets the value for TimeCreated to be an explicit nil
+func (o *CertificateOrderTask) SetTimeCreatedNil() {
+	o.TimeCreated.Set(nil)
 }
 
-// GetTimeScheduled returns the TimeScheduled field value
+// UnsetTimeCreated ensures that no value is present for TimeCreated, not even an explicit nil
+func (o *CertificateOrderTask) UnsetTimeCreated() {
+	o.TimeCreated.Unset()
+}
+
+// GetTimeScheduled returns the TimeScheduled field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CertificateOrderTask) GetTimeScheduled() time.Time {
-	if o == nil {
+	if o == nil || o.TimeScheduled.Get() == nil {
 		var ret time.Time
 		return ret
 	}
-
-	return o.TimeScheduled
+	return *o.TimeScheduled.Get()
 }
 
-// GetTimeScheduledOk returns a tuple with the TimeScheduled field value
+// GetTimeScheduledOk returns a tuple with the TimeScheduled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CertificateOrderTask) GetTimeScheduledOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.TimeScheduled, true
+	return o.TimeScheduled.Get(), o.TimeScheduled.IsSet()
 }
 
-// SetTimeScheduled sets field value
+// HasTimeScheduled returns a boolean if a field has been set.
+func (o *CertificateOrderTask) HasTimeScheduled() bool {
+	if o != nil && o.TimeScheduled.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeScheduled gets a reference to the given NullableTime and assigns it to the TimeScheduled field.
 func (o *CertificateOrderTask) SetTimeScheduled(v time.Time) {
-	o.TimeScheduled = v
+	o.TimeScheduled.Set(&v)
+}
+// SetTimeScheduledNil sets the value for TimeScheduled to be an explicit nil
+func (o *CertificateOrderTask) SetTimeScheduledNil() {
+	o.TimeScheduled.Set(nil)
+}
+
+// UnsetTimeScheduled ensures that no value is present for TimeScheduled, not even an explicit nil
+func (o *CertificateOrderTask) UnsetTimeScheduled() {
+	o.TimeScheduled.Unset()
 }
 
 // GetTimeStarted returns the TimeStarted field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -385,11 +412,11 @@ func (o CertificateOrderTask) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["uuid"] = o.Uuid
 	}
-	if o.CreatedOn != nil {
-		toSerialize["createdOn"] = o.CreatedOn
+	if o.TimeCreated.IsSet() {
+		toSerialize["timeCreated"] = o.TimeCreated.Get()
 	}
-	if true {
-		toSerialize["timeScheduled"] = o.TimeScheduled
+	if o.TimeScheduled.IsSet() {
+		toSerialize["timeScheduled"] = o.TimeScheduled.Get()
 	}
 	if o.TimeStarted.IsSet() {
 		toSerialize["timeStarted"] = o.TimeStarted.Get()

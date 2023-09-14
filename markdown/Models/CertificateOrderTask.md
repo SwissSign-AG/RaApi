@@ -4,8 +4,8 @@
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 | **uuid** | **String** | Certificate Order Task reference | [default to null] |
-| **createdOn** | **Date** | Certificate Order creation date time | [optional] [default to null] |
-| **timeScheduled** | **Date** | Scheduled date time | [default to null] |
+| **timeCreated** | **Date** | Certificate Order creation date time | [optional] [default to null] |
+| **timeScheduled** | **Date** | Scheduled date time | [optional] [default to null] |
 | **timeStarted** | **Date** | Started date time | [optional] [default to null] |
 | **timeFinished** | **Date** | Finished date time | [optional] [default to null] |
 | **status** | [**JobStatus**](JobStatus.md) |  | [default to null] |
