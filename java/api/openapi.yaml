@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.3.7
+  version: 2.3.8
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch
@@ -1995,6 +1995,7 @@ components:
           documentName: my_document.pdf
         publishCertificate: true
         acceptTandC: true
+        includeCertificateChain: true
       properties:
         productReference:
           description: Product reference
@@ -2061,6 +2062,13 @@ components:
         acceptTandC:
           default: true
           description: "When server backend has T&C enabled, this value is checked.\n"
+          example: true
+          nullable: false
+          type: boolean
+        includeCertificateChain:
+          default: false
+          description: |
+            Include the certificate chain in the reply (only valid when 'synchrone' is true).
           example: true
           nullable: false
           type: boolean
@@ -2137,6 +2145,9 @@ components:
         - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
           language: NEUTRAL
           email: shared.mailbox@sample.org
+        certificateChain:
+        - certificateChain
+        - certificateChain
         issuedBy: some@email.org
         clientReference: cli-123e4567-e89b-12d3-a456-426614174000
         certificate:
@@ -2185,6 +2196,15 @@ components:
           type: string
         certificate:
           $ref: '#/components/schemas/Certificate'
+        certificateChain:
+          description: Certificate chain
+          items:
+            nullable: true
+            readOnly: true
+            type: string
+          nullable: true
+          readOnly: true
+          type: array
         additionalRecipients:
           items:
             $ref: '#/components/schemas/AdditionalRecipient'

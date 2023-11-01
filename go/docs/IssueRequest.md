@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **PublishCertificate** | Pointer to **bool** | Publish certificate to repository. Publication occurs if option is enabled on certificate policy or if the account has the option enabled to override the publication.  | [optional] 
 **Synchrone** | Pointer to **bool** | Request is sent asynchronously to the backend by default.  Setting this value to _true_ will wait until the certificate is issued and return the completed certificate order. For successful synchrone issuance, _insure_ that you have all prerequisites for DNS validation and/or Authorization fulfilled.  | [optional] [default to false]
 **AcceptTandC** | Pointer to **bool** | When server backend has T&amp;C enabled, this value is checked.  | [optional] [default to true]
+**IncludeCertificateChain** | Pointer to **bool** | Include the certificate chain in the reply (only valid when &#39;synchrone&#39; is true).  | [optional] [default to false]
 
 ## Methods
 
@@ -272,6 +273,31 @@ SetAcceptTandC sets AcceptTandC field to given value.
 `func (o *IssueRequest) HasAcceptTandC() bool`
 
 HasAcceptTandC returns a boolean if a field has been set.
+
+### GetIncludeCertificateChain
+
+`func (o *IssueRequest) GetIncludeCertificateChain() bool`
+
+GetIncludeCertificateChain returns the IncludeCertificateChain field if non-nil, zero value otherwise.
+
+### GetIncludeCertificateChainOk
+
+`func (o *IssueRequest) GetIncludeCertificateChainOk() (*bool, bool)`
+
+GetIncludeCertificateChainOk returns a tuple with the IncludeCertificateChain field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncludeCertificateChain
+
+`func (o *IssueRequest) SetIncludeCertificateChain(v bool)`
+
+SetIncludeCertificateChain sets IncludeCertificateChain field to given value.
+
+### HasIncludeCertificateChain
+
+`func (o *IssueRequest) HasIncludeCertificateChain() bool`
+
+HasIncludeCertificateChain returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

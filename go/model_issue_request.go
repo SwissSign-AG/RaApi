@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.3.7
+API version: 2.3.8
 Contact: ssc@swisssign.com
 */
 
@@ -32,6 +32,8 @@ type IssueRequest struct {
 	Synchrone *bool `json:"synchrone,omitempty"`
 	// When server backend has T&C enabled, this value is checked. 
 	AcceptTandC *bool `json:"acceptTandC,omitempty"`
+	// Include the certificate chain in the reply (only valid when 'synchrone' is true). 
+	IncludeCertificateChain *bool `json:"includeCertificateChain,omitempty"`
 }
 
 // NewIssueRequest instantiates a new IssueRequest object
@@ -45,6 +47,8 @@ func NewIssueRequest(productReference string) *IssueRequest {
 	this.Synchrone = &synchrone
 	var acceptTandC bool = true
 	this.AcceptTandC = &acceptTandC
+	var includeCertificateChain bool = false
+	this.IncludeCertificateChain = &includeCertificateChain
 	return &this
 }
 
@@ -57,6 +61,8 @@ func NewIssueRequestWithDefaults() *IssueRequest {
 	this.Synchrone = &synchrone
 	var acceptTandC bool = true
 	this.AcceptTandC = &acceptTandC
+	var includeCertificateChain bool = false
+	this.IncludeCertificateChain = &includeCertificateChain
 	return &this
 }
 
@@ -360,6 +366,38 @@ func (o *IssueRequest) SetAcceptTandC(v bool) {
 	o.AcceptTandC = &v
 }
 
+// GetIncludeCertificateChain returns the IncludeCertificateChain field value if set, zero value otherwise.
+func (o *IssueRequest) GetIncludeCertificateChain() bool {
+	if o == nil || o.IncludeCertificateChain == nil {
+		var ret bool
+		return ret
+	}
+	return *o.IncludeCertificateChain
+}
+
+// GetIncludeCertificateChainOk returns a tuple with the IncludeCertificateChain field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *IssueRequest) GetIncludeCertificateChainOk() (*bool, bool) {
+	if o == nil || o.IncludeCertificateChain == nil {
+		return nil, false
+	}
+	return o.IncludeCertificateChain, true
+}
+
+// HasIncludeCertificateChain returns a boolean if a field has been set.
+func (o *IssueRequest) HasIncludeCertificateChain() bool {
+	if o != nil && o.IncludeCertificateChain != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeCertificateChain gets a reference to the given bool and assigns it to the IncludeCertificateChain field.
+func (o *IssueRequest) SetIncludeCertificateChain(v bool) {
+	o.IncludeCertificateChain = &v
+}
+
 func (o IssueRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -388,6 +426,9 @@ func (o IssueRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.AcceptTandC != nil {
 		toSerialize["acceptTandC"] = o.AcceptTandC
+	}
+	if o.IncludeCertificateChain != nil {
+		toSerialize["includeCertificateChain"] = o.IncludeCertificateChain
 	}
 	return json.Marshal(toSerialize)
 }

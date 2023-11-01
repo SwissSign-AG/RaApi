@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **publish_certificate** | **bool** | Publish certificate to repository. Publication occurs if option is enabled on certificate policy or if the account has the option enabled to override the publication.  | [optional] 
 **synchrone** | **bool** | Request is sent asynchronously to the backend by default.  Setting this value to _true_ will wait until the certificate is issued and return the completed certificate order. For successful synchrone issuance, _insure_ that you have all prerequisites for DNS validation and/or Authorization fulfilled.  | [optional]  if omitted the server will use the default value of False
 **accept_tand_c** | **bool** | When server backend has T&amp;C enabled, this value is checked.  | [optional]  if omitted the server will use the default value of True
+**include_certificate_chain** | **bool** | Include the certificate chain in the reply (only valid when &#39;synchrone&#39; is true).  | [optional]  if omitted the server will use the default value of False
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

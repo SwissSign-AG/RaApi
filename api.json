@@ -666,6 +666,13 @@
             "nullable": false,
             "description": "When server backend has T&C enabled, this value is checked.\n",
             "example": true
+          },
+          "includeCertificateChain": {
+            "type": "boolean",
+            "default": false,
+            "nullable": false,
+            "description": "Include the certificate chain in the reply (only valid when 'synchrone' is true).\n",
+            "example": true
           }
         }
       },
@@ -738,6 +745,17 @@
             "nullable": true,
             "description": "Certificate reference",
             "$ref": "#/components/schemas/Certificate"
+          },
+          "certificateChain": {
+            "description": "Certificate chain",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "readOnly": true,
+              "nullable": true
+            },
+            "readOnly": true,
+            "nullable": true
           },
           "additionalRecipients": {
             "type": "array",
@@ -3194,7 +3212,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.3.7",
+    "version": "2.3.8",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"

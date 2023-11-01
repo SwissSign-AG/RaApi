@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.3.7
+API version: 2.3.8
 Contact: ssc@swisssign.com
 */
 
@@ -28,6 +28,8 @@ type CertificateOrder struct {
 	// Product reference UUID
 	ProductReference string `json:"productReference"`
 	Certificate *Certificate `json:"certificate,omitempty"`
+	// Certificate chain
+	CertificateChain []*string `json:"certificateChain,omitempty"`
 	AdditionalRecipients []AdditionalRecipient `json:"additionalRecipients,omitempty"`
 	// email of the person who created the order
 	IssuedBy *string `json:"issuedBy,omitempty"`
@@ -207,6 +209,39 @@ func (o *CertificateOrder) SetCertificate(v Certificate) {
 	o.Certificate = &v
 }
 
+// GetCertificateChain returns the CertificateChain field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CertificateOrder) GetCertificateChain() []*string {
+	if o == nil {
+		var ret []*string
+		return ret
+	}
+	return o.CertificateChain
+}
+
+// GetCertificateChainOk returns a tuple with the CertificateChain field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CertificateOrder) GetCertificateChainOk() ([]*string, bool) {
+	if o == nil || o.CertificateChain == nil {
+		return nil, false
+	}
+	return o.CertificateChain, true
+}
+
+// HasCertificateChain returns a boolean if a field has been set.
+func (o *CertificateOrder) HasCertificateChain() bool {
+	if o != nil && o.CertificateChain != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCertificateChain gets a reference to the given []*string and assigns it to the CertificateChain field.
+func (o *CertificateOrder) SetCertificateChain(v []*string) {
+	o.CertificateChain = v
+}
+
 // GetAdditionalRecipients returns the AdditionalRecipients field value if set, zero value otherwise.
 func (o *CertificateOrder) GetAdditionalRecipients() []AdditionalRecipient {
 	if o == nil || o.AdditionalRecipients == nil {
@@ -290,6 +325,9 @@ func (o CertificateOrder) MarshalJSON() ([]byte, error) {
 	}
 	if o.Certificate != nil {
 		toSerialize["certificate"] = o.Certificate
+	}
+	if o.CertificateChain != nil {
+		toSerialize["certificateChain"] = o.CertificateChain
 	}
 	if o.AdditionalRecipients != nil {
 		toSerialize["additionalRecipients"] = o.AdditionalRecipients

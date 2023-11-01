@@ -1317,6 +1317,7 @@ CRg0mu4um+/DZaWV6IUOiTPj6wewH+909Ov8f2G+
         publish_certificate=True,
         synchrone=True,
         accept_tand_c=True,
+        include_certificate_chain=True,
     ) # IssueRequest | Issue Request
 
     # example passing only required values which don't have defaults set

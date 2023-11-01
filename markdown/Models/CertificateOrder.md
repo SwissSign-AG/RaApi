@@ -9,6 +9,7 @@
 | **clientReference** | **String** | Client reference UUID | [default to null] |
 | **productReference** | **String** | Product reference UUID | [default to null] |
 | **certificate** | [**Certificate**](Certificate.md) |  | [optional] [default to null] |
+| **certificateChain** | **List** | Certificate chain | [optional] [default to null] |
 | **additionalRecipients** | [**List**](AdditionalRecipient.md) |  | [optional] [default to null] |
 | **issuedBy** | **String** | email of the person who created the order | [optional] [default to null] |
 
