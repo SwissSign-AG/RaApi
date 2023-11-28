@@ -25,6 +25,8 @@ Method | HTTP request | Description
 [**ResetClientPrevalidatedDomain**](ApiRegistrationApi.md#ResetClientPrevalidatedDomain) | **Post** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id
 [**RevokeCertificates**](ApiRegistrationApi.md#RevokeCertificates) | **Post** /v2/revoke | Revoke certificates
 [**SearchClients**](ApiRegistrationApi.md#SearchClients) | **Post** /v2/clients | Search Clients available to the RA Operator
+[**SearchPagedCertificateOrders**](ApiRegistrationApi.md#SearchPagedCertificateOrders) | **Post** /v2/orders/paged | Search Certificate Orders
+[**SearchPagedClients**](ApiRegistrationApi.md#SearchPagedClients) | **Post** /v2/clients/paged | Search Clients available to the RA Operator
 [**UnpublishCertificate**](ApiRegistrationApi.md#UnpublishCertificate) | **Post** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order
 [**ValidateClientPrevalidatedDomain**](ApiRegistrationApi.md#ValidateClientPrevalidatedDomain) | **Post** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id
 
@@ -1478,6 +1480,146 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]Client**](Client.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SearchPagedCertificateOrders
+
+> CertificateOrders SearchPagedCertificateOrders(ctx).SearchCertificateOrder(searchCertificateOrder).Length(length).Start(start).Execute()
+
+Search Certificate Orders
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    searchCertificateOrder := *openapiclient.NewSearchCertificateOrder() // SearchCertificateOrder | Certificate order search options
+    length := int32(56) // int32 | The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used. If length > maximum (default is 300) server side configured length, then the server side setting is used.  (optional)
+    start := int32(56) // int32 | the offset in search result for paging support (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.SearchPagedCertificateOrders(context.Background()).SearchCertificateOrder(searchCertificateOrder).Length(length).Start(start).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.SearchPagedCertificateOrders``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `SearchPagedCertificateOrders`: CertificateOrders
+    fmt.Fprintf(os.Stdout, "Response from `ApiRegistrationApi.SearchPagedCertificateOrders`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSearchPagedCertificateOrdersRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **searchCertificateOrder** | [**SearchCertificateOrder**](SearchCertificateOrder.md) | Certificate order search options | 
+ **length** | **int32** | The number of items to return. When unset or &lt; 0, the maximum (default is 300) server side configured length setting is used. If length &gt; maximum (default is 300) server side configured length, then the server side setting is used.  | 
+ **start** | **int32** | the offset in search result for paging support | 
+
+### Return type
+
+[**CertificateOrders**](CertificateOrders.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SearchPagedClients
+
+> Clients SearchPagedClients(ctx).Search(search).Length(length).Start(start).Execute()
+
+Search Clients available to the RA Operator
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    search := "C?mpan* Ltd" // string |  (optional)
+    length := int32(56) // int32 | The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used. If length > maximum (default is 300) server side configured length, then the server side setting is used.  (optional)
+    start := int32(56) // int32 | the offset in search result for paging support (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.SearchPagedClients(context.Background()).Search(search).Length(length).Start(start).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.SearchPagedClients``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `SearchPagedClients`: Clients
+    fmt.Fprintf(os.Stdout, "Response from `ApiRegistrationApi.SearchPagedClients`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSearchPagedClientsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **search** | **string** |  | 
+ **length** | **int32** | The number of items to return. When unset or &lt; 0, the maximum (default is 300) server side configured length setting is used. If length &gt; maximum (default is 300) server side configured length, then the server side setting is used.  | 
+ **start** | **int32** | the offset in search result for paging support | 
+
+### Return type
+
+[**Clients**](Clients.md)
 
 ### Authorization
 

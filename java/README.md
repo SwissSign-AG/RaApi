@@ -1,7 +1,7 @@
 # openapi-java-client
 
 SwissSign RA REST API
-- API version: 2.3.8
+- API version: 2.3.12
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
@@ -39,7 +39,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>2.3.8</version>
+  <version>2.3.12</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -55,7 +55,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "org.openapitools:openapi-java-client:2.3.8"
+     implementation "org.openapitools:openapi-java-client:2.3.12"
   }
 ```
 
@@ -69,7 +69,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-2.3.8.jar`
+* `target/openapi-java-client-2.3.12.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -140,6 +140,8 @@ Class | Method | HTTP request | Description
 *ApiRegistrationApi* | [**resetClientPrevalidatedDomain**](docs/ApiRegistrationApi.md#resetClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id
 *ApiRegistrationApi* | [**revokeCertificates**](docs/ApiRegistrationApi.md#revokeCertificates) | **POST** /v2/revoke | Revoke certificates
 *ApiRegistrationApi* | [**searchClients**](docs/ApiRegistrationApi.md#searchClients) | **POST** /v2/clients | Search Clients available to the RA Operator
+*ApiRegistrationApi* | [**searchPagedCertificateOrders**](docs/ApiRegistrationApi.md#searchPagedCertificateOrders) | **POST** /v2/orders/paged | Search Certificate Orders
+*ApiRegistrationApi* | [**searchPagedClients**](docs/ApiRegistrationApi.md#searchPagedClients) | **POST** /v2/clients/paged | Search Clients available to the RA Operator
 *ApiRegistrationApi* | [**unpublishCertificate**](docs/ApiRegistrationApi.md#unpublishCertificate) | **POST** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order
 *ApiRegistrationApi* | [**validateClientPrevalidatedDomain**](docs/ApiRegistrationApi.md#validateClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id
 
@@ -153,9 +155,11 @@ Class | Method | HTTP request | Description
  - [CertificateOrder](docs/CertificateOrder.md)
  - [CertificateOrderStatus](docs/CertificateOrderStatus.md)
  - [CertificateOrderTask](docs/CertificateOrderTask.md)
+ - [CertificateOrders](docs/CertificateOrders.md)
  - [Client](docs/Client.md)
  - [ClientDNS](docs/ClientDNS.md)
  - [ClientDomainValidationStatus](docs/ClientDomainValidationStatus.md)
+ - [Clients](docs/Clients.md)
  - [DNS](docs/DNS.md)
  - [IssueRequest](docs/IssueRequest.md)
  - [JobStatus](docs/JobStatus.md)

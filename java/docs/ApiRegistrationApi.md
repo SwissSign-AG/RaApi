@@ -25,6 +25,8 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch*
 | [**resetClientPrevalidatedDomain**](ApiRegistrationApi.md#resetClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id |
 | [**revokeCertificates**](ApiRegistrationApi.md#revokeCertificates) | **POST** /v2/revoke | Revoke certificates |
 | [**searchClients**](ApiRegistrationApi.md#searchClients) | **POST** /v2/clients | Search Clients available to the RA Operator |
+| [**searchPagedCertificateOrders**](ApiRegistrationApi.md#searchPagedCertificateOrders) | **POST** /v2/orders/paged | Search Certificate Orders |
+| [**searchPagedClients**](ApiRegistrationApi.md#searchPagedClients) | **POST** /v2/clients/paged | Search Clients available to the RA Operator |
 | [**unpublishCertificate**](ApiRegistrationApi.md#unpublishCertificate) | **POST** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order |
 | [**validateClientPrevalidatedDomain**](ApiRegistrationApi.md#validateClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id |
 
@@ -679,7 +681,7 @@ public class Example {
 
 Search Certificate Orders
 
-Search for Certificate Orders given search parameters 
+Search for Certificate Orders given search parameters. The result list is limited to the maximum (default is 300) query result list settings. 
 
 ### Example
 ```java
@@ -1462,7 +1464,7 @@ null (empty response body)
 
 Search Clients available to the RA Operator
 
-Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. 
+Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. The result list is limited to the maximum (default is 300) query result list settings 
 
 ### Example
 ```java
@@ -1524,6 +1526,157 @@ public class Example {
 | **200** | success |  -  |
 | **400** | bad request |  -  |
 | **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
+
+<a name="searchPagedCertificateOrders"></a>
+# **searchPagedCertificateOrders**
+> CertificateOrders searchPagedCertificateOrders(searchCertificateOrder, length, start)
+
+Search Certificate Orders
+
+Search for Certificate Orders given search parameters. The search supports paging 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    SearchCertificateOrder searchCertificateOrder = new SearchCertificateOrder(); // SearchCertificateOrder | Certificate order search options
+    Integer length = 56; // Integer | The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used. If length > maximum (default is 300) server side configured length, then the server side setting is used. 
+    Integer start = 56; // Integer | the offset in search result for paging support
+    try {
+      CertificateOrders result = apiInstance.searchPagedCertificateOrders(searchCertificateOrder, length, start);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#searchPagedCertificateOrders");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **searchCertificateOrder** | [**SearchCertificateOrder**](SearchCertificateOrder.md)| Certificate order search options | |
+| **length** | **Integer**| The number of items to return. When unset or &lt; 0, the maximum (default is 300) server side configured length setting is used. If length &gt; maximum (default is 300) server side configured length, then the server side setting is used.  | [optional] |
+| **start** | **Integer**| the offset in search result for paging support | [optional] |
+
+### Return type
+
+[**CertificateOrders**](CertificateOrders.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
+
+<a name="searchPagedClients"></a>
+# **searchPagedClients**
+> Clients searchPagedClients(search, length, start)
+
+Search Clients available to the RA Operator
+
+Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. The search supports paging 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    String search = "C?mpan* Ltd"; // String | 
+    Integer length = 56; // Integer | The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used. If length > maximum (default is 300) server side configured length, then the server side setting is used. 
+    Integer start = 56; // Integer | the offset in search result for paging support
+    try {
+      Clients result = apiInstance.searchPagedClients(search, length, start);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#searchPagedClients");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **search** | **String**|  | [optional] |
+| **length** | **Integer**| The number of items to return. When unset or &lt; 0, the maximum (default is 300) server side configured length setting is used. If length &gt; maximum (default is 300) server side configured length, then the server side setting is used.  | [optional] |
+| **start** | **Integer**| the offset in search result for paging support | [optional] |
+
+### Return type
+
+[**Clients**](Clients.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **403** | Forbidden |  -  |
 | **404** | not found |  -  |
 | **500** | Internal server error |  -  |
 

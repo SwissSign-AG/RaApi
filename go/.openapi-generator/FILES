@@ -14,9 +14,11 @@ docs/Certificate.md
 docs/CertificateOrder.md
 docs/CertificateOrderStatus.md
 docs/CertificateOrderTask.md
+docs/CertificateOrders.md
 docs/Client.md
 docs/ClientDNS.md
 docs/ClientDomainValidationStatus.md
+docs/Clients.md
 docs/DNS.md
 docs/IssueRequest.md
 docs/JobStatus.md
@@ -44,9 +46,11 @@ model_certificate.go
 model_certificate_order.go
 model_certificate_order_status.go
 model_certificate_order_task.go
+model_certificate_orders.go
 model_client.go
 model_client_dns.go
 model_client_domain_validation_status.go
+model_clients.go
 model_dns.go
 model_issue_request.go
 model_job_status.go

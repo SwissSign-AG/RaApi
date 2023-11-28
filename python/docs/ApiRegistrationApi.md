@@ -25,6 +25,8 @@ Method | HTTP request | Description
 [**reset_client_prevalidated_domain**](ApiRegistrationApi.md#reset_client_prevalidated_domain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id
 [**revoke_certificates**](ApiRegistrationApi.md#revoke_certificates) | **POST** /v2/revoke | Revoke certificates
 [**search_clients**](ApiRegistrationApi.md#search_clients) | **POST** /v2/clients | Search Clients available to the RA Operator
+[**search_paged_certificate_orders**](ApiRegistrationApi.md#search_paged_certificate_orders) | **POST** /v2/orders/paged | Search Certificate Orders
+[**search_paged_clients**](ApiRegistrationApi.md#search_paged_clients) | **POST** /v2/clients/paged | Search Clients available to the RA Operator
 [**unpublish_certificate**](ApiRegistrationApi.md#unpublish_certificate) | **POST** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order
 [**validate_client_prevalidated_domain**](ApiRegistrationApi.md#validate_client_prevalidated_domain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id
 
@@ -789,7 +791,7 @@ Name | Type | Description  | Notes
 
 Search Certificate Orders
 
-Search for Certificate Orders given search parameters 
+Search for Certificate Orders given search parameters. The result list is limited to the maximum (default is 300) query result list settings. 
 
 ### Example
 
@@ -836,6 +838,7 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
         start_after=dateutil_parser('Tue Mar 20 00:00:00 UTC 2018').date(),
         start_before=dateutil_parser('Sun Mar 25 00:00:00 UTC 2018').date(),
         attribute="s?me@emai* or 2.5.4.r or street",
+        include_certificate_chain=True,
     ) # SearchCertificateOrder | Certificate order search options
 
     # example passing only required values which don't have defaults set
@@ -1771,7 +1774,7 @@ void (empty response body)
 
 Search Clients available to the RA Operator
 
-Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. 
+Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. The result list is limited to the maximum (default is 300) query result list settings 
 
 ### Example
 
@@ -1844,6 +1847,204 @@ Name | Type | Description  | Notes
 **200** | success |  -  |
 **400** | bad request |  -  |
 **401** | Unauthorized |  -  |
+**404** | not found |  -  |
+**500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **search_paged_certificate_orders**
+> CertificateOrders search_paged_certificate_orders(search_certificate_order)
+
+Search Certificate Orders
+
+Search for Certificate Orders given search parameters. The search supports paging 
+
+### Example
+
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import time
+import swisssign_ra_api.v2
+from swisssign_ra_api.v2.api import api_registration_api
+from swisssign_ra_api.v2.model.search_certificate_order import SearchCertificateOrder
+from swisssign_ra_api.v2.model.api_error import APIError
+from swisssign_ra_api.v2.model.certificate_orders import CertificateOrders
+from pprint import pprint
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
+# See configuration.py for a list of all supported configuration parameters.
+configuration = swisssign_ra_api.v2.Configuration(
+    host = "https://api.ra.pre.swisssign.ch"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
+
+# Enter a context with an instance of the API client
+with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = api_registration_api.ApiRegistrationApi(api_client)
+    search_certificate_order = SearchCertificateOrder(
+        order_reference="ord-f0725b50-c533-4802-a844-de57bfb7a80e",
+        serial_number="3893409CB*66E1F09?",
+        order_status=[
+            CertificateOrderStatus("ISSUED"),
+        ],
+        revocation_reason=[
+            RevocationReason("SUPERSEDED"),
+        ],
+        client_references=["cli-123e4567-e89b-12d3-a456-426614174000"],
+        start_after=dateutil_parser('Tue Mar 20 00:00:00 UTC 2018').date(),
+        start_before=dateutil_parser('Sun Mar 25 00:00:00 UTC 2018').date(),
+        attribute="s?me@emai* or 2.5.4.r or street",
+        include_certificate_chain=True,
+    ) # SearchCertificateOrder | Certificate order search options
+    length = 0 # int | The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used. If length > maximum (default is 300) server side configured length, then the server side setting is used.  (optional)
+    start = 0 # int | the offset in search result for paging support (optional)
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Search Certificate Orders
+        api_response = api_instance.search_paged_certificate_orders(search_certificate_order)
+        pprint(api_response)
+    except swisssign_ra_api.v2.ApiException as e:
+        print("Exception when calling ApiRegistrationApi->search_paged_certificate_orders: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # Search Certificate Orders
+        api_response = api_instance.search_paged_certificate_orders(search_certificate_order, length=length, start=start)
+        pprint(api_response)
+    except swisssign_ra_api.v2.ApiException as e:
+        print("Exception when calling ApiRegistrationApi->search_paged_certificate_orders: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **search_certificate_order** | [**SearchCertificateOrder**](SearchCertificateOrder.md)| Certificate order search options |
+ **length** | **int**| The number of items to return. When unset or &lt; 0, the maximum (default is 300) server side configured length setting is used. If length &gt; maximum (default is 300) server side configured length, then the server side setting is used.  | [optional]
+ **start** | **int**| the offset in search result for paging support | [optional]
+
+### Return type
+
+[**CertificateOrders**](CertificateOrders.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | success |  -  |
+**400** | bad request |  -  |
+**401** | Unauthorized |  -  |
+**404** | not found |  -  |
+**500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **search_paged_clients**
+> Clients search_paged_clients()
+
+Search Clients available to the RA Operator
+
+Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. The search supports paging 
+
+### Example
+
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import time
+import swisssign_ra_api.v2
+from swisssign_ra_api.v2.api import api_registration_api
+from swisssign_ra_api.v2.model.api_error import APIError
+from swisssign_ra_api.v2.model.clients import Clients
+from pprint import pprint
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
+# See configuration.py for a list of all supported configuration parameters.
+configuration = swisssign_ra_api.v2.Configuration(
+    host = "https://api.ra.pre.swisssign.ch"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
+
+# Enter a context with an instance of the API client
+with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = api_registration_api.ApiRegistrationApi(api_client)
+    search = "C?mpan* Ltd" # str |  (optional)
+    length = 0 # int | The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used. If length > maximum (default is 300) server side configured length, then the server side setting is used.  (optional)
+    start = 0 # int | the offset in search result for paging support (optional)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # Search Clients available to the RA Operator
+        api_response = api_instance.search_paged_clients(search=search, length=length, start=start)
+        pprint(api_response)
+    except swisssign_ra_api.v2.ApiException as e:
+        print("Exception when calling ApiRegistrationApi->search_paged_clients: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **search** | **str**|  | [optional]
+ **length** | **int**| The number of items to return. When unset or &lt; 0, the maximum (default is 300) server side configured length setting is used. If length &gt; maximum (default is 300) server side configured length, then the server side setting is used.  | [optional]
+ **start** | **int**| the offset in search result for paging support | [optional]
+
+### Return type
+
+[**Clients**](Clients.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | success |  -  |
+**400** | bad request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **404** | not found |  -  |
 **500** | Internal server error |  -  |
 

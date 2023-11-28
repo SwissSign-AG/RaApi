@@ -14,9 +14,11 @@ docs/Certificate.md
 docs/CertificateOrder.md
 docs/CertificateOrderStatus.md
 docs/CertificateOrderTask.md
+docs/CertificateOrders.md
 docs/Client.md
 docs/ClientDNS.md
 docs/ClientDomainValidationStatus.md
+docs/Clients.md
 docs/DNS.md
 docs/IssueRequest.md
 docs/JobStatus.md
@@ -69,9 +71,11 @@ src/main/java/org/openapitools/client/model/Certificate.java
 src/main/java/org/openapitools/client/model/CertificateOrder.java
 src/main/java/org/openapitools/client/model/CertificateOrderStatus.java
 src/main/java/org/openapitools/client/model/CertificateOrderTask.java
+src/main/java/org/openapitools/client/model/CertificateOrders.java
 src/main/java/org/openapitools/client/model/Client.java
 src/main/java/org/openapitools/client/model/ClientDNS.java
 src/main/java/org/openapitools/client/model/ClientDomainValidationStatus.java
+src/main/java/org/openapitools/client/model/Clients.java
 src/main/java/org/openapitools/client/model/DNS.java
 src/main/java/org/openapitools/client/model/IssueRequest.java
 src/main/java/org/openapitools/client/model/JobStatus.java
@@ -96,10 +100,12 @@ src/test/java/org/openapitools/client/model/AdditionalRecipientTypeTest.java
 src/test/java/org/openapitools/client/model/CertificateOrderStatusTest.java
 src/test/java/org/openapitools/client/model/CertificateOrderTaskTest.java
 src/test/java/org/openapitools/client/model/CertificateOrderTest.java
+src/test/java/org/openapitools/client/model/CertificateOrdersTest.java
 src/test/java/org/openapitools/client/model/CertificateTest.java
 src/test/java/org/openapitools/client/model/ClientDNSTest.java
 src/test/java/org/openapitools/client/model/ClientDomainValidationStatusTest.java
 src/test/java/org/openapitools/client/model/ClientTest.java
+src/test/java/org/openapitools/client/model/ClientsTest.java
 src/test/java/org/openapitools/client/model/DNSTest.java
 src/test/java/org/openapitools/client/model/IssueRequestTest.java
 src/test/java/org/openapitools/client/model/JobStatusTest.java

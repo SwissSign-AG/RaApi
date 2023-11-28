@@ -11,6 +11,7 @@
 | **startAfter** | **date** | Certificate Order not starting after Date | [optional] [default to null] |
 | **startBefore** | **date** | Certificate Order not starting before Date | [optional] [default to null] |
 | **attribute** | **String** | Any certificate attribute OID or value with optional wildcard attributes ? and/or * | [optional] [default to null] |
+| **includeCertificateChain** | **Boolean** | Include the certificate chain in the certificate order when available | [optional] [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

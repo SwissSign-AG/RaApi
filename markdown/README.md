@@ -28,6 +28,8 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch*
 *ApiRegistrationApi* | [**resetClientPrevalidatedDomain**](Apis/ApiRegistrationApi.md#resetclientprevalidateddomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id |
 *ApiRegistrationApi* | [**revokeCertificates**](Apis/ApiRegistrationApi.md#revokecertificates) | **POST** /v2/revoke | Revoke certificates |
 *ApiRegistrationApi* | [**searchClients**](Apis/ApiRegistrationApi.md#searchclients) | **POST** /v2/clients | Search Clients available to the RA Operator |
+*ApiRegistrationApi* | [**searchPagedCertificateOrders**](Apis/ApiRegistrationApi.md#searchpagedcertificateorders) | **POST** /v2/orders/paged | Search Certificate Orders |
+*ApiRegistrationApi* | [**searchPagedClients**](Apis/ApiRegistrationApi.md#searchpagedclients) | **POST** /v2/clients/paged | Search Clients available to the RA Operator |
 *ApiRegistrationApi* | [**unpublishCertificate**](Apis/ApiRegistrationApi.md#unpublishcertificate) | **POST** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order |
 *ApiRegistrationApi* | [**validateClientPrevalidatedDomain**](Apis/ApiRegistrationApi.md#validateclientprevalidateddomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id |
 
@@ -42,9 +44,11 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch*
  - [CertificateOrder](./Models/CertificateOrder.md)
  - [CertificateOrderStatus](./Models/CertificateOrderStatus.md)
  - [CertificateOrderTask](./Models/CertificateOrderTask.md)
+ - [CertificateOrders](./Models/CertificateOrders.md)
  - [Client](./Models/Client.md)
  - [ClientDNS](./Models/ClientDNS.md)
  - [ClientDomainValidationStatus](./Models/ClientDomainValidationStatus.md)
+ - [Clients](./Models/Clients.md)
  - [DNS](./Models/DNS.md)
  - [IssueRequest](./Models/IssueRequest.md)
  - [JobStatus](./Models/JobStatus.md)

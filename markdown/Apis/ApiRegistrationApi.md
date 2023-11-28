@@ -25,6 +25,8 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch*
 | [**resetClientPrevalidatedDomain**](ApiRegistrationApi.md#resetClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id |
 | [**revokeCertificates**](ApiRegistrationApi.md#revokeCertificates) | **POST** /v2/revoke | Revoke certificates |
 | [**searchClients**](ApiRegistrationApi.md#searchClients) | **POST** /v2/clients | Search Clients available to the RA Operator |
+| [**searchPagedCertificateOrders**](ApiRegistrationApi.md#searchPagedCertificateOrders) | **POST** /v2/orders/paged | Search Certificate Orders |
+| [**searchPagedClients**](ApiRegistrationApi.md#searchPagedClients) | **POST** /v2/clients/paged | Search Clients available to the RA Operator |
 | [**unpublishCertificate**](ApiRegistrationApi.md#unpublishCertificate) | **POST** /v2/order/{orderReference}/unpublish | Send a certificate un-publication request for selected Certificate Order |
 | [**validateClientPrevalidatedDomain**](ApiRegistrationApi.md#validateClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/validate | Prevalidate domain for the selected domain reference Id |
 
@@ -281,7 +283,7 @@ Retrieve a Certificate Order Tasks given the Order reference
 
 Search Certificate Orders
 
-    Search for Certificate Orders given search parameters 
+    Search for Certificate Orders given search parameters. The result list is limited to the maximum (default is 300) query result list settings. 
 
 ### Parameters
 
@@ -580,7 +582,7 @@ null (empty response body)
 
 Search Clients available to the RA Operator
 
-    Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. 
+    Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. The result list is limited to the maximum (default is 300) query result list settings 
 
 ### Parameters
 
@@ -591,6 +593,64 @@ Search Clients available to the RA Operator
 ### Return type
 
 [**List**](../Models/Client.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+<a name="searchPagedCertificateOrders"></a>
+# **searchPagedCertificateOrders**
+> CertificateOrders searchPagedCertificateOrders(SearchCertificateOrder, length, start)
+
+Search Certificate Orders
+
+    Search for Certificate Orders given search parameters. The search supports paging 
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **SearchCertificateOrder** | [**SearchCertificateOrder**](../Models/SearchCertificateOrder.md)| Certificate order search options | |
+| **length** | **Integer**| The number of items to return. When unset or &lt; 0, the maximum (default is 300) server side configured length setting is used. If length &gt; maximum (default is 300) server side configured length, then the server side setting is used.  | [optional] [default to null] |
+| **start** | **Integer**| the offset in search result for paging support | [optional] [default to null] |
+
+### Return type
+
+[**CertificateOrders**](../Models/CertificateOrders.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+<a name="searchPagedClients"></a>
+# **searchPagedClients**
+> Clients searchPagedClients(search, length, start)
+
+Search Clients available to the RA Operator
+
+    Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries. The Client information includes the list of assigned certificate products. The search supports paging 
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **search** | **String**|  | [optional] [default to null] |
+| **length** | **Integer**| The number of items to return. When unset or &lt; 0, the maximum (default is 300) server side configured length setting is used. If length &gt; maximum (default is 300) server side configured length, then the server side setting is used.  | [optional] [default to null] |
+| **start** | **Integer**| the offset in search result for paging support | [optional] [default to null] |
+
+### Return type
+
+[**Clients**](../Models/Clients.md)
 
 ### Authorization
 

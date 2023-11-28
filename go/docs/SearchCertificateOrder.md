@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **StartAfter** | Pointer to **NullableString** | Certificate Order not starting after Date | [optional] 
 **StartBefore** | Pointer to **NullableString** | Certificate Order not starting before Date | [optional] 
 **Attribute** | Pointer to **NullableString** | Any certificate attribute OID or value with optional wildcard attributes ? and/or * | [optional] 
+**IncludeCertificateChain** | Pointer to **NullableBool** | Include the certificate chain in the certificate order when available | [optional] 
 
 ## Methods
 
@@ -312,6 +313,41 @@ HasAttribute returns a boolean if a field has been set.
 `func (o *SearchCertificateOrder) UnsetAttribute()`
 
 UnsetAttribute ensures that no value is present for Attribute, not even an explicit nil
+### GetIncludeCertificateChain
+
+`func (o *SearchCertificateOrder) GetIncludeCertificateChain() bool`
+
+GetIncludeCertificateChain returns the IncludeCertificateChain field if non-nil, zero value otherwise.
+
+### GetIncludeCertificateChainOk
+
+`func (o *SearchCertificateOrder) GetIncludeCertificateChainOk() (*bool, bool)`
+
+GetIncludeCertificateChainOk returns a tuple with the IncludeCertificateChain field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncludeCertificateChain
+
+`func (o *SearchCertificateOrder) SetIncludeCertificateChain(v bool)`
+
+SetIncludeCertificateChain sets IncludeCertificateChain field to given value.
+
+### HasIncludeCertificateChain
+
+`func (o *SearchCertificateOrder) HasIncludeCertificateChain() bool`
+
+HasIncludeCertificateChain returns a boolean if a field has been set.
+
+### SetIncludeCertificateChainNil
+
+`func (o *SearchCertificateOrder) SetIncludeCertificateChainNil(b bool)`
+
+ SetIncludeCertificateChainNil sets the value for IncludeCertificateChain to be an explicit nil
+
+### UnsetIncludeCertificateChain
+`func (o *SearchCertificateOrder) UnsetIncludeCertificateChain()`
+
+UnsetIncludeCertificateChain ensures that no value is present for IncludeCertificateChain, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

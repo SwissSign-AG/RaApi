@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.3.8
+  version: 2.3.12
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch
@@ -74,7 +74,8 @@ paths:
     post:
       description: "Search for clients for which the RA Operator can issue, revoke\
         \ or pre validate DNS entries.\nThe Client information includes the list of\
-        \ assigned certificate products.\n"
+        \ assigned certificate products.\nThe result list is limited to the maximum\
+        \ (default is 300) query result list settings\n"
       operationId: searchClients
       parameters:
       - explode: true
@@ -109,6 +110,87 @@ paths:
               schema:
                 $ref: '#/components/schemas/APIError'
           description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - BearerAuth: []
+      summary: Search Clients available to the RA Operator
+      tags:
+      - api_registration
+      x-accepts: application/json
+  /v2/clients/paged:
+    post:
+      description: "Search for clients for which the RA Operator can issue, revoke\
+        \ or pre validate DNS entries.\nThe Client information includes the list of\
+        \ assigned certificate products.\nThe search supports paging\n"
+      operationId: searchPagedClients
+      parameters:
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          description: search query string with optional wildcard attributes ? and/or
+            *
+          example: C?mpan* Ltd
+          type: string
+        style: form
+      - description: "The number of items to return. When unset or < 0, the maximum\
+          \ (default is 300) server side configured length setting is used.\nIf length\
+          \ > maximum (default is 300) server side configured length, then the server\
+          \ side setting is used.\n"
+        explode: true
+        in: query
+        name: length
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+        style: form
+      - description: the offset in search result for paging support
+        explode: true
+        in: query
+        name: start
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clients'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Forbidden
         "404":
           content:
             application/json:
@@ -525,7 +607,8 @@ paths:
   /v2/orders:
     post:
       description: |
-        Search for Certificate Orders given search parameters
+        Search for Certificate Orders given search parameters.
+        The result list is limited to the maximum (default is 300) query result list settings.
       operationId: getCertificateOrders
       requestBody:
         content:
@@ -543,6 +626,79 @@ paths:
                   $ref: '#/components/schemas/CertificateOrder'
                 readOnly: true
                 type: array
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - BearerAuth: []
+      summary: Search Certificate Orders
+      tags:
+      - api_registration
+      x-content-type: application/json
+      x-accepts: application/json
+  /v2/orders/paged:
+    post:
+      description: |
+        Search for Certificate Orders given search parameters.
+        The search supports paging
+      operationId: searchPagedCertificateOrders
+      parameters:
+      - description: "The number of items to return. When unset or < 0, the maximum\
+          \ (default is 300) server side configured length setting is used.\nIf length\
+          \ > maximum (default is 300) server side configured length, then the server\
+          \ side setting is used.\n"
+        explode: true
+        in: query
+        name: length
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+        style: form
+      - description: the offset in search result for paging support
+        explode: true
+        in: query
+        name: start
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchCertificateOrder'
+        description: Certificate order search options
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateOrders'
           description: success
         "400":
           content:
@@ -1748,6 +1904,7 @@ components:
         revocationReason:
         - SUPERSEDED
         - SUPERSEDED
+        includeCertificateChain: true
       properties:
         orderReference:
           description: Certificate Order reference
@@ -1798,6 +1955,12 @@ components:
           example: s?me@emai* or 2.5.4.r or street
           nullable: true
           type: string
+        includeCertificateChain:
+          description: Include the certificate chain in the certificate order when
+            available
+          example: true
+          nullable: true
+          type: boolean
       type: object
     ClientDNS:
       example:
@@ -2574,6 +2737,184 @@ components:
         requestUPN:
           $ref: '#/components/schemas/RequestUPN'
       type: object
+    Clients:
+      example:
+        recordsFiltered: 6
+        data:
+        - name: Company XYZ
+          description: Some information about Company XYZ
+          uuid: cli-123e4567-e89b-12d3-a456-426614174000
+          products:
+          - allowAdditionalAuthorizationAcceptedNotificationRecipients: true
+            isCABDNSValidationRequired: true
+            isCABDNSEmailLinkValidationRequired: true
+            productValidity:
+              validityType: HOURS
+              validityOptions:
+              - 0
+              - 0
+              validity: 1
+            isGenerateRevocationCode: true
+            uuid: pma-123e4567-e89b-12d3-a456-426614174000
+            productName: SSL Silver
+            allowRegistrationDocumentsJPG: true
+            keyGenerationType: PKCS10
+            authorization: true
+            revocationNotification: true
+            allowAdditionalCABDNSNotificationRecipients: true
+            allowRegistrationDocumentsPDF: true
+            keyType: RSA_2048
+            allowAdditionalRenewalNotificationRecipients: true
+            requiresRegistrationDocumentsOnRegister: true
+            productDescription: SSL NCP policy with domain validation
+            expirationDate: 2022-02-15T00:00:00.000+00:00
+            renewalRule: true
+            requiresRegistrationDocuments: true
+            allowAdditionalRevocationNotificationRecipients: true
+            publishCertificate: true
+            allowAdditionalAuthorizationNotificationRecipients: true
+            allowAdditionalAuthorizationRejectedNotificationRecipients: true
+            isEmailBoxValidationRequired: true
+            issuanceNotification: true
+            clientPublishCertificateOverrideDefault: true
+            clientPublishCertificateOverride: true
+            allowAdditionalIssuanceNotificationRecipients: true
+          - allowAdditionalAuthorizationAcceptedNotificationRecipients: true
+            isCABDNSValidationRequired: true
+            isCABDNSEmailLinkValidationRequired: true
+            productValidity:
+              validityType: HOURS
+              validityOptions:
+              - 0
+              - 0
+              validity: 1
+            isGenerateRevocationCode: true
+            uuid: pma-123e4567-e89b-12d3-a456-426614174000
+            productName: SSL Silver
+            allowRegistrationDocumentsJPG: true
+            keyGenerationType: PKCS10
+            authorization: true
+            revocationNotification: true
+            allowAdditionalCABDNSNotificationRecipients: true
+            allowRegistrationDocumentsPDF: true
+            keyType: RSA_2048
+            allowAdditionalRenewalNotificationRecipients: true
+            requiresRegistrationDocumentsOnRegister: true
+            productDescription: SSL NCP policy with domain validation
+            expirationDate: 2022-02-15T00:00:00.000+00:00
+            renewalRule: true
+            requiresRegistrationDocuments: true
+            allowAdditionalRevocationNotificationRecipients: true
+            publishCertificate: true
+            allowAdditionalAuthorizationNotificationRecipients: true
+            allowAdditionalAuthorizationRejectedNotificationRecipients: true
+            isEmailBoxValidationRequired: true
+            issuanceNotification: true
+            clientPublishCertificateOverrideDefault: true
+            clientPublishCertificateOverride: true
+            allowAdditionalIssuanceNotificationRecipients: true
+        - name: Company XYZ
+          description: Some information about Company XYZ
+          uuid: cli-123e4567-e89b-12d3-a456-426614174000
+          products:
+          - allowAdditionalAuthorizationAcceptedNotificationRecipients: true
+            isCABDNSValidationRequired: true
+            isCABDNSEmailLinkValidationRequired: true
+            productValidity:
+              validityType: HOURS
+              validityOptions:
+              - 0
+              - 0
+              validity: 1
+            isGenerateRevocationCode: true
+            uuid: pma-123e4567-e89b-12d3-a456-426614174000
+            productName: SSL Silver
+            allowRegistrationDocumentsJPG: true
+            keyGenerationType: PKCS10
+            authorization: true
+            revocationNotification: true
+            allowAdditionalCABDNSNotificationRecipients: true
+            allowRegistrationDocumentsPDF: true
+            keyType: RSA_2048
+            allowAdditionalRenewalNotificationRecipients: true
+            requiresRegistrationDocumentsOnRegister: true
+            productDescription: SSL NCP policy with domain validation
+            expirationDate: 2022-02-15T00:00:00.000+00:00
+            renewalRule: true
+            requiresRegistrationDocuments: true
+            allowAdditionalRevocationNotificationRecipients: true
+            publishCertificate: true
+            allowAdditionalAuthorizationNotificationRecipients: true
+            allowAdditionalAuthorizationRejectedNotificationRecipients: true
+            isEmailBoxValidationRequired: true
+            issuanceNotification: true
+            clientPublishCertificateOverrideDefault: true
+            clientPublishCertificateOverride: true
+            allowAdditionalIssuanceNotificationRecipients: true
+          - allowAdditionalAuthorizationAcceptedNotificationRecipients: true
+            isCABDNSValidationRequired: true
+            isCABDNSEmailLinkValidationRequired: true
+            productValidity:
+              validityType: HOURS
+              validityOptions:
+              - 0
+              - 0
+              validity: 1
+            isGenerateRevocationCode: true
+            uuid: pma-123e4567-e89b-12d3-a456-426614174000
+            productName: SSL Silver
+            allowRegistrationDocumentsJPG: true
+            keyGenerationType: PKCS10
+            authorization: true
+            revocationNotification: true
+            allowAdditionalCABDNSNotificationRecipients: true
+            allowRegistrationDocumentsPDF: true
+            keyType: RSA_2048
+            allowAdditionalRenewalNotificationRecipients: true
+            requiresRegistrationDocumentsOnRegister: true
+            productDescription: SSL NCP policy with domain validation
+            expirationDate: 2022-02-15T00:00:00.000+00:00
+            renewalRule: true
+            requiresRegistrationDocuments: true
+            allowAdditionalRevocationNotificationRecipients: true
+            publishCertificate: true
+            allowAdditionalAuthorizationNotificationRecipients: true
+            allowAdditionalAuthorizationRejectedNotificationRecipients: true
+            isEmailBoxValidationRequired: true
+            issuanceNotification: true
+            clientPublishCertificateOverrideDefault: true
+            clientPublishCertificateOverride: true
+            allowAdditionalIssuanceNotificationRecipients: true
+        draw: 0
+        recordsTotal: 1
+      properties:
+        draw:
+          nullable: false
+          readOnly: true
+          type: integer
+        recordsFiltered:
+          description: "Total records, after filtering (i.e. the total number of records\
+            \ after filtering has been applied - not just the number of records being\
+            \ returned for this page of data)."
+          nullable: false
+          readOnly: true
+          type: integer
+        recordsTotal:
+          description: "Total records, before filtering (i.e. the total number of\
+            \ records in the database)"
+          nullable: false
+          readOnly: true
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/Client'
+          type: array
+      required:
+      - data
+      - draw
+      - recordsFiltered
+      - recordsTotal
+      type: object
     JobType:
       description: Certificate Order Task Type
       enum:
@@ -2666,6 +3007,96 @@ components:
           type: array
       required:
       - validityType
+      type: object
+    CertificateOrders:
+      example:
+        recordsFiltered: 6
+        data:
+        - additionalRecipients:
+          - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
+            language: NEUTRAL
+            email: shared.mailbox@sample.org
+          - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
+            language: NEUTRAL
+            email: shared.mailbox@sample.org
+          certificateChain:
+          - certificateChain
+          - certificateChain
+          issuedBy: some@email.org
+          clientReference: cli-123e4567-e89b-12d3-a456-426614174000
+          certificate:
+            serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+            endValidity: 2023-01-12T23:20:50.52Z
+            subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+            revocationStatus:
+              revokedOn: 2022-02-12T05:10:50.52Z
+              reason: SUPERSEDED
+              revokedBy: some@email.org
+            startValidity: 2022-01-12T23:20:50.52Z
+            certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped]\
+              \ ..."
+            issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+          productReference: pma-123e4567-e89b-12d3-a456-426614174000
+          uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          createdOn: 2022-02-12T05:10:50.52Z
+          status: ISSUED
+        - additionalRecipients:
+          - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
+            language: NEUTRAL
+            email: shared.mailbox@sample.org
+          - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
+            language: NEUTRAL
+            email: shared.mailbox@sample.org
+          certificateChain:
+          - certificateChain
+          - certificateChain
+          issuedBy: some@email.org
+          clientReference: cli-123e4567-e89b-12d3-a456-426614174000
+          certificate:
+            serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+            endValidity: 2023-01-12T23:20:50.52Z
+            subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+            revocationStatus:
+              revokedOn: 2022-02-12T05:10:50.52Z
+              reason: SUPERSEDED
+              revokedBy: some@email.org
+            startValidity: 2022-01-12T23:20:50.52Z
+            certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped]\
+              \ ..."
+            issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+          productReference: pma-123e4567-e89b-12d3-a456-426614174000
+          uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          createdOn: 2022-02-12T05:10:50.52Z
+          status: ISSUED
+        draw: 0
+        recordsTotal: 1
+      properties:
+        draw:
+          nullable: false
+          readOnly: true
+          type: integer
+        recordsFiltered:
+          description: "Total records, after filtering (i.e. the total number of records\
+            \ after filtering has been applied - not just the number of records being\
+            \ returned for this page of data)."
+          nullable: false
+          readOnly: true
+          type: integer
+        recordsTotal:
+          description: "Total records, before filtering (i.e. the total number of\
+            \ records in the database)"
+          nullable: false
+          readOnly: true
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/CertificateOrder'
+          type: array
+      required:
+      - data
+      - draw
+      - recordsFiltered
+      - recordsTotal
       type: object
     RequestDNS:
       example:

@@ -7,9 +7,11 @@ Models/Certificate.md
 Models/CertificateOrder.md
 Models/CertificateOrderStatus.md
 Models/CertificateOrderTask.md
+Models/CertificateOrders.md
 Models/Client.md
 Models/ClientDNS.md
 Models/ClientDomainValidationStatus.md
+Models/Clients.md
 Models/DNS.md
 Models/IssueRequest.md
 Models/JobStatus.md

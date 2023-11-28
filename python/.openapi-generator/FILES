@@ -11,9 +11,11 @@ docs/Certificate.md
 docs/CertificateOrder.md
 docs/CertificateOrderStatus.md
 docs/CertificateOrderTask.md
+docs/CertificateOrders.md
 docs/Client.md
 docs/ClientDNS.md
 docs/ClientDomainValidationStatus.md
+docs/Clients.md
 docs/DNS.md
 docs/IssueRequest.md
 docs/JobStatus.md
@@ -51,9 +53,11 @@ swisssign_ra_api/v2/model/certificate.py
 swisssign_ra_api/v2/model/certificate_order.py
 swisssign_ra_api/v2/model/certificate_order_status.py
 swisssign_ra_api/v2/model/certificate_order_task.py
+swisssign_ra_api/v2/model/certificate_orders.py
 swisssign_ra_api/v2/model/client.py
 swisssign_ra_api/v2/model/client_dns.py
 swisssign_ra_api/v2/model/client_domain_validation_status.py
+swisssign_ra_api/v2/model/clients.py
 swisssign_ra_api/v2/model/dns.py
 swisssign_ra_api/v2/model/issue_request.py
 swisssign_ra_api/v2/model/job_status.py
@@ -84,9 +88,11 @@ test/test_certificate.py
 test/test_certificate_order.py
 test/test_certificate_order_status.py
 test/test_certificate_order_task.py
+test/test_certificate_orders.py
 test/test_client.py
 test/test_client_dns.py
 test/test_client_domain_validation_status.py
+test/test_clients.py
 test/test_dns.py
 test/test_issue_request.py
 test/test_job_status.py

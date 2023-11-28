@@ -465,6 +465,12 @@
             "nullable": true,
             "description": "Any certificate attribute OID or value with optional wildcard attributes ? and/or *",
             "example": "s?me@emai* or 2.5.4.r or street"
+          },
+          "includeCertificateChain": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Include the certificate chain in the certificate order when available",
+            "example": true
           }
         }
       },
@@ -1039,6 +1045,40 @@
           }
         }
       },
+      "Clients": {
+        "type": "object",
+        "required": [
+          "draw",
+          "recordsFiltered",
+          "recordsTotal",
+          "data"
+        ],
+        "properties": {
+          "draw": {
+            "type": "integer",
+            "readOnly": true,
+            "nullable": false
+          },
+          "recordsFiltered": {
+            "type": "integer",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Total records, after filtering (i.e. the total number of records after filtering has been applied - not just the number of records being returned for this page of data)."
+          },
+          "recordsTotal": {
+            "type": "integer",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Total records, before filtering (i.e. the total number of records in the database)"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Client"
+            }
+          }
+        }
+      },
       "JobType": {
         "type": "string",
         "readOnly": true,
@@ -1128,6 +1168,40 @@
             "description": "Optional certificate validity values",
             "items": {
               "type": "integer"
+            }
+          }
+        }
+      },
+      "CertificateOrders": {
+        "type": "object",
+        "required": [
+          "draw",
+          "recordsFiltered",
+          "recordsTotal",
+          "data"
+        ],
+        "properties": {
+          "draw": {
+            "type": "integer",
+            "readOnly": true,
+            "nullable": false
+          },
+          "recordsFiltered": {
+            "type": "integer",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Total records, after filtering (i.e. the total number of records after filtering has been applied - not just the number of records being returned for this page of data)."
+          },
+          "recordsTotal": {
+            "type": "integer",
+            "readOnly": true,
+            "nullable": false,
+            "description": "Total records, before filtering (i.e. the total number of records in the database)"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CertificateOrder"
             }
           }
         }
@@ -1374,7 +1448,7 @@
           "api_registration"
         ],
         "summary": "Search Clients available to the RA Operator",
-        "description": "Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries.\nThe Client information includes the list of assigned certificate products.\n",
+        "description": "Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries.\nThe Client information includes the list of assigned certificate products.\nThe result list is limited to the maximum (default is 300) query result list settings\n",
         "security": [
           {
             "BearerAuth": []
@@ -1419,6 +1493,115 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/clients/paged": {
+      "post": {
+        "operationId": "searchPagedClients",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Search Clients available to the RA Operator",
+        "description": "Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries.\nThe Client information includes the list of assigned certificate products.\nThe search supports paging\n",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "search query string with optional wildcard attributes ? and/or *",
+              "example": "C?mpan* Ltd"
+            }
+          },
+          {
+            "in": "query",
+            "name": "length",
+            "required": false,
+            "description": "The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used.\nIf length > maximum (default is 300) server side configured length, then the server side setting is used.\n",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "description": "the offset in search result for paging support",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Clients"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
             "content": {
               "application/json": {
                 "schema": {
@@ -2045,7 +2228,7 @@
           "api_registration"
         ],
         "summary": "Search Certificate Orders",
-        "description": "Search for Certificate Orders given search parameters\n",
+        "description": "Search for Certificate Orders given search parameters.\nThe result list is limited to the maximum (default is 300) query result list settings.\n",
         "security": [
           {
             "BearerAuth": []
@@ -2073,6 +2256,106 @@
                   "items": {
                     "$ref": "#/components/schemas/CertificateOrder"
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/orders/paged": {
+      "post": {
+        "operationId": "searchPagedCertificateOrders",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Search Certificate Orders",
+        "description": "Search for Certificate Orders given search parameters.\nThe search supports paging\n",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "length",
+            "required": false,
+            "description": "The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used.\nIf length > maximum (default is 300) server side configured length, then the server side setting is used.\n",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "description": "the offset in search result for paging support",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Certificate order search options",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchCertificateOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CertificateOrders"
                 }
               }
             }
@@ -3212,7 +3495,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.3.8",
+    "version": "2.3.12",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"

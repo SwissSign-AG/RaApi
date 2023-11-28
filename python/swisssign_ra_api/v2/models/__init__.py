@@ -16,9 +16,11 @@ from swisssign_ra_api.v2.model.certificate import Certificate
 from swisssign_ra_api.v2.model.certificate_order import CertificateOrder
 from swisssign_ra_api.v2.model.certificate_order_status import CertificateOrderStatus
 from swisssign_ra_api.v2.model.certificate_order_task import CertificateOrderTask
+from swisssign_ra_api.v2.model.certificate_orders import CertificateOrders
 from swisssign_ra_api.v2.model.client import Client
 from swisssign_ra_api.v2.model.client_dns import ClientDNS
 from swisssign_ra_api.v2.model.client_domain_validation_status import ClientDomainValidationStatus
+from swisssign_ra_api.v2.model.clients import Clients
 from swisssign_ra_api.v2.model.dns import DNS
 from swisssign_ra_api.v2.model.issue_request import IssueRequest
 from swisssign_ra_api.v2.model.job_status import JobStatus

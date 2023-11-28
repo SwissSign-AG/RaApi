@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.3.8
+API version: 2.3.12
 Contact: ssc@swisssign.com
 */
 
@@ -31,6 +31,8 @@ type SearchCertificateOrder struct {
 	StartBefore NullableString `json:"startBefore,omitempty"`
 	// Any certificate attribute OID or value with optional wildcard attributes ? and/or *
 	Attribute NullableString `json:"attribute,omitempty"`
+	// Include the certificate chain in the certificate order when available
+	IncludeCertificateChain NullableBool `json:"includeCertificateChain,omitempty"`
 }
 
 // NewSearchCertificateOrder instantiates a new SearchCertificateOrder object
@@ -359,6 +361,48 @@ func (o *SearchCertificateOrder) UnsetAttribute() {
 	o.Attribute.Unset()
 }
 
+// GetIncludeCertificateChain returns the IncludeCertificateChain field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *SearchCertificateOrder) GetIncludeCertificateChain() bool {
+	if o == nil || o.IncludeCertificateChain.Get() == nil {
+		var ret bool
+		return ret
+	}
+	return *o.IncludeCertificateChain.Get()
+}
+
+// GetIncludeCertificateChainOk returns a tuple with the IncludeCertificateChain field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *SearchCertificateOrder) GetIncludeCertificateChainOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IncludeCertificateChain.Get(), o.IncludeCertificateChain.IsSet()
+}
+
+// HasIncludeCertificateChain returns a boolean if a field has been set.
+func (o *SearchCertificateOrder) HasIncludeCertificateChain() bool {
+	if o != nil && o.IncludeCertificateChain.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeCertificateChain gets a reference to the given NullableBool and assigns it to the IncludeCertificateChain field.
+func (o *SearchCertificateOrder) SetIncludeCertificateChain(v bool) {
+	o.IncludeCertificateChain.Set(&v)
+}
+// SetIncludeCertificateChainNil sets the value for IncludeCertificateChain to be an explicit nil
+func (o *SearchCertificateOrder) SetIncludeCertificateChainNil() {
+	o.IncludeCertificateChain.Set(nil)
+}
+
+// UnsetIncludeCertificateChain ensures that no value is present for IncludeCertificateChain, not even an explicit nil
+func (o *SearchCertificateOrder) UnsetIncludeCertificateChain() {
+	o.IncludeCertificateChain.Unset()
+}
+
 func (o SearchCertificateOrder) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.OrderReference.IsSet() {
@@ -384,6 +428,9 @@ func (o SearchCertificateOrder) MarshalJSON() ([]byte, error) {
 	}
 	if o.Attribute.IsSet() {
 		toSerialize["attribute"] = o.Attribute.Get()
+	}
+	if o.IncludeCertificateChain.IsSet() {
+		toSerialize["includeCertificateChain"] = o.IncludeCertificateChain.Get()
 	}
 	return json.Marshal(toSerialize)
 }
