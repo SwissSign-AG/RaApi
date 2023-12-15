@@ -324,7 +324,7 @@ public class Certificate {
         throw new IllegalArgumentException(String.format("Expected the field `certificate` to be a primitive type in the JSON string but got `%s`", jsonObj.get("certificate").toString()));
       }
       // validate the optional field `revocationStatus`
-      if (jsonObj.getAsJsonObject("revocationStatus") != null) {
+      if (jsonObj.get("revocationStatus") != null && jsonObj.get("revocationStatus").isJsonObject()) {
         RevocationStatus.validateJsonObject(jsonObj.getAsJsonObject("revocationStatus"));
       }
   }
