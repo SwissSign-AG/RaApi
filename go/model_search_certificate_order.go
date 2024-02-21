@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.3.12
+API version: 2.4.9
 Contact: ssc@swisssign.com
 */
 
@@ -33,6 +33,8 @@ type SearchCertificateOrder struct {
 	Attribute NullableString `json:"attribute,omitempty"`
 	// Include the certificate chain in the certificate order when available
 	IncludeCertificateChain NullableBool `json:"includeCertificateChain,omitempty"`
+	// Customer label/tags
+	Tags []string `json:"tags,omitempty"`
 }
 
 // NewSearchCertificateOrder instantiates a new SearchCertificateOrder object
@@ -403,6 +405,39 @@ func (o *SearchCertificateOrder) UnsetIncludeCertificateChain() {
 	o.IncludeCertificateChain.Unset()
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *SearchCertificateOrder) GetTags() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *SearchCertificateOrder) GetTagsOk() ([]string, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *SearchCertificateOrder) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []string and assigns it to the Tags field.
+func (o *SearchCertificateOrder) SetTags(v []string) {
+	o.Tags = v
+}
+
 func (o SearchCertificateOrder) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.OrderReference.IsSet() {
@@ -431,6 +466,9 @@ func (o SearchCertificateOrder) MarshalJSON() ([]byte, error) {
 	}
 	if o.IncludeCertificateChain.IsSet() {
 		toSerialize["includeCertificateChain"] = o.IncludeCertificateChain.Get()
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return json.Marshal(toSerialize)
 }

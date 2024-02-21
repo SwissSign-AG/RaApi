@@ -22,6 +22,7 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch*
 | [**jwt**](ApiRegistrationApi.md#jwt) | **POST** /v2/jwt/{userName} | Produce a user JWT |
 | [**listCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#listCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients |
 | [**publishCertificate**](ApiRegistrationApi.md#publishCertificate) | **POST** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order |
+| [**replaceCertificateOrderTags**](ApiRegistrationApi.md#replaceCertificateOrderTags) | **POST** /v2/order/{orderReference}/tags | Replace Certificate Order custom tags |
 | [**resetClientPrevalidatedDomain**](ApiRegistrationApi.md#resetClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id |
 | [**revokeCertificates**](ApiRegistrationApi.md#revokeCertificates) | **POST** /v2/revoke | Revoke certificates |
 | [**searchClients**](ApiRegistrationApi.md#searchClients) | **POST** /v2/clients | Search Clients available to the RA Operator |
@@ -520,6 +521,34 @@ null (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+<a name="replaceCertificateOrderTags"></a>
+# **replaceCertificateOrderTags**
+> CertificateOrder replaceCertificateOrderTags(orderReference, request\_body)
+
+Replace Certificate Order custom tags
+
+    Replace certificate order custom tags with a new set of user defined tags/labels 
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orderReference** | **String**|  | [default to null] |
+| **request\_body** | [**List**](../Models/string.md)| List of user defined tags/labels | |
+
+### Return type
+
+[**CertificateOrder**](../Models/CertificateOrder.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 <a name="resetClientPrevalidatedDomain"></a>

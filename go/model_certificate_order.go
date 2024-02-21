@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.3.12
+API version: 2.4.9
 Contact: ssc@swisssign.com
 */
 
@@ -30,6 +30,8 @@ type CertificateOrder struct {
 	Certificate *Certificate `json:"certificate,omitempty"`
 	// Certificate chain
 	CertificateChain []*string `json:"certificateChain,omitempty"`
+	// User defined tags/labels
+	Tags []string `json:"tags,omitempty"`
 	AdditionalRecipients []AdditionalRecipient `json:"additionalRecipients,omitempty"`
 	// email of the person who created the order
 	IssuedBy *string `json:"issuedBy,omitempty"`
@@ -242,6 +244,39 @@ func (o *CertificateOrder) SetCertificateChain(v []*string) {
 	o.CertificateChain = v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CertificateOrder) GetTags() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CertificateOrder) GetTagsOk() ([]string, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *CertificateOrder) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []string and assigns it to the Tags field.
+func (o *CertificateOrder) SetTags(v []string) {
+	o.Tags = v
+}
+
 // GetAdditionalRecipients returns the AdditionalRecipients field value if set, zero value otherwise.
 func (o *CertificateOrder) GetAdditionalRecipients() []AdditionalRecipient {
 	if o == nil || o.AdditionalRecipients == nil {
@@ -328,6 +363,9 @@ func (o CertificateOrder) MarshalJSON() ([]byte, error) {
 	}
 	if o.CertificateChain != nil {
 		toSerialize["certificateChain"] = o.CertificateChain
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	if o.AdditionalRecipients != nil {
 		toSerialize["additionalRecipients"] = o.AdditionalRecipients

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Overrides** | Pointer to [**RequestOverrides**](RequestOverrides.md) |  | [optional] 
 **AdditionalRecipients** | Pointer to [**[]AdditionalRecipient**](AdditionalRecipient.md) |  | [optional] 
 **RegistrationDocuments** | Pointer to [**[]RegistrationDocument**](RegistrationDocument.md) |  | [optional] 
+**Tags** | Pointer to **[]string** |  | [optional] 
 **Note** | Pointer to **NullableString** | User note added to issued certificate order | [optional] 
 **PublishCertificate** | Pointer to **bool** | Publish certificate to repository. Publication occurs if option is enabled on certificate policy or if the account has the option enabled to override the publication.  | [optional] 
 **Synchrone** | Pointer to **bool** | Request is sent asynchronously to the backend by default.  Setting this value to _true_ will wait until the certificate is issued and return the completed certificate order. For successful synchrone issuance, _insure_ that you have all prerequisites for DNS validation and/or Authorization fulfilled.  | [optional] [default to false]
@@ -163,6 +164,31 @@ SetRegistrationDocuments sets RegistrationDocuments field to given value.
 `func (o *IssueRequest) HasRegistrationDocuments() bool`
 
 HasRegistrationDocuments returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *IssueRequest) GetTags() []string`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *IssueRequest) GetTagsOk() (*[]string, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *IssueRequest) SetTags(v []string)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *IssueRequest) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
 
 ### GetNote
 

@@ -22,6 +22,7 @@ Method | HTTP request | Description
 [**jwt**](ApiRegistrationApi.md#jwt) | **POST** /v2/jwt/{userName} | Produce a user JWT
 [**list_certificate_order_additional_recipients**](ApiRegistrationApi.md#list_certificate_order_additional_recipients) | **POST** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients
 [**publish_certificate**](ApiRegistrationApi.md#publish_certificate) | **POST** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order
+[**replace_certificate_order_tags**](ApiRegistrationApi.md#replace_certificate_order_tags) | **POST** /v2/order/{orderReference}/tags | Replace Certificate Order custom tags
 [**reset_client_prevalidated_domain**](ApiRegistrationApi.md#reset_client_prevalidated_domain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id
 [**revoke_certificates**](ApiRegistrationApi.md#revoke_certificates) | **POST** /v2/revoke | Revoke certificates
 [**search_clients**](ApiRegistrationApi.md#search_clients) | **POST** /v2/clients | Search Clients available to the RA Operator
@@ -839,6 +840,7 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
         start_before=dateutil_parser('Sun Mar 25 00:00:00 UTC 2018').date(),
         attribute="s?me@emai* or 2.5.4.r or street",
         include_certificate_chain=True,
+        tags=["my.cmdb-tag","my.cmdb-label"],
     ) # SearchCertificateOrder | Certificate order search options
 
     # example passing only required values which don't have defaults set
@@ -1316,6 +1318,9 @@ CRg0mu4um+/DZaWV6IUOiTPj6wewH+909Ov8f2G+
                 document="document_example",
             ),
         ],
+        tags=[
+            "my-cmdb-label",
+        ],
         note="user free text",
         publish_certificate=True,
         synchrone=True,
@@ -1593,6 +1598,92 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | success |  -  |
+**400** | bad request |  -  |
+**401** | Unauthorized |  -  |
+**404** | not found |  -  |
+**500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **replace_certificate_order_tags**
+> CertificateOrder replace_certificate_order_tags(order_reference, request_body)
+
+Replace Certificate Order custom tags
+
+Replace certificate order custom tags with a new set of user defined tags/labels 
+
+### Example
+
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import time
+import swisssign_ra_api.v2
+from swisssign_ra_api.v2.api import api_registration_api
+from swisssign_ra_api.v2.model.certificate_order import CertificateOrder
+from swisssign_ra_api.v2.model.api_error import APIError
+from pprint import pprint
+# Defining the host is optional and defaults to https://api.ra.pre.swisssign.ch
+# See configuration.py for a list of all supported configuration parameters.
+configuration = swisssign_ra_api.v2.Configuration(
+    host = "https://api.ra.pre.swisssign.ch"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = swisssign_ra_api.v2.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
+
+# Enter a context with an instance of the API client
+with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = api_registration_api.ApiRegistrationApi(api_client)
+    order_reference = "ord-f0725b50-c533-4802-a844-de57bfb7a80e" # str | 
+    request_body = [
+        "my-cmdb-label",
+    ] # [str] | List of user defined tags/labels
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Replace Certificate Order custom tags
+        api_response = api_instance.replace_certificate_order_tags(order_reference, request_body)
+        pprint(api_response)
+    except swisssign_ra_api.v2.ApiException as e:
+        print("Exception when calling ApiRegistrationApi->replace_certificate_order_tags: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **order_reference** | **str**|  |
+ **request_body** | **[str]**| List of user defined tags/labels |
+
+### Return type
+
+[**CertificateOrder**](CertificateOrder.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | success |  -  |
 **400** | bad request |  -  |
 **401** | Unauthorized |  -  |
 **404** | not found |  -  |
@@ -1905,6 +1996,7 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
         start_before=dateutil_parser('Sun Mar 25 00:00:00 UTC 2018').date(),
         attribute="s?me@emai* or 2.5.4.r or street",
         include_certificate_chain=True,
+        tags=["my.cmdb-tag","my.cmdb-label"],
     ) # SearchCertificateOrder | Certificate order search options
     length = 0 # int | The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used. If length > maximum (default is 300) server side configured length, then the server side setting is used.  (optional)
     start = 0 # int | the offset in search result for paging support (optional)

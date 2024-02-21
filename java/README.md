@@ -1,7 +1,7 @@
 # openapi-java-client
 
 SwissSign RA REST API
-- API version: 2.3.12
+- API version: 2.4.9
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
@@ -39,7 +39,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>2.3.12</version>
+  <version>2.4.9</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -55,7 +55,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "org.openapitools:openapi-java-client:2.3.12"
+     implementation "org.openapitools:openapi-java-client:2.4.9"
   }
 ```
 
@@ -69,7 +69,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-2.3.12.jar`
+* `target/openapi-java-client-2.4.9.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -137,6 +137,7 @@ Class | Method | HTTP request | Description
 *ApiRegistrationApi* | [**jwt**](docs/ApiRegistrationApi.md#jwt) | **POST** /v2/jwt/{userName} | Produce a user JWT
 *ApiRegistrationApi* | [**listCertificateOrderAdditionalRecipients**](docs/ApiRegistrationApi.md#listCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients
 *ApiRegistrationApi* | [**publishCertificate**](docs/ApiRegistrationApi.md#publishCertificate) | **POST** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order
+*ApiRegistrationApi* | [**replaceCertificateOrderTags**](docs/ApiRegistrationApi.md#replaceCertificateOrderTags) | **POST** /v2/order/{orderReference}/tags | Replace Certificate Order custom tags
 *ApiRegistrationApi* | [**resetClientPrevalidatedDomain**](docs/ApiRegistrationApi.md#resetClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id
 *ApiRegistrationApi* | [**revokeCertificates**](docs/ApiRegistrationApi.md#revokeCertificates) | **POST** /v2/revoke | Revoke certificates
 *ApiRegistrationApi* | [**searchClients**](docs/ApiRegistrationApi.md#searchClients) | **POST** /v2/clients | Search Clients available to the RA Operator

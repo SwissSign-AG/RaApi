@@ -16,6 +16,7 @@
 |**startBefore** | **LocalDate** | Certificate Order not starting before Date |  [optional] |
 |**attribute** | **String** | Any certificate attribute OID or value with optional wildcard attributes ? and/or * |  [optional] |
 |**includeCertificateChain** | **Boolean** | Include the certificate chain in the certificate order when available |  [optional] |
+|**tags** | **List&lt;String&gt;** | Customer label/tags |  [optional] |
 
 
 

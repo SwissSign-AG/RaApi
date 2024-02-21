@@ -22,6 +22,7 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch*
 | [**jwt**](ApiRegistrationApi.md#jwt) | **POST** /v2/jwt/{userName} | Produce a user JWT |
 | [**listCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#listCertificateOrderAdditionalRecipients) | **POST** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients |
 | [**publishCertificate**](ApiRegistrationApi.md#publishCertificate) | **POST** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order |
+| [**replaceCertificateOrderTags**](ApiRegistrationApi.md#replaceCertificateOrderTags) | **POST** /v2/order/{orderReference}/tags | Replace Certificate Order custom tags |
 | [**resetClientPrevalidatedDomain**](ApiRegistrationApi.md#resetClientPrevalidatedDomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id |
 | [**revokeCertificates**](ApiRegistrationApi.md#revokeCertificates) | **POST** /v2/revoke | Revoke certificates |
 | [**searchClients**](ApiRegistrationApi.md#searchClients) | **POST** /v2/clients | Search Clients available to the RA Operator |
@@ -1312,6 +1313,79 @@ null (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | success |  -  |
+| **400** | bad request |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | not found |  -  |
+| **500** | Internal server error |  -  |
+
+<a name="replaceCertificateOrderTags"></a>
+# **replaceCertificateOrderTags**
+> CertificateOrder replaceCertificateOrderTags(orderReference, requestBody)
+
+Replace Certificate Order custom tags
+
+Replace certificate order custom tags with a new set of user defined tags/labels 
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ApiRegistrationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://api.ra.pre.swisssign.ch");
+    
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    ApiRegistrationApi apiInstance = new ApiRegistrationApi(defaultClient);
+    String orderReference = "ord-f0725b50-c533-4802-a844-de57bfb7a80e"; // String | 
+    List<String> requestBody = Arrays.asList(); // List<String> | List of user defined tags/labels
+    try {
+      CertificateOrder result = apiInstance.replaceCertificateOrderTags(orderReference, requestBody);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ApiRegistrationApi#replaceCertificateOrderTags");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orderReference** | **String**|  | |
+| **requestBody** | [**List&lt;String&gt;**](String.md)| List of user defined tags/labels | |
+
+### Return type
+
+[**CertificateOrder**](CertificateOrder.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | success |  -  |
 | **400** | bad request |  -  |
 | **401** | Unauthorized |  -  |
 | **404** | not found |  -  |

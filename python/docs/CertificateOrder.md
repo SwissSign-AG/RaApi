@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **product_reference** | **str** | Product reference UUID | [readonly] 
 **certificate** | [**Certificate**](Certificate.md) |  | [optional] 
 **certificate_chain** | **[str, none_type], none_type** | Certificate chain | [optional] [readonly] 
+**tags** | **[str], none_type** | User defined tags/labels | [optional] [readonly] 
 **additional_recipients** | [**[AdditionalRecipient]**](AdditionalRecipient.md) |  | [optional] 
 **issued_by** | **str** | email of the person who created the order | [optional] [readonly] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]

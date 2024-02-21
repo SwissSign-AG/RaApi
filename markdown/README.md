@@ -25,6 +25,7 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch*
 *ApiRegistrationApi* | [**jwt**](Apis/ApiRegistrationApi.md#jwt) | **POST** /v2/jwt/{userName} | Produce a user JWT |
 *ApiRegistrationApi* | [**listCertificateOrderAdditionalRecipients**](Apis/ApiRegistrationApi.md#listcertificateorderadditionalrecipients) | **POST** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients |
 *ApiRegistrationApi* | [**publishCertificate**](Apis/ApiRegistrationApi.md#publishcertificate) | **POST** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order |
+*ApiRegistrationApi* | [**replaceCertificateOrderTags**](Apis/ApiRegistrationApi.md#replacecertificateordertags) | **POST** /v2/order/{orderReference}/tags | Replace Certificate Order custom tags |
 *ApiRegistrationApi* | [**resetClientPrevalidatedDomain**](Apis/ApiRegistrationApi.md#resetclientprevalidateddomain) | **POST** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id |
 *ApiRegistrationApi* | [**revokeCertificates**](Apis/ApiRegistrationApi.md#revokecertificates) | **POST** /v2/revoke | Revoke certificates |
 *ApiRegistrationApi* | [**searchClients**](Apis/ApiRegistrationApi.md#searchclients) | **POST** /v2/clients | Search Clients available to the RA Operator |

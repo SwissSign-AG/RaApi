@@ -22,6 +22,7 @@ Method | HTTP request | Description
 [**Jwt**](ApiRegistrationApi.md#Jwt) | **Post** /v2/jwt/{userName} | Produce a user JWT
 [**ListCertificateOrderAdditionalRecipients**](ApiRegistrationApi.md#ListCertificateOrderAdditionalRecipients) | **Post** /v2/order/{orderReference}/list/recipients | Obtain a list of additional Certificate Order recipients
 [**PublishCertificate**](ApiRegistrationApi.md#PublishCertificate) | **Post** /v2/order/{orderReference}/publish | Send a certificate publication request for selected Certificate Order
+[**ReplaceCertificateOrderTags**](ApiRegistrationApi.md#ReplaceCertificateOrderTags) | **Post** /v2/order/{orderReference}/tags | Replace Certificate Order custom tags
 [**ResetClientPrevalidatedDomain**](ApiRegistrationApi.md#ResetClientPrevalidatedDomain) | **Post** /v2/client/domain/{prevalidatedDomainReference}/token/reset | Reset prevalidated domain token for the selected reference Id
 [**RevokeCertificates**](ApiRegistrationApi.md#RevokeCertificates) | **Post** /v2/revoke | Revoke certificates
 [**SearchClients**](ApiRegistrationApi.md#SearchClients) | **Post** /v2/clients | Search Clients available to the RA Operator
@@ -1288,6 +1289,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ReplaceCertificateOrderTags
+
+> CertificateOrder ReplaceCertificateOrderTags(ctx, orderReference).RequestBody(requestBody).Execute()
+
+Replace Certificate Order custom tags
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    orderReference := "ord-f0725b50-c533-4802-a844-de57bfb7a80e" // string | 
+    requestBody := []string{"my-cmdb-label"} // []string | List of user defined tags/labels
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ApiRegistrationApi.ReplaceCertificateOrderTags(context.Background(), orderReference).RequestBody(requestBody).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ApiRegistrationApi.ReplaceCertificateOrderTags``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ReplaceCertificateOrderTags`: CertificateOrder
+    fmt.Fprintf(os.Stdout, "Response from `ApiRegistrationApi.ReplaceCertificateOrderTags`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orderReference** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReplaceCertificateOrderTagsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **requestBody** | **[]string** | List of user defined tags/labels | 
+
+### Return type
+
+[**CertificateOrder**](CertificateOrder.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **StartBefore** | Pointer to **NullableString** | Certificate Order not starting before Date | [optional] 
 **Attribute** | Pointer to **NullableString** | Any certificate attribute OID or value with optional wildcard attributes ? and/or * | [optional] 
 **IncludeCertificateChain** | Pointer to **NullableBool** | Include the certificate chain in the certificate order when available | [optional] 
+**Tags** | Pointer to **[]string** | Customer label/tags | [optional] 
 
 ## Methods
 
@@ -348,6 +349,41 @@ HasIncludeCertificateChain returns a boolean if a field has been set.
 `func (o *SearchCertificateOrder) UnsetIncludeCertificateChain()`
 
 UnsetIncludeCertificateChain ensures that no value is present for IncludeCertificateChain, not even an explicit nil
+### GetTags
+
+`func (o *SearchCertificateOrder) GetTags() []string`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *SearchCertificateOrder) GetTagsOk() (*[]string, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *SearchCertificateOrder) SetTags(v []string)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *SearchCertificateOrder) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
+### SetTagsNil
+
+`func (o *SearchCertificateOrder) SetTagsNil(b bool)`
+
+ SetTagsNil sets the value for Tags to be an explicit nil
+
+### UnsetTags
+`func (o *SearchCertificateOrder) UnsetTags()`
+
+UnsetTags ensures that no value is present for Tags, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

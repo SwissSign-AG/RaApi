@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.3.12
+  version: 2.4.9
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch
@@ -589,6 +589,69 @@ paths:
       security:
       - BearerAuth: []
       summary: Retrieve a Certificate Order Tasks given the Order reference
+      tags:
+      - api_registration
+  /v2/order/{orderReference}/tags:
+    post:
+      description: |
+        Replace certificate order custom tags with a new set of user defined tags/labels
+      operationId: replaceCertificateOrderTags
+      parameters:
+      - explode: false
+        in: path
+        name: orderReference
+        required: true
+        schema:
+          description: Certificate order reference UUID
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                example: my-cmdb-label
+                nullable: false
+                type: string
+              type: array
+        description: List of user defined tags/labels
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateOrder'
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - BearerAuth: []
+      summary: Replace Certificate Order custom tags
       tags:
       - api_registration
   /v2/orders:
@@ -1871,6 +1934,9 @@ components:
         - SUPERSEDED
         - SUPERSEDED
         includeCertificateChain: true
+        tags:
+        - my.cmdb-tag
+        - my.cmdb-label
       properties:
         orderReference:
           description: Certificate Order reference
@@ -1927,6 +1993,16 @@ components:
           example: true
           nullable: true
           type: boolean
+        tags:
+          description: Customer label/tags
+          example:
+          - my.cmdb-tag
+          - my.cmdb-label
+          items:
+            nullable: false
+            type: string
+          nullable: true
+          type: array
       type: object
     ClientDNS:
       example:
@@ -2124,6 +2200,9 @@ components:
           documentName: my_document.pdf
         publishCertificate: true
         acceptTandC: true
+        tags:
+        - my-cmdb-label
+        - my-cmdb-label
         includeCertificateChain: true
       properties:
         productReference:
@@ -2165,6 +2244,14 @@ components:
         registrationDocuments:
           items:
             $ref: '#/components/schemas/RegistrationDocument'
+          type: array
+        tags:
+          items:
+            description: User defined tag/label
+            example: my-cmdb-label
+            nullable: false
+            readOnly: false
+            type: string
           type: array
         note:
           description: User note added to issued certificate order
@@ -2294,6 +2381,9 @@ components:
         uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
         createdOn: 2022-02-12T05:10:50.52Z
         status: ISSUED
+        tags:
+        - my-cmdb-label
+        - my-cmdb-label
       properties:
         uuid:
           description: Certificate Order reference
@@ -2329,6 +2419,16 @@ components:
           description: Certificate chain
           items:
             nullable: true
+            readOnly: true
+            type: string
+          nullable: true
+          readOnly: true
+          type: array
+        tags:
+          description: User defined tags/labels
+          items:
+            example: my-cmdb-label
+            nullable: false
             readOnly: true
             type: string
           nullable: true
@@ -3006,6 +3106,9 @@ components:
           uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
           createdOn: 2022-02-12T05:10:50.52Z
           status: ISSUED
+          tags:
+          - my-cmdb-label
+          - my-cmdb-label
         - additionalRecipients:
           - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
             language: NEUTRAL
@@ -3034,6 +3137,9 @@ components:
           uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
           createdOn: 2022-02-12T05:10:50.52Z
           status: ISSUED
+          tags:
+          - my-cmdb-label
+          - my-cmdb-label
         draw: 0
         recordsTotal: 1
       properties:

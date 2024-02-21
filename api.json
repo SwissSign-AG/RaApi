@@ -471,6 +471,19 @@
             "nullable": true,
             "description": "Include the certificate chain in the certificate order when available",
             "example": true
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "description": "Customer label/tags",
+            "example": [
+              "my.cmdb-tag",
+              "my.cmdb-label"
+            ],
+            "items": {
+              "type": "string",
+              "nullable": false
+            }
           }
         }
       },
@@ -648,6 +661,16 @@
               "$ref": "#/components/schemas/RegistrationDocument"
             }
           },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "nullable": false,
+              "readOnly": false,
+              "description": "User defined tag/label",
+              "example": "my-cmdb-label"
+            }
+          },
           "note": {
             "type": "string",
             "nullable": true,
@@ -759,6 +782,18 @@
               "type": "string",
               "readOnly": true,
               "nullable": true
+            },
+            "readOnly": true,
+            "nullable": true
+          },
+          "tags": {
+            "description": "User defined tags/labels",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "readOnly": true,
+              "nullable": false,
+              "example": "my-cmdb-label"
             },
             "readOnly": true,
             "nullable": true
@@ -2221,6 +2256,102 @@
         }
       }
     },
+    "/v2/order/{orderReference}/tags": {
+      "post": {
+        "operationId": "replaceCertificateOrderTags",
+        "tags": [
+          "api_registration"
+        ],
+        "summary": "Replace Certificate Order custom tags",
+        "description": "Replace certificate order custom tags with a new set of user defined tags/labels\n",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "pattern": "ord-[0-9a-f-]{36}",
+              "description": "Certificate order reference UUID",
+              "type": "string",
+              "example": "ord-f0725b50-c533-4802-a844-de57bfb7a80e"
+            },
+            "in": "path",
+            "name": "orderReference",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "List of user defined tags/labels",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "nullable": false,
+                  "example": "my-cmdb-label"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CertificateOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/orders": {
       "post": {
         "operationId": "getCertificateOrders",
@@ -3495,7 +3626,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.3.12",
+    "version": "2.4.9",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"

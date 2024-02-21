@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.3.12
+API version: 2.4.9
 Contact: ssc@swisssign.com
 */
 
@@ -24,6 +24,7 @@ type IssueRequest struct {
 	Overrides *RequestOverrides `json:"overrides,omitempty"`
 	AdditionalRecipients []AdditionalRecipient `json:"additionalRecipients,omitempty"`
 	RegistrationDocuments []RegistrationDocument `json:"registrationDocuments,omitempty"`
+	Tags []string `json:"tags,omitempty"`
 	// User note added to issued certificate order
 	Note NullableString `json:"note,omitempty"`
 	// Publish certificate to repository. Publication occurs if option is enabled on certificate policy or if the account has the option enabled to override the publication. 
@@ -228,6 +229,38 @@ func (o *IssueRequest) SetRegistrationDocuments(v []RegistrationDocument) {
 	o.RegistrationDocuments = v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *IssueRequest) GetTags() []string {
+	if o == nil || o.Tags == nil {
+		var ret []string
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *IssueRequest) GetTagsOk() ([]string, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *IssueRequest) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []string and assigns it to the Tags field.
+func (o *IssueRequest) SetTags(v []string) {
+	o.Tags = v
+}
+
 // GetNote returns the Note field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *IssueRequest) GetNote() string {
 	if o == nil || o.Note.Get() == nil {
@@ -414,6 +447,9 @@ func (o IssueRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.RegistrationDocuments != nil {
 		toSerialize["registrationDocuments"] = o.RegistrationDocuments
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	if o.Note.IsSet() {
 		toSerialize["note"] = o.Note.Get()
