@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.4.9
+  version: 2.4.13
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch

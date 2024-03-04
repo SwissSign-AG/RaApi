@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.4.9
+API version: 2.4.13
 Contact: ssc@swisssign.com
 */
 
@@ -42,7 +42,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the SwissSign RA REST API API v2.4.9
+// APIClient manages communication with the SwissSign RA REST API API v2.4.13
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
