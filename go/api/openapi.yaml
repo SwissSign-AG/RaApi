@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.4.13
+  version: 2.5.6
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch
@@ -1517,6 +1517,7 @@ components:
       example:
         serialNumber: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
         issuerName: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+        revocationRequestor: John Doe
         revocationReason: CESSATION_OF_OPERATION
       properties:
         serialNumber:
@@ -1540,6 +1541,12 @@ components:
           example: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
           nullable: false
           type: string
+        revocationRequestor:
+          description: First- and last name of revocation requestor. Revocation requestor
+            must be used when API account is of type SERVICE_ACCOUNT
+          example: John Doe
+          nullable: false
+          type: "string,"
       required:
       - issuerName
       - revocationReason
@@ -2374,6 +2381,7 @@ components:
             revokedOn: 2022-02-12T05:10:50.52Z
             reason: SUPERSEDED
             revokedBy: some@email.org
+            revocationRequestor: John Doe
           startValidity: 2022-01-12T23:20:50.52Z
           certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
           issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
@@ -2552,6 +2560,7 @@ components:
         revokedOn: 2022-02-12T05:10:50.52Z
         reason: SUPERSEDED
         revokedBy: some@email.org
+        revocationRequestor: John Doe
       properties:
         revokedOn:
           description: Revocation date in UTC
@@ -2569,6 +2578,11 @@ components:
           nullable: false
           readOnly: true
           type: string
+        revocationRequestor:
+          description: First- and last name of revocation requestor
+          example: John Doe
+          nullable: false
+          type: "string,"
       required:
       - reason
       - revokedBy
@@ -3098,6 +3112,7 @@ components:
               revokedOn: 2022-02-12T05:10:50.52Z
               reason: SUPERSEDED
               revokedBy: some@email.org
+              revocationRequestor: John Doe
             startValidity: 2022-01-12T23:20:50.52Z
             certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped]\
               \ ..."
@@ -3129,6 +3144,7 @@ components:
               revokedOn: 2022-02-12T05:10:50.52Z
               reason: SUPERSEDED
               revokedBy: some@email.org
+              revocationRequestor: John Doe
             startValidity: 2022-01-12T23:20:50.52Z
             certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped]\
               \ ..."
@@ -3196,6 +3212,7 @@ components:
           revokedOn: 2022-02-12T05:10:50.52Z
           reason: SUPERSEDED
           revokedBy: some@email.org
+          revocationRequestor: John Doe
         startValidity: 2022-01-12T23:20:50.52Z
         certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
         issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"

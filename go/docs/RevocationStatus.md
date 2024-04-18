@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **RevokedOn** | **time.Time** | Revocation date in UTC | [readonly] 
 **Reason** | [**RevocationReason**](RevocationReason.md) |  | 
 **RevokedBy** | **string** | email of the person who revoked the certificate | [readonly] 
+**RevocationRequestor** | Pointer to [**ModelString**](string,.md) | First- and last name of revocation requestor | [optional] 
 
 ## Methods
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetRevokedBy sets RevokedBy field to given value.
 
+
+### GetRevocationRequestor
+
+`func (o *RevocationStatus) GetRevocationRequestor() ModelString`
+
+GetRevocationRequestor returns the RevocationRequestor field if non-nil, zero value otherwise.
+
+### GetRevocationRequestorOk
+
+`func (o *RevocationStatus) GetRevocationRequestorOk() (*ModelString, bool)`
+
+GetRevocationRequestorOk returns a tuple with the RevocationRequestor field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRevocationRequestor
+
+`func (o *RevocationStatus) SetRevocationRequestor(v ModelString)`
+
+SetRevocationRequestor sets RevocationRequestor field to given value.
+
+### HasRevocationRequestor
+
+`func (o *RevocationStatus) HasRevocationRequestor() bool`
+
+HasRevocationRequestor returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

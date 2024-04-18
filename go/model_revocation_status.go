@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.4.13
+API version: 2.5.6
 Contact: ssc@swisssign.com
 */
 
@@ -23,6 +23,8 @@ type RevocationStatus struct {
 	Reason RevocationReason `json:"reason"`
 	// email of the person who revoked the certificate
 	RevokedBy string `json:"revokedBy"`
+	// First- and last name of revocation requestor
+	RevocationRequestor *ModelString `json:"revocationRequestor,omitempty"`
 }
 
 // NewRevocationStatus instantiates a new RevocationStatus object
@@ -117,6 +119,38 @@ func (o *RevocationStatus) SetRevokedBy(v string) {
 	o.RevokedBy = v
 }
 
+// GetRevocationRequestor returns the RevocationRequestor field value if set, zero value otherwise.
+func (o *RevocationStatus) GetRevocationRequestor() ModelString {
+	if o == nil || o.RevocationRequestor == nil {
+		var ret ModelString
+		return ret
+	}
+	return *o.RevocationRequestor
+}
+
+// GetRevocationRequestorOk returns a tuple with the RevocationRequestor field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RevocationStatus) GetRevocationRequestorOk() (*ModelString, bool) {
+	if o == nil || o.RevocationRequestor == nil {
+		return nil, false
+	}
+	return o.RevocationRequestor, true
+}
+
+// HasRevocationRequestor returns a boolean if a field has been set.
+func (o *RevocationStatus) HasRevocationRequestor() bool {
+	if o != nil && o.RevocationRequestor != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRevocationRequestor gets a reference to the given ModelString and assigns it to the RevocationRequestor field.
+func (o *RevocationStatus) SetRevocationRequestor(v ModelString) {
+	o.RevocationRequestor = &v
+}
+
 func (o RevocationStatus) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -127,6 +161,9 @@ func (o RevocationStatus) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["revokedBy"] = o.RevokedBy
+	}
+	if o.RevocationRequestor != nil {
+		toSerialize["revocationRequestor"] = o.RevocationRequestor
 	}
 	return json.Marshal(toSerialize)
 }
