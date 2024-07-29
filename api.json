@@ -48,8 +48,8 @@
             "example": "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
           },
           "revocationRequestor": {
-            "type": "string,",
-            "nullable": "true,",
+            "type": "string",
+            "nullable": true,
             "description": "First- and last name of revocation requestor. Revocation requestor must be used when API account is of type SERVICE_ACCOUNT",
             "example": "John Doe"
           }
@@ -947,8 +947,8 @@
             "example": "some@email.org"
           },
           "revocationRequestor": {
-            "type": "string,",
-            "nullable": "true,",
+            "type": "string",
+            "nullable": true,
             "description": "First- and last name of revocation requestor",
             "example": "John Doe"
           }
@@ -3638,7 +3638,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.5.6",
+    "version": "2.5.10",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"

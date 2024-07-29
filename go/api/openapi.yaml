@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.5.6
+  version: 2.5.10
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch
@@ -1545,8 +1545,8 @@ components:
           description: First- and last name of revocation requestor. Revocation requestor
             must be used when API account is of type SERVICE_ACCOUNT
           example: John Doe
-          nullable: false
-          type: "string,"
+          nullable: true
+          type: string
       required:
       - issuerName
       - revocationReason
@@ -2581,8 +2581,8 @@ components:
         revocationRequestor:
           description: First- and last name of revocation requestor
           example: John Doe
-          nullable: false
-          type: "string,"
+          nullable: true
+          type: string
       required:
       - reason
       - revokedBy

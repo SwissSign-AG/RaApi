@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **SerialNumber** | **string** | Certificate serial number (Big Integer HEX encoded) | 
 **RevocationReason** | **string** | Revocation reason | 
 **IssuerName** | **string** | Certificate issuer distinguished name | 
-**RevocationRequestor** | Pointer to [**ModelString**](string,.md) | First- and last name of revocation requestor. Revocation requestor must be used when API account is of type SERVICE_ACCOUNT | [optional] 
+**RevocationRequestor** | Pointer to **NullableString** | First- and last name of revocation requestor. Revocation requestor must be used when API account is of type SERVICE_ACCOUNT | [optional] 
 
 ## Methods
 
@@ -90,20 +90,20 @@ SetIssuerName sets IssuerName field to given value.
 
 ### GetRevocationRequestor
 
-`func (o *RevocationRequest) GetRevocationRequestor() ModelString`
+`func (o *RevocationRequest) GetRevocationRequestor() string`
 
 GetRevocationRequestor returns the RevocationRequestor field if non-nil, zero value otherwise.
 
 ### GetRevocationRequestorOk
 
-`func (o *RevocationRequest) GetRevocationRequestorOk() (*ModelString, bool)`
+`func (o *RevocationRequest) GetRevocationRequestorOk() (*string, bool)`
 
 GetRevocationRequestorOk returns a tuple with the RevocationRequestor field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRevocationRequestor
 
-`func (o *RevocationRequest) SetRevocationRequestor(v ModelString)`
+`func (o *RevocationRequest) SetRevocationRequestor(v string)`
 
 SetRevocationRequestor sets RevocationRequestor field to given value.
 
@@ -113,6 +113,16 @@ SetRevocationRequestor sets RevocationRequestor field to given value.
 
 HasRevocationRequestor returns a boolean if a field has been set.
 
+### SetRevocationRequestorNil
+
+`func (o *RevocationRequest) SetRevocationRequestorNil(b bool)`
+
+ SetRevocationRequestorNil sets the value for RevocationRequestor to be an explicit nil
+
+### UnsetRevocationRequestor
+`func (o *RevocationRequest) UnsetRevocationRequestor()`
+
+UnsetRevocationRequestor ensures that no value is present for RevocationRequestor, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

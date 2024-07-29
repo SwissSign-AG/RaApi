@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.6
+API version: 2.5.10
 Contact: ssc@swisssign.com
 */
 
@@ -24,7 +24,7 @@ type RevocationStatus struct {
 	// email of the person who revoked the certificate
 	RevokedBy string `json:"revokedBy"`
 	// First- and last name of revocation requestor
-	RevocationRequestor *ModelString `json:"revocationRequestor,omitempty"`
+	RevocationRequestor NullableString `json:"revocationRequestor,omitempty"`
 }
 
 // NewRevocationStatus instantiates a new RevocationStatus object
@@ -119,36 +119,46 @@ func (o *RevocationStatus) SetRevokedBy(v string) {
 	o.RevokedBy = v
 }
 
-// GetRevocationRequestor returns the RevocationRequestor field value if set, zero value otherwise.
-func (o *RevocationStatus) GetRevocationRequestor() ModelString {
-	if o == nil || o.RevocationRequestor == nil {
-		var ret ModelString
+// GetRevocationRequestor returns the RevocationRequestor field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RevocationStatus) GetRevocationRequestor() string {
+	if o == nil || o.RevocationRequestor.Get() == nil {
+		var ret string
 		return ret
 	}
-	return *o.RevocationRequestor
+	return *o.RevocationRequestor.Get()
 }
 
 // GetRevocationRequestorOk returns a tuple with the RevocationRequestor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RevocationStatus) GetRevocationRequestorOk() (*ModelString, bool) {
-	if o == nil || o.RevocationRequestor == nil {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RevocationStatus) GetRevocationRequestorOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RevocationRequestor, true
+	return o.RevocationRequestor.Get(), o.RevocationRequestor.IsSet()
 }
 
 // HasRevocationRequestor returns a boolean if a field has been set.
 func (o *RevocationStatus) HasRevocationRequestor() bool {
-	if o != nil && o.RevocationRequestor != nil {
+	if o != nil && o.RevocationRequestor.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetRevocationRequestor gets a reference to the given ModelString and assigns it to the RevocationRequestor field.
-func (o *RevocationStatus) SetRevocationRequestor(v ModelString) {
-	o.RevocationRequestor = &v
+// SetRevocationRequestor gets a reference to the given NullableString and assigns it to the RevocationRequestor field.
+func (o *RevocationStatus) SetRevocationRequestor(v string) {
+	o.RevocationRequestor.Set(&v)
+}
+// SetRevocationRequestorNil sets the value for RevocationRequestor to be an explicit nil
+func (o *RevocationStatus) SetRevocationRequestorNil() {
+	o.RevocationRequestor.Set(nil)
+}
+
+// UnsetRevocationRequestor ensures that no value is present for RevocationRequestor, not even an explicit nil
+func (o *RevocationStatus) UnsetRevocationRequestor() {
+	o.RevocationRequestor.Unset()
 }
 
 func (o RevocationStatus) MarshalJSON() ([]byte, error) {
@@ -162,8 +172,8 @@ func (o RevocationStatus) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["revokedBy"] = o.RevokedBy
 	}
-	if o.RevocationRequestor != nil {
-		toSerialize["revocationRequestor"] = o.RevocationRequestor
+	if o.RevocationRequestor.IsSet() {
+		toSerialize["revocationRequestor"] = o.RevocationRequestor.Get()
 	}
 	return json.Marshal(toSerialize)
 }

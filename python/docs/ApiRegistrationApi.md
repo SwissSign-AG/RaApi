@@ -1816,7 +1816,7 @@ with swisssign_ra_api.v2.ApiClient(configuration) as api_client:
             serial_number="3893409CB666E1F092B7B6F28E1EAF4582AA7F21",
             revocation_reason="CESSATION_OF_OPERATION",
             issuer_name="DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA",
-John Doe,
+            revocation_requestor="John Doe",
         ),
     ] # [RevocationRequest] | Certificate references to revoke
 
