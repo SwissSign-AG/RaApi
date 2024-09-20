@@ -22,6 +22,7 @@ Models/ProductValidity.md
 Models/RegistrationDocument.md
 Models/RequestDNS.md
 Models/RequestExtensions.md
+Models/RequestIP.md
 Models/RequestOverrides.md
 Models/RequestRFC822.md
 Models/RequestUPN.md

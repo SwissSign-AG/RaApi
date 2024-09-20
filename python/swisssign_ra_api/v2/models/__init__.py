@@ -31,6 +31,7 @@ from swisssign_ra_api.v2.model.product_validity import ProductValidity
 from swisssign_ra_api.v2.model.registration_document import RegistrationDocument
 from swisssign_ra_api.v2.model.request_dns import RequestDNS
 from swisssign_ra_api.v2.model.request_extensions import RequestExtensions
+from swisssign_ra_api.v2.model.request_ip import RequestIP
 from swisssign_ra_api.v2.model.request_overrides import RequestOverrides
 from swisssign_ra_api.v2.model.request_rfc822 import RequestRFC822
 from swisssign_ra_api.v2.model.request_upn import RequestUPN

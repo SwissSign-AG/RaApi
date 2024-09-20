@@ -29,6 +29,7 @@ docs/ProductValidity.md
 docs/RegistrationDocument.md
 docs/RequestDNS.md
 docs/RequestExtensions.md
+docs/RequestIP.md
 docs/RequestOverrides.md
 docs/RequestRFC822.md
 docs/RequestUPN.md
@@ -61,6 +62,7 @@ model_product_validity.go
 model_registration_document.go
 model_request_dns.go
 model_request_extensions.go
+model_request_ip.go
 model_request_overrides.go
 model_request_rfc822.go
 model_request_upn.go

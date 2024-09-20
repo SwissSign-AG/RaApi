@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.10
+API version: 2.5.13
 Contact: ssc@swisssign.com
 */
 
@@ -24,6 +24,7 @@ type RequestExtensions struct {
 	RequestDNS *RequestDNS `json:"requestDNS,omitempty"`
 	RequestRFC822 *RequestRFC822 `json:"requestRFC822,omitempty"`
 	RequestUPN *RequestUPN `json:"requestUPN,omitempty"`
+	RequestIP *RequestIP `json:"requestIP,omitempty"`
 }
 
 // NewRequestExtensions instantiates a new RequestExtensions object
@@ -223,6 +224,38 @@ func (o *RequestExtensions) SetRequestUPN(v RequestUPN) {
 	o.RequestUPN = &v
 }
 
+// GetRequestIP returns the RequestIP field value if set, zero value otherwise.
+func (o *RequestExtensions) GetRequestIP() RequestIP {
+	if o == nil || o.RequestIP == nil {
+		var ret RequestIP
+		return ret
+	}
+	return *o.RequestIP
+}
+
+// GetRequestIPOk returns a tuple with the RequestIP field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RequestExtensions) GetRequestIPOk() (*RequestIP, bool) {
+	if o == nil || o.RequestIP == nil {
+		return nil, false
+	}
+	return o.RequestIP, true
+}
+
+// HasRequestIP returns a boolean if a field has been set.
+func (o *RequestExtensions) HasRequestIP() bool {
+	if o != nil && o.RequestIP != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestIP gets a reference to the given RequestIP and assigns it to the RequestIP field.
+func (o *RequestExtensions) SetRequestIP(v RequestIP) {
+	o.RequestIP = &v
+}
+
 func (o RequestExtensions) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.MicrosoftSecurityIdentifier.IsSet() {
@@ -239,6 +272,9 @@ func (o RequestExtensions) MarshalJSON() ([]byte, error) {
 	}
 	if o.RequestUPN != nil {
 		toSerialize["requestUPN"] = o.RequestUPN
+	}
+	if o.RequestIP != nil {
+		toSerialize["requestIP"] = o.RequestIP
 	}
 	return json.Marshal(toSerialize)
 }

@@ -1,7 +1,7 @@
 # openapi-java-client
 
 SwissSign RA REST API
-- API version: 2.5.10
+- API version: 2.5.13
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
@@ -39,7 +39,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>2.5.10</version>
+  <version>2.5.13</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -55,7 +55,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "org.openapitools:openapi-java-client:2.5.10"
+     implementation "org.openapitools:openapi-java-client:2.5.13"
   }
 ```
 
@@ -69,7 +69,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-2.5.10.jar`
+* `target/openapi-java-client-2.5.13.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -171,6 +171,7 @@ Class | Method | HTTP request | Description
  - [RegistrationDocument](docs/RegistrationDocument.md)
  - [RequestDNS](docs/RequestDNS.md)
  - [RequestExtensions](docs/RequestExtensions.md)
+ - [RequestIP](docs/RequestIP.md)
  - [RequestOverrides](docs/RequestOverrides.md)
  - [RequestRFC822](docs/RequestRFC822.md)
  - [RequestUPN](docs/RequestUPN.md)

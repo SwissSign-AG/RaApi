@@ -12,6 +12,7 @@
 |**requestDNS** | [**RequestDNS**](RequestDNS.md) |  |  [optional] |
 |**requestRFC822** | [**RequestRFC822**](RequestRFC822.md) |  |  [optional] |
 |**requestUPN** | [**RequestUPN**](RequestUPN.md) |  |  [optional] |
+|**requestIP** | [**RequestIP**](RequestIP.md) |  |  [optional] |
 
 
 

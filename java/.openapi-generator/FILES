@@ -29,6 +29,7 @@ docs/ProductValidity.md
 docs/RegistrationDocument.md
 docs/RequestDNS.md
 docs/RequestExtensions.md
+docs/RequestIP.md
 docs/RequestOverrides.md
 docs/RequestRFC822.md
 docs/RequestUPN.md
@@ -86,6 +87,7 @@ src/main/java/org/openapitools/client/model/ProductValidity.java
 src/main/java/org/openapitools/client/model/RegistrationDocument.java
 src/main/java/org/openapitools/client/model/RequestDNS.java
 src/main/java/org/openapitools/client/model/RequestExtensions.java
+src/main/java/org/openapitools/client/model/RequestIP.java
 src/main/java/org/openapitools/client/model/RequestOverrides.java
 src/main/java/org/openapitools/client/model/RequestRFC822.java
 src/main/java/org/openapitools/client/model/RequestUPN.java
@@ -116,6 +118,7 @@ src/test/java/org/openapitools/client/model/ProductValidityTest.java
 src/test/java/org/openapitools/client/model/RegistrationDocumentTest.java
 src/test/java/org/openapitools/client/model/RequestDNSTest.java
 src/test/java/org/openapitools/client/model/RequestExtensionsTest.java
+src/test/java/org/openapitools/client/model/RequestIPTest.java
 src/test/java/org/openapitools/client/model/RequestOverridesTest.java
 src/test/java/org/openapitools/client/model/RequestRFC822Test.java
 src/test/java/org/openapitools/client/model/RequestUPNTest.java

@@ -8,6 +8,7 @@
 | **requestDNS** | [**RequestDNS**](RequestDNS.md) |  | [optional] [default to null] |
 | **requestRFC822** | [**RequestRFC822**](RequestRFC822.md) |  | [optional] [default to null] |
 | **requestUPN** | [**RequestUPN**](RequestUPN.md) |  | [optional] [default to null] |
+| **requestIP** | [**RequestIP**](RequestIP.md) |  | [optional] [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

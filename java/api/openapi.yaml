@@ -5,7 +5,7 @@ info:
     name: SwissSign Support
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.5.10
+  version: 2.5.13
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch
@@ -2222,6 +2222,10 @@ components:
               - upn@sample.org
             microsoftSecurityIdentifier: S-1-5-32
             microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
+            requestIP:
+              values:
+              - 1.1.1.1
+              - 1.1.1.1
             requestRFC822:
               values:
               - sample@sample.org
@@ -2343,6 +2347,10 @@ components:
             - upn@sample.org
           microsoftSecurityIdentifier: S-1-5-32
           microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
+          requestIP:
+            values:
+            - 1.1.1.1
+            - 1.1.1.1
           requestRFC822:
             values:
             - sample@sample.org
@@ -2572,6 +2580,22 @@ components:
       - status
       - type
       - uuid
+      type: object
+    RequestIP:
+      example:
+        values:
+        - 1.1.1.1
+        - 1.1.1.1
+      properties:
+        values:
+          items:
+            description: IP entry
+            example: 1.1.1.1
+            nullable: false
+            type: string
+          type: array
+      required:
+      - values
       type: object
     RegistrationDocument:
       example:
@@ -2819,6 +2843,10 @@ components:
           - upn@sample.org
         microsoftSecurityIdentifier: S-1-5-32
         microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
+        requestIP:
+          values:
+          - 1.1.1.1
+          - 1.1.1.1
         requestRFC822:
           values:
           - sample@sample.org
@@ -2852,6 +2880,8 @@ components:
           $ref: '#/components/schemas/RequestRFC822'
         requestUPN:
           $ref: '#/components/schemas/RequestUPN'
+        requestIP:
+          $ref: '#/components/schemas/RequestIP'
       type: object
     Clients:
       example:

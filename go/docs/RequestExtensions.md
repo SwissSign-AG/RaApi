@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **RequestDNS** | Pointer to [**RequestDNS**](RequestDNS.md) |  | [optional] 
 **RequestRFC822** | Pointer to [**RequestRFC822**](RequestRFC822.md) |  | [optional] 
 **RequestUPN** | Pointer to [**RequestUPN**](RequestUPN.md) |  | [optional] 
+**RequestIP** | Pointer to [**RequestIP**](RequestIP.md) |  | [optional] 
 
 ## Methods
 
@@ -173,6 +174,31 @@ SetRequestUPN sets RequestUPN field to given value.
 `func (o *RequestExtensions) HasRequestUPN() bool`
 
 HasRequestUPN returns a boolean if a field has been set.
+
+### GetRequestIP
+
+`func (o *RequestExtensions) GetRequestIP() RequestIP`
+
+GetRequestIP returns the RequestIP field if non-nil, zero value otherwise.
+
+### GetRequestIPOk
+
+`func (o *RequestExtensions) GetRequestIPOk() (*RequestIP, bool)`
+
+GetRequestIPOk returns a tuple with the RequestIP field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestIP
+
+`func (o *RequestExtensions) SetRequestIP(v RequestIP)`
+
+SetRequestIP sets RequestIP field to given value.
+
+### HasRequestIP
+
+`func (o *RequestExtensions) HasRequestIP() bool`
+
+HasRequestIP returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

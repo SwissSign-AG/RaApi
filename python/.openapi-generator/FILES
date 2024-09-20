@@ -26,6 +26,7 @@ docs/ProductValidity.md
 docs/RegistrationDocument.md
 docs/RequestDNS.md
 docs/RequestExtensions.md
+docs/RequestIP.md
 docs/RequestOverrides.md
 docs/RequestRFC822.md
 docs/RequestUPN.md
@@ -68,6 +69,7 @@ swisssign_ra_api/v2/model/product_validity.py
 swisssign_ra_api/v2/model/registration_document.py
 swisssign_ra_api/v2/model/request_dns.py
 swisssign_ra_api/v2/model/request_extensions.py
+swisssign_ra_api/v2/model/request_ip.py
 swisssign_ra_api/v2/model/request_overrides.py
 swisssign_ra_api/v2/model/request_rfc822.py
 swisssign_ra_api/v2/model/request_upn.py
@@ -103,6 +105,7 @@ test/test_product_validity.py
 test/test_registration_document.py
 test/test_request_dns.py
 test/test_request_extensions.py
+test/test_request_ip.py
 test/test_request_overrides.py
 test/test_request_rfc822.py
 test/test_request_upn.py

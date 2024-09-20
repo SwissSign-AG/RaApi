@@ -60,6 +60,7 @@ All URIs are relative to *https://api.ra.pre.swisssign.ch*
  - [RegistrationDocument](./Models/RegistrationDocument.md)
  - [RequestDNS](./Models/RequestDNS.md)
  - [RequestExtensions](./Models/RequestExtensions.md)
+ - [RequestIP](./Models/RequestIP.md)
  - [RequestOverrides](./Models/RequestOverrides.md)
  - [RequestRFC822](./Models/RequestRFC822.md)
  - [RequestUPN](./Models/RequestUPN.md)

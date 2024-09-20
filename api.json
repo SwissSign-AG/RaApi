@@ -899,6 +899,23 @@
           }
         }
       },
+      "RequestIP": {
+        "type": "object",
+        "required": [
+          "values"
+        ],
+        "properties": {
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "nullable": false,
+              "description": "IP entry",
+              "example": "1.1.1.1"
+            }
+          }
+        }
+      },
       "RegistrationDocument": {
         "type": "object",
         "required": [
@@ -1089,6 +1106,9 @@
           },
           "requestUPN": {
             "$ref": "#/components/schemas/RequestUPN"
+          },
+          "requestIP": {
+            "$ref": "#/components/schemas/RequestIP"
           }
         }
       },
@@ -3638,7 +3658,7 @@
   },
   "info": {
     "title": "SwissSign RA REST API",
-    "version": "2.5.10",
+    "version": "2.5.13",
     "contact": {
       "name": "SwissSign Support",
       "email": "ssc@swisssign.com"
