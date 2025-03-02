@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,16 +13,22 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"time"
+	"bytes"
+	"fmt"
 )
+
+// checks if the Product type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Product{}
 
 // Product struct for Product
 type Product struct {
 	// Product UUID reference
-	Uuid string `json:"uuid"`
+	Uuid string `json:"uuid" validate:"regexp=pma-[0-9a-f-]{36}"`
 	// Certificate product name
 	ProductName *string `json:"productName,omitempty"`
 	// Product additional description
-	ProductDescription NullableString `json:"productDescription,omitempty"`
+	ProductDescription *string `json:"productDescription,omitempty"`
 	// Key generation protocol
 	KeyGenerationType string `json:"keyGenerationType"`
 	KeyType KeyType `json:"keyType"`
@@ -41,7 +47,7 @@ type Product struct {
 	// Indicate the default value if publication override is enabled
 	ClientPublishCertificateOverrideDefault bool `json:"clientPublishCertificateOverrideDefault"`
 	// Indicate if the certificate product has an expiration date
-	ExpirationDate NullableString `json:"expirationDate,omitempty"`
+	ExpirationDate *time.Time `json:"expirationDate,omitempty"`
 	// When enabled, additional certificate issuance notification recipients can be added to the certificate order. Additional recipients are skipped when disabled.
 	AllowAdditionalIssuanceNotificationRecipients bool `json:"allowAdditionalIssuanceNotificationRecipients"`
 	// When enabled, additional certificate revocation notification recipients can be added to the certificate order. Additional recipients are skipped when disabled.
@@ -74,6 +80,8 @@ type Product struct {
 	IsGenerateRevocationCode bool `json:"isGenerateRevocationCode"`
 	ProductValidity *ProductValidity `json:"productValidity,omitempty"`
 }
+
+type _Product Product
 
 // NewProduct instantiates a new Product object
 // This constructor will assign default values to properties that have it defined,
@@ -143,7 +151,7 @@ func (o *Product) SetUuid(v string) {
 
 // GetProductName returns the ProductName field value if set, zero value otherwise.
 func (o *Product) GetProductName() string {
-	if o == nil || o.ProductName == nil {
+	if o == nil || IsNil(o.ProductName) {
 		var ret string
 		return ret
 	}
@@ -153,7 +161,7 @@ func (o *Product) GetProductName() string {
 // GetProductNameOk returns a tuple with the ProductName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Product) GetProductNameOk() (*string, bool) {
-	if o == nil || o.ProductName == nil {
+	if o == nil || IsNil(o.ProductName) {
 		return nil, false
 	}
 	return o.ProductName, true
@@ -161,7 +169,7 @@ func (o *Product) GetProductNameOk() (*string, bool) {
 
 // HasProductName returns a boolean if a field has been set.
 func (o *Product) HasProductName() bool {
-	if o != nil && o.ProductName != nil {
+	if o != nil && !IsNil(o.ProductName) {
 		return true
 	}
 
@@ -173,46 +181,36 @@ func (o *Product) SetProductName(v string) {
 	o.ProductName = &v
 }
 
-// GetProductDescription returns the ProductDescription field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetProductDescription returns the ProductDescription field value if set, zero value otherwise.
 func (o *Product) GetProductDescription() string {
-	if o == nil || o.ProductDescription.Get() == nil {
+	if o == nil || IsNil(o.ProductDescription) {
 		var ret string
 		return ret
 	}
-	return *o.ProductDescription.Get()
+	return *o.ProductDescription
 }
 
 // GetProductDescriptionOk returns a tuple with the ProductDescription field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Product) GetProductDescriptionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ProductDescription) {
 		return nil, false
 	}
-	return o.ProductDescription.Get(), o.ProductDescription.IsSet()
+	return o.ProductDescription, true
 }
 
 // HasProductDescription returns a boolean if a field has been set.
 func (o *Product) HasProductDescription() bool {
-	if o != nil && o.ProductDescription.IsSet() {
+	if o != nil && !IsNil(o.ProductDescription) {
 		return true
 	}
 
 	return false
 }
 
-// SetProductDescription gets a reference to the given NullableString and assigns it to the ProductDescription field.
+// SetProductDescription gets a reference to the given string and assigns it to the ProductDescription field.
 func (o *Product) SetProductDescription(v string) {
-	o.ProductDescription.Set(&v)
-}
-// SetProductDescriptionNil sets the value for ProductDescription to be an explicit nil
-func (o *Product) SetProductDescriptionNil() {
-	o.ProductDescription.Set(nil)
-}
-
-// UnsetProductDescription ensures that no value is present for ProductDescription, not even an explicit nil
-func (o *Product) UnsetProductDescription() {
-	o.ProductDescription.Unset()
+	o.ProductDescription = &v
 }
 
 // GetKeyGenerationType returns the KeyGenerationType field value
@@ -431,46 +429,36 @@ func (o *Product) SetClientPublishCertificateOverrideDefault(v bool) {
 	o.ClientPublishCertificateOverrideDefault = v
 }
 
-// GetExpirationDate returns the ExpirationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Product) GetExpirationDate() string {
-	if o == nil || o.ExpirationDate.Get() == nil {
-		var ret string
+// GetExpirationDate returns the ExpirationDate field value if set, zero value otherwise.
+func (o *Product) GetExpirationDate() time.Time {
+	if o == nil || IsNil(o.ExpirationDate) {
+		var ret time.Time
 		return ret
 	}
-	return *o.ExpirationDate.Get()
+	return *o.ExpirationDate
 }
 
 // GetExpirationDateOk returns a tuple with the ExpirationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Product) GetExpirationDateOk() (*string, bool) {
-	if o == nil {
+func (o *Product) GetExpirationDateOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.ExpirationDate) {
 		return nil, false
 	}
-	return o.ExpirationDate.Get(), o.ExpirationDate.IsSet()
+	return o.ExpirationDate, true
 }
 
 // HasExpirationDate returns a boolean if a field has been set.
 func (o *Product) HasExpirationDate() bool {
-	if o != nil && o.ExpirationDate.IsSet() {
+	if o != nil && !IsNil(o.ExpirationDate) {
 		return true
 	}
 
 	return false
 }
 
-// SetExpirationDate gets a reference to the given NullableString and assigns it to the ExpirationDate field.
-func (o *Product) SetExpirationDate(v string) {
-	o.ExpirationDate.Set(&v)
-}
-// SetExpirationDateNil sets the value for ExpirationDate to be an explicit nil
-func (o *Product) SetExpirationDateNil() {
-	o.ExpirationDate.Set(nil)
-}
-
-// UnsetExpirationDate ensures that no value is present for ExpirationDate, not even an explicit nil
-func (o *Product) UnsetExpirationDate() {
-	o.ExpirationDate.Unset()
+// SetExpirationDate gets a reference to the given time.Time and assigns it to the ExpirationDate field.
+func (o *Product) SetExpirationDate(v time.Time) {
+	o.ExpirationDate = &v
 }
 
 // GetAllowAdditionalIssuanceNotificationRecipients returns the AllowAdditionalIssuanceNotificationRecipients field value
@@ -835,7 +823,7 @@ func (o *Product) SetIsGenerateRevocationCode(v bool) {
 
 // GetProductValidity returns the ProductValidity field value if set, zero value otherwise.
 func (o *Product) GetProductValidity() ProductValidity {
-	if o == nil || o.ProductValidity == nil {
+	if o == nil || IsNil(o.ProductValidity) {
 		var ret ProductValidity
 		return ret
 	}
@@ -845,7 +833,7 @@ func (o *Product) GetProductValidity() ProductValidity {
 // GetProductValidityOk returns a tuple with the ProductValidity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Product) GetProductValidityOk() (*ProductValidity, bool) {
-	if o == nil || o.ProductValidity == nil {
+	if o == nil || IsNil(o.ProductValidity) {
 		return nil, false
 	}
 	return o.ProductValidity, true
@@ -853,7 +841,7 @@ func (o *Product) GetProductValidityOk() (*ProductValidity, bool) {
 
 // HasProductValidity returns a boolean if a field has been set.
 func (o *Product) HasProductValidity() bool {
-	if o != nil && o.ProductValidity != nil {
+	if o != nil && !IsNil(o.ProductValidity) {
 		return true
 	}
 
@@ -866,95 +854,114 @@ func (o *Product) SetProductValidity(v ProductValidity) {
 }
 
 func (o Product) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["uuid"] = o.Uuid
-	}
-	if o.ProductName != nil {
-		toSerialize["productName"] = o.ProductName
-	}
-	if o.ProductDescription.IsSet() {
-		toSerialize["productDescription"] = o.ProductDescription.Get()
-	}
-	if true {
-		toSerialize["keyGenerationType"] = o.KeyGenerationType
-	}
-	if true {
-		toSerialize["keyType"] = o.KeyType
-	}
-	if true {
-		toSerialize["issuanceNotification"] = o.IssuanceNotification
-	}
-	if true {
-		toSerialize["revocationNotification"] = o.RevocationNotification
-	}
-	if true {
-		toSerialize["authorization"] = o.Authorization
-	}
-	if true {
-		toSerialize["renewalRule"] = o.RenewalRule
-	}
-	if true {
-		toSerialize["publishCertificate"] = o.PublishCertificate
-	}
-	if true {
-		toSerialize["clientPublishCertificateOverride"] = o.ClientPublishCertificateOverride
-	}
-	if true {
-		toSerialize["clientPublishCertificateOverrideDefault"] = o.ClientPublishCertificateOverrideDefault
-	}
-	if o.ExpirationDate.IsSet() {
-		toSerialize["expirationDate"] = o.ExpirationDate.Get()
-	}
-	if true {
-		toSerialize["allowAdditionalIssuanceNotificationRecipients"] = o.AllowAdditionalIssuanceNotificationRecipients
-	}
-	if true {
-		toSerialize["allowAdditionalRevocationNotificationRecipients"] = o.AllowAdditionalRevocationNotificationRecipients
-	}
-	if true {
-		toSerialize["allowAdditionalRenewalNotificationRecipients"] = o.AllowAdditionalRenewalNotificationRecipients
-	}
-	if true {
-		toSerialize["allowAdditionalAuthorizationNotificationRecipients"] = o.AllowAdditionalAuthorizationNotificationRecipients
-	}
-	if true {
-		toSerialize["allowAdditionalAuthorizationAcceptedNotificationRecipients"] = o.AllowAdditionalAuthorizationAcceptedNotificationRecipients
-	}
-	if true {
-		toSerialize["allowAdditionalAuthorizationRejectedNotificationRecipients"] = o.AllowAdditionalAuthorizationRejectedNotificationRecipients
-	}
-	if true {
-		toSerialize["isCABDNSValidationRequired"] = o.IsCABDNSValidationRequired
-	}
-	if true {
-		toSerialize["allowAdditionalCABDNSNotificationRecipients"] = o.AllowAdditionalCABDNSNotificationRecipients
-	}
-	if true {
-		toSerialize["isCABDNSEmailLinkValidationRequired"] = o.IsCABDNSEmailLinkValidationRequired
-	}
-	if true {
-		toSerialize["isEmailBoxValidationRequired"] = o.IsEmailBoxValidationRequired
-	}
-	if true {
-		toSerialize["requiresRegistrationDocuments"] = o.RequiresRegistrationDocuments
-	}
-	if true {
-		toSerialize["requiresRegistrationDocumentsOnRegister"] = o.RequiresRegistrationDocumentsOnRegister
-	}
-	if true {
-		toSerialize["allowRegistrationDocumentsPDF"] = o.AllowRegistrationDocumentsPDF
-	}
-	if true {
-		toSerialize["allowRegistrationDocumentsJPG"] = o.AllowRegistrationDocumentsJPG
-	}
-	if true {
-		toSerialize["isGenerateRevocationCode"] = o.IsGenerateRevocationCode
-	}
-	if o.ProductValidity != nil {
-		toSerialize["productValidity"] = o.ProductValidity
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Product) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["uuid"] = o.Uuid
+	if !IsNil(o.ProductName) {
+		toSerialize["productName"] = o.ProductName
+	}
+	if !IsNil(o.ProductDescription) {
+		toSerialize["productDescription"] = o.ProductDescription
+	}
+	toSerialize["keyGenerationType"] = o.KeyGenerationType
+	toSerialize["keyType"] = o.KeyType
+	toSerialize["issuanceNotification"] = o.IssuanceNotification
+	toSerialize["revocationNotification"] = o.RevocationNotification
+	toSerialize["authorization"] = o.Authorization
+	toSerialize["renewalRule"] = o.RenewalRule
+	toSerialize["publishCertificate"] = o.PublishCertificate
+	toSerialize["clientPublishCertificateOverride"] = o.ClientPublishCertificateOverride
+	toSerialize["clientPublishCertificateOverrideDefault"] = o.ClientPublishCertificateOverrideDefault
+	if !IsNil(o.ExpirationDate) {
+		toSerialize["expirationDate"] = o.ExpirationDate
+	}
+	toSerialize["allowAdditionalIssuanceNotificationRecipients"] = o.AllowAdditionalIssuanceNotificationRecipients
+	toSerialize["allowAdditionalRevocationNotificationRecipients"] = o.AllowAdditionalRevocationNotificationRecipients
+	toSerialize["allowAdditionalRenewalNotificationRecipients"] = o.AllowAdditionalRenewalNotificationRecipients
+	toSerialize["allowAdditionalAuthorizationNotificationRecipients"] = o.AllowAdditionalAuthorizationNotificationRecipients
+	toSerialize["allowAdditionalAuthorizationAcceptedNotificationRecipients"] = o.AllowAdditionalAuthorizationAcceptedNotificationRecipients
+	toSerialize["allowAdditionalAuthorizationRejectedNotificationRecipients"] = o.AllowAdditionalAuthorizationRejectedNotificationRecipients
+	toSerialize["isCABDNSValidationRequired"] = o.IsCABDNSValidationRequired
+	toSerialize["allowAdditionalCABDNSNotificationRecipients"] = o.AllowAdditionalCABDNSNotificationRecipients
+	toSerialize["isCABDNSEmailLinkValidationRequired"] = o.IsCABDNSEmailLinkValidationRequired
+	toSerialize["isEmailBoxValidationRequired"] = o.IsEmailBoxValidationRequired
+	toSerialize["requiresRegistrationDocuments"] = o.RequiresRegistrationDocuments
+	toSerialize["requiresRegistrationDocumentsOnRegister"] = o.RequiresRegistrationDocumentsOnRegister
+	toSerialize["allowRegistrationDocumentsPDF"] = o.AllowRegistrationDocumentsPDF
+	toSerialize["allowRegistrationDocumentsJPG"] = o.AllowRegistrationDocumentsJPG
+	toSerialize["isGenerateRevocationCode"] = o.IsGenerateRevocationCode
+	if !IsNil(o.ProductValidity) {
+		toSerialize["productValidity"] = o.ProductValidity
+	}
+	return toSerialize, nil
+}
+
+func (o *Product) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"uuid",
+		"keyGenerationType",
+		"keyType",
+		"issuanceNotification",
+		"revocationNotification",
+		"authorization",
+		"renewalRule",
+		"publishCertificate",
+		"clientPublishCertificateOverride",
+		"clientPublishCertificateOverrideDefault",
+		"allowAdditionalIssuanceNotificationRecipients",
+		"allowAdditionalRevocationNotificationRecipients",
+		"allowAdditionalRenewalNotificationRecipients",
+		"allowAdditionalAuthorizationNotificationRecipients",
+		"allowAdditionalAuthorizationAcceptedNotificationRecipients",
+		"allowAdditionalAuthorizationRejectedNotificationRecipients",
+		"isCABDNSValidationRequired",
+		"allowAdditionalCABDNSNotificationRecipients",
+		"isCABDNSEmailLinkValidationRequired",
+		"isEmailBoxValidationRequired",
+		"requiresRegistrationDocuments",
+		"requiresRegistrationDocumentsOnRegister",
+		"allowRegistrationDocumentsPDF",
+		"allowRegistrationDocumentsJPG",
+		"isGenerateRevocationCode",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProduct := _Product{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProduct)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Product(varProduct)
+
+	return err
 }
 
 type NullableProduct struct {

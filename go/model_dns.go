@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,7 +13,12 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
+
+// checks if the DNS type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DNS{}
 
 // DNS struct for DNS
 type DNS struct {
@@ -24,6 +29,8 @@ type DNS struct {
 	// Append www to requested DNS.  Adds www.sample.org when sample.org is requested. When enabled, www is prefixed to all requested DNS. 
 	IncludeWWWDomain *bool `json:"includeWWWDomain,omitempty"`
 }
+
+type _DNS DNS
 
 // NewDNS instantiates a new DNS object
 // This constructor will assign default values to properties that have it defined,
@@ -69,7 +76,7 @@ func (o *DNS) SetDns(v string) {
 
 // GetIncludeBaseDomainForWildcard returns the IncludeBaseDomainForWildcard field value if set, zero value otherwise.
 func (o *DNS) GetIncludeBaseDomainForWildcard() bool {
-	if o == nil || o.IncludeBaseDomainForWildcard == nil {
+	if o == nil || IsNil(o.IncludeBaseDomainForWildcard) {
 		var ret bool
 		return ret
 	}
@@ -79,7 +86,7 @@ func (o *DNS) GetIncludeBaseDomainForWildcard() bool {
 // GetIncludeBaseDomainForWildcardOk returns a tuple with the IncludeBaseDomainForWildcard field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DNS) GetIncludeBaseDomainForWildcardOk() (*bool, bool) {
-	if o == nil || o.IncludeBaseDomainForWildcard == nil {
+	if o == nil || IsNil(o.IncludeBaseDomainForWildcard) {
 		return nil, false
 	}
 	return o.IncludeBaseDomainForWildcard, true
@@ -87,7 +94,7 @@ func (o *DNS) GetIncludeBaseDomainForWildcardOk() (*bool, bool) {
 
 // HasIncludeBaseDomainForWildcard returns a boolean if a field has been set.
 func (o *DNS) HasIncludeBaseDomainForWildcard() bool {
-	if o != nil && o.IncludeBaseDomainForWildcard != nil {
+	if o != nil && !IsNil(o.IncludeBaseDomainForWildcard) {
 		return true
 	}
 
@@ -101,7 +108,7 @@ func (o *DNS) SetIncludeBaseDomainForWildcard(v bool) {
 
 // GetIncludeWWWDomain returns the IncludeWWWDomain field value if set, zero value otherwise.
 func (o *DNS) GetIncludeWWWDomain() bool {
-	if o == nil || o.IncludeWWWDomain == nil {
+	if o == nil || IsNil(o.IncludeWWWDomain) {
 		var ret bool
 		return ret
 	}
@@ -111,7 +118,7 @@ func (o *DNS) GetIncludeWWWDomain() bool {
 // GetIncludeWWWDomainOk returns a tuple with the IncludeWWWDomain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DNS) GetIncludeWWWDomainOk() (*bool, bool) {
-	if o == nil || o.IncludeWWWDomain == nil {
+	if o == nil || IsNil(o.IncludeWWWDomain) {
 		return nil, false
 	}
 	return o.IncludeWWWDomain, true
@@ -119,7 +126,7 @@ func (o *DNS) GetIncludeWWWDomainOk() (*bool, bool) {
 
 // HasIncludeWWWDomain returns a boolean if a field has been set.
 func (o *DNS) HasIncludeWWWDomain() bool {
-	if o != nil && o.IncludeWWWDomain != nil {
+	if o != nil && !IsNil(o.IncludeWWWDomain) {
 		return true
 	}
 
@@ -132,17 +139,60 @@ func (o *DNS) SetIncludeWWWDomain(v bool) {
 }
 
 func (o DNS) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["dns"] = o.Dns
-	}
-	if o.IncludeBaseDomainForWildcard != nil {
-		toSerialize["includeBaseDomainForWildcard"] = o.IncludeBaseDomainForWildcard
-	}
-	if o.IncludeWWWDomain != nil {
-		toSerialize["includeWWWDomain"] = o.IncludeWWWDomain
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DNS) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["dns"] = o.Dns
+	if !IsNil(o.IncludeBaseDomainForWildcard) {
+		toSerialize["includeBaseDomainForWildcard"] = o.IncludeBaseDomainForWildcard
+	}
+	if !IsNil(o.IncludeWWWDomain) {
+		toSerialize["includeWWWDomain"] = o.IncludeWWWDomain
+	}
+	return toSerialize, nil
+}
+
+func (o *DNS) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"dns",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDNS := _DNS{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDNS)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DNS(varDNS)
+
+	return err
 }
 
 type NullableDNS struct {

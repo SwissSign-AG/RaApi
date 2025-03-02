@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **SerialNumber** | **string** | Certificate serial number (Big Integer HEX encoded) | 
 **RevocationReason** | **string** | Revocation reason | 
 **IssuerName** | **string** | Certificate issuer distinguished name | 
-**RevocationRequestor** | Pointer to **NullableString** | First- and last name of revocation requestor. Revocation requestor must be used when API account is of type SERVICE_ACCOUNT | [optional] 
+**RevocationRequestor** | Pointer to **string** | First- and last name of revocation requestor. Revocation requestor must be used when API account is of type SERVICE_ACCOUNT | [optional] 
 
 ## Methods
 
@@ -113,16 +113,6 @@ SetRevocationRequestor sets RevocationRequestor field to given value.
 
 HasRevocationRequestor returns a boolean if a field has been set.
 
-### SetRevocationRequestorNil
-
-`func (o *RevocationRequest) SetRevocationRequestorNil(b bool)`
-
- SetRevocationRequestorNil sets the value for RevocationRequestor to be an explicit nil
-
-### UnsetRevocationRequestor
-`func (o *RevocationRequest) UnsetRevocationRequestor()`
-
-UnsetRevocationRequestor ensures that no value is present for RevocationRequestor, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

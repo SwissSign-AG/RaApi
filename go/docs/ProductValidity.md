@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ValidityType** | **string** | Certificate validity types.   - YEARS: certificate validity in years.   - MONTHS: certificate validity in months.   - DAYS: certificate validity in days.   - HOURS: certificate validity in hours.   - MINUTES: certificate validity in minutes.   - SECONDS: certificate validity in seconds.  | [readonly] 
-**Validity** | Pointer to **NullableInt32** | The default certificate validity | [optional] [readonly] 
-**ValidityOptions** | Pointer to **[]int32** | Optional certificate validity values | [optional] [readonly] 
+**Validity** | Pointer to **int32** | The default certificate validity | [optional] [readonly] 
+**ValidityOptions** | Pointer to **[]int32** | Optional certificate validity values | [optional] 
 
 ## Methods
 
@@ -72,16 +72,6 @@ SetValidity sets Validity field to given value.
 
 HasValidity returns a boolean if a field has been set.
 
-### SetValidityNil
-
-`func (o *ProductValidity) SetValidityNil(b bool)`
-
- SetValidityNil sets the value for Validity to be an explicit nil
-
-### UnsetValidity
-`func (o *ProductValidity) UnsetValidity()`
-
-UnsetValidity ensures that no value is present for Validity, not even an explicit nil
 ### GetValidityOptions
 
 `func (o *ProductValidity) GetValidityOptions() []int32`

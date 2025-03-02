@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,7 +13,12 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
+
+// checks if the Clients type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Clients{}
 
 // Clients struct for Clients
 type Clients struct {
@@ -24,6 +29,8 @@ type Clients struct {
 	RecordsTotal int32 `json:"recordsTotal"`
 	Data []Client `json:"data"`
 }
+
+type _Clients Clients
 
 // NewClients instantiates a new Clients object
 // This constructor will assign default values to properties that have it defined,
@@ -143,20 +150,60 @@ func (o *Clients) SetData(v []Client) {
 }
 
 func (o Clients) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["draw"] = o.Draw
-	}
-	if true {
-		toSerialize["recordsFiltered"] = o.RecordsFiltered
-	}
-	if true {
-		toSerialize["recordsTotal"] = o.RecordsTotal
-	}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Clients) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["draw"] = o.Draw
+	toSerialize["recordsFiltered"] = o.RecordsFiltered
+	toSerialize["recordsTotal"] = o.RecordsTotal
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
+}
+
+func (o *Clients) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"draw",
+		"recordsFiltered",
+		"recordsTotal",
+		"data",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varClients := _Clients{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varClients)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Clients(varClients)
+
+	return err
 }
 
 type NullableClients struct {

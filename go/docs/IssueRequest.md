@@ -5,16 +5,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProductReference** | **string** | Product reference | 
-**Csr** | Pointer to **NullableString** | CSR PEM encoded with or without ----BEGIN/END CERTIFICATE REQUEST-----. When null, a key-pair is generated if the certificate policy allows it (SubjectDN and optional overrides must be provided where necessary). | [optional] 
+**Csr** | Pointer to **string** | CSR PEM encoded with or without ----BEGIN/END CERTIFICATE REQUEST-----. When null, a key-pair is generated if the certificate policy allows it (SubjectDN and optional overrides must be provided where necessary). | [optional] 
 **Overrides** | Pointer to [**RequestOverrides**](RequestOverrides.md) |  | [optional] 
 **AdditionalRecipients** | Pointer to [**[]AdditionalRecipient**](AdditionalRecipient.md) |  | [optional] 
 **RegistrationDocuments** | Pointer to [**[]RegistrationDocument**](RegistrationDocument.md) |  | [optional] 
 **Tags** | Pointer to **[]string** |  | [optional] 
-**Note** | Pointer to **NullableString** | User note added to issued certificate order | [optional] 
+**Note** | Pointer to **string** | User note added to issued certificate order | [optional] 
 **PublishCertificate** | Pointer to **bool** | Publish certificate to repository. Publication occurs if option is enabled on certificate policy or if the account has the option enabled to override the publication.  | [optional] 
-**Synchrone** | Pointer to **bool** | Request is sent asynchronously to the backend by default.  Setting this value to _true_ will wait until the certificate is issued and return the completed certificate order. For successful synchrone issuance, _insure_ that you have all prerequisites for DNS validation and/or Authorization fulfilled.  | [optional] [default to false]
+**Synchrone** | Pointer to **bool** | Request is sent asynchronously to the backend by default.  Setting this value to _true_ will wait until the certificate is issued and return the completed certificate order. For successful synchronous issuance, _insure_ that you have all prerequisites for DNS validation and/or Authorization fulfilled.  | [optional] [default to false]
 **AcceptTandC** | Pointer to **bool** | When server backend has T&amp;C enabled, this value is checked.  | [optional] [default to true]
-**IncludeCertificateChain** | Pointer to **bool** | Include the certificate chain in the reply (only valid when &#39;synchrone&#39; is true).  | [optional] [default to false]
+**IncludeCertificateChain** | Pointer to **bool** | Include the certificate chain in the reply (only valid when &#39;synchronous&#39; is true).  | [optional] [default to false]
 
 ## Methods
 
@@ -80,16 +80,6 @@ SetCsr sets Csr field to given value.
 
 HasCsr returns a boolean if a field has been set.
 
-### SetCsrNil
-
-`func (o *IssueRequest) SetCsrNil(b bool)`
-
- SetCsrNil sets the value for Csr to be an explicit nil
-
-### UnsetCsr
-`func (o *IssueRequest) UnsetCsr()`
-
-UnsetCsr ensures that no value is present for Csr, not even an explicit nil
 ### GetOverrides
 
 `func (o *IssueRequest) GetOverrides() RequestOverrides`
@@ -215,16 +205,6 @@ SetNote sets Note field to given value.
 
 HasNote returns a boolean if a field has been set.
 
-### SetNoteNil
-
-`func (o *IssueRequest) SetNoteNil(b bool)`
-
- SetNoteNil sets the value for Note to be an explicit nil
-
-### UnsetNote
-`func (o *IssueRequest) UnsetNote()`
-
-UnsetNote ensures that no value is present for Note, not even an explicit nil
 ### GetPublishCertificate
 
 `func (o *IssueRequest) GetPublishCertificate() bool`

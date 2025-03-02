@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrderReference** | Pointer to **NullableString** | Certificate Order reference | [optional] 
-**SerialNumber** | Pointer to **NullableString** | Certificate serial number (Big Integer HEX encoded) with optional wildcard attributes ? and/or * | [optional] 
+**OrderReference** | Pointer to **string** | Certificate Order reference | [optional] 
+**SerialNumber** | Pointer to **string** | Certificate serial number (Big Integer HEX encoded) with optional wildcard attributes ? and/or * | [optional] 
 **OrderStatus** | Pointer to [**[]CertificateOrderStatus**](CertificateOrderStatus.md) |  | [optional] 
 **RevocationReason** | Pointer to [**[]RevocationReason**](RevocationReason.md) |  | [optional] 
 **ClientReferences** | Pointer to **[]string** | Client reference UUID | [optional] 
-**StartAfter** | Pointer to **NullableString** | Certificate Order not starting after Date | [optional] 
-**StartBefore** | Pointer to **NullableString** | Certificate Order not starting before Date | [optional] 
-**Attribute** | Pointer to **NullableString** | Any certificate attribute OID or value with optional wildcard attributes ? and/or * | [optional] 
-**IncludeCertificateChain** | Pointer to **NullableBool** | Include the certificate chain in the certificate order when available | [optional] 
+**StartAfter** | Pointer to **time.Time** | Certificate Order not starting after Date | [optional] 
+**StartBefore** | Pointer to **time.Time** | Certificate Order not starting before Date | [optional] 
+**Attribute** | Pointer to **string** | Any certificate attribute OID or value with optional wildcard attributes ? and/or * | [optional] 
+**IncludeCertificateChain** | Pointer to **bool** | Include the certificate chain in the certificate order when available | [optional] 
 **Tags** | Pointer to **[]string** | Customer label/tags | [optional] 
 
 ## Methods
@@ -59,16 +59,6 @@ SetOrderReference sets OrderReference field to given value.
 
 HasOrderReference returns a boolean if a field has been set.
 
-### SetOrderReferenceNil
-
-`func (o *SearchCertificateOrder) SetOrderReferenceNil(b bool)`
-
- SetOrderReferenceNil sets the value for OrderReference to be an explicit nil
-
-### UnsetOrderReference
-`func (o *SearchCertificateOrder) UnsetOrderReference()`
-
-UnsetOrderReference ensures that no value is present for OrderReference, not even an explicit nil
 ### GetSerialNumber
 
 `func (o *SearchCertificateOrder) GetSerialNumber() string`
@@ -94,16 +84,6 @@ SetSerialNumber sets SerialNumber field to given value.
 
 HasSerialNumber returns a boolean if a field has been set.
 
-### SetSerialNumberNil
-
-`func (o *SearchCertificateOrder) SetSerialNumberNil(b bool)`
-
- SetSerialNumberNil sets the value for SerialNumber to be an explicit nil
-
-### UnsetSerialNumber
-`func (o *SearchCertificateOrder) UnsetSerialNumber()`
-
-UnsetSerialNumber ensures that no value is present for SerialNumber, not even an explicit nil
 ### GetOrderStatus
 
 `func (o *SearchCertificateOrder) GetOrderStatus() []CertificateOrderStatus`
@@ -129,16 +109,6 @@ SetOrderStatus sets OrderStatus field to given value.
 
 HasOrderStatus returns a boolean if a field has been set.
 
-### SetOrderStatusNil
-
-`func (o *SearchCertificateOrder) SetOrderStatusNil(b bool)`
-
- SetOrderStatusNil sets the value for OrderStatus to be an explicit nil
-
-### UnsetOrderStatus
-`func (o *SearchCertificateOrder) UnsetOrderStatus()`
-
-UnsetOrderStatus ensures that no value is present for OrderStatus, not even an explicit nil
 ### GetRevocationReason
 
 `func (o *SearchCertificateOrder) GetRevocationReason() []RevocationReason`
@@ -164,16 +134,6 @@ SetRevocationReason sets RevocationReason field to given value.
 
 HasRevocationReason returns a boolean if a field has been set.
 
-### SetRevocationReasonNil
-
-`func (o *SearchCertificateOrder) SetRevocationReasonNil(b bool)`
-
- SetRevocationReasonNil sets the value for RevocationReason to be an explicit nil
-
-### UnsetRevocationReason
-`func (o *SearchCertificateOrder) UnsetRevocationReason()`
-
-UnsetRevocationReason ensures that no value is present for RevocationReason, not even an explicit nil
 ### GetClientReferences
 
 `func (o *SearchCertificateOrder) GetClientReferences() []string`
@@ -199,32 +159,22 @@ SetClientReferences sets ClientReferences field to given value.
 
 HasClientReferences returns a boolean if a field has been set.
 
-### SetClientReferencesNil
-
-`func (o *SearchCertificateOrder) SetClientReferencesNil(b bool)`
-
- SetClientReferencesNil sets the value for ClientReferences to be an explicit nil
-
-### UnsetClientReferences
-`func (o *SearchCertificateOrder) UnsetClientReferences()`
-
-UnsetClientReferences ensures that no value is present for ClientReferences, not even an explicit nil
 ### GetStartAfter
 
-`func (o *SearchCertificateOrder) GetStartAfter() string`
+`func (o *SearchCertificateOrder) GetStartAfter() time.Time`
 
 GetStartAfter returns the StartAfter field if non-nil, zero value otherwise.
 
 ### GetStartAfterOk
 
-`func (o *SearchCertificateOrder) GetStartAfterOk() (*string, bool)`
+`func (o *SearchCertificateOrder) GetStartAfterOk() (*time.Time, bool)`
 
 GetStartAfterOk returns a tuple with the StartAfter field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStartAfter
 
-`func (o *SearchCertificateOrder) SetStartAfter(v string)`
+`func (o *SearchCertificateOrder) SetStartAfter(v time.Time)`
 
 SetStartAfter sets StartAfter field to given value.
 
@@ -234,32 +184,22 @@ SetStartAfter sets StartAfter field to given value.
 
 HasStartAfter returns a boolean if a field has been set.
 
-### SetStartAfterNil
-
-`func (o *SearchCertificateOrder) SetStartAfterNil(b bool)`
-
- SetStartAfterNil sets the value for StartAfter to be an explicit nil
-
-### UnsetStartAfter
-`func (o *SearchCertificateOrder) UnsetStartAfter()`
-
-UnsetStartAfter ensures that no value is present for StartAfter, not even an explicit nil
 ### GetStartBefore
 
-`func (o *SearchCertificateOrder) GetStartBefore() string`
+`func (o *SearchCertificateOrder) GetStartBefore() time.Time`
 
 GetStartBefore returns the StartBefore field if non-nil, zero value otherwise.
 
 ### GetStartBeforeOk
 
-`func (o *SearchCertificateOrder) GetStartBeforeOk() (*string, bool)`
+`func (o *SearchCertificateOrder) GetStartBeforeOk() (*time.Time, bool)`
 
 GetStartBeforeOk returns a tuple with the StartBefore field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStartBefore
 
-`func (o *SearchCertificateOrder) SetStartBefore(v string)`
+`func (o *SearchCertificateOrder) SetStartBefore(v time.Time)`
 
 SetStartBefore sets StartBefore field to given value.
 
@@ -269,16 +209,6 @@ SetStartBefore sets StartBefore field to given value.
 
 HasStartBefore returns a boolean if a field has been set.
 
-### SetStartBeforeNil
-
-`func (o *SearchCertificateOrder) SetStartBeforeNil(b bool)`
-
- SetStartBeforeNil sets the value for StartBefore to be an explicit nil
-
-### UnsetStartBefore
-`func (o *SearchCertificateOrder) UnsetStartBefore()`
-
-UnsetStartBefore ensures that no value is present for StartBefore, not even an explicit nil
 ### GetAttribute
 
 `func (o *SearchCertificateOrder) GetAttribute() string`
@@ -304,16 +234,6 @@ SetAttribute sets Attribute field to given value.
 
 HasAttribute returns a boolean if a field has been set.
 
-### SetAttributeNil
-
-`func (o *SearchCertificateOrder) SetAttributeNil(b bool)`
-
- SetAttributeNil sets the value for Attribute to be an explicit nil
-
-### UnsetAttribute
-`func (o *SearchCertificateOrder) UnsetAttribute()`
-
-UnsetAttribute ensures that no value is present for Attribute, not even an explicit nil
 ### GetIncludeCertificateChain
 
 `func (o *SearchCertificateOrder) GetIncludeCertificateChain() bool`
@@ -339,16 +259,6 @@ SetIncludeCertificateChain sets IncludeCertificateChain field to given value.
 
 HasIncludeCertificateChain returns a boolean if a field has been set.
 
-### SetIncludeCertificateChainNil
-
-`func (o *SearchCertificateOrder) SetIncludeCertificateChainNil(b bool)`
-
- SetIncludeCertificateChainNil sets the value for IncludeCertificateChain to be an explicit nil
-
-### UnsetIncludeCertificateChain
-`func (o *SearchCertificateOrder) UnsetIncludeCertificateChain()`
-
-UnsetIncludeCertificateChain ensures that no value is present for IncludeCertificateChain, not even an explicit nil
 ### GetTags
 
 `func (o *SearchCertificateOrder) GetTags() []string`
@@ -374,16 +284,6 @@ SetTags sets Tags field to given value.
 
 HasTags returns a boolean if a field has been set.
 
-### SetTagsNil
-
-`func (o *SearchCertificateOrder) SetTagsNil(b bool)`
-
- SetTagsNil sets the value for Tags to be an explicit nil
-
-### UnsetTags
-`func (o *SearchCertificateOrder) UnsetTags()`
-
-UnsetTags ensures that no value is present for Tags, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

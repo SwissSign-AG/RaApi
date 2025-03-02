@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -14,28 +14,35 @@ package swisssign_ra_api.v2
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
+
+// checks if the CertificateOrder type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CertificateOrder{}
 
 // CertificateOrder struct for CertificateOrder
 type CertificateOrder struct {
 	// Certificate Order reference
-	Uuid string `json:"uuid"`
+	Uuid string `json:"uuid" validate:"regexp=ord-[0-9a-f-]{36}"`
 	// Certificate Order creation date time
 	CreatedOn time.Time `json:"createdOn"`
 	Status CertificateOrderStatus `json:"status"`
 	// Client reference UUID
-	ClientReference string `json:"clientReference"`
+	ClientReference string `json:"clientReference" validate:"regexp=cli-[0-9a-f-]{36}"`
 	// Product reference UUID
-	ProductReference string `json:"productReference"`
+	ProductReference string `json:"productReference" validate:"regexp=pma-[0-9a-f-]{36}"`
 	Certificate *Certificate `json:"certificate,omitempty"`
 	// Certificate chain
-	CertificateChain []*string `json:"certificateChain,omitempty"`
+	CertificateChain []string `json:"certificateChain,omitempty"`
 	// User defined tags/labels
 	Tags []string `json:"tags,omitempty"`
 	AdditionalRecipients []AdditionalRecipient `json:"additionalRecipients,omitempty"`
 	// email of the person who created the order
 	IssuedBy *string `json:"issuedBy,omitempty"`
 }
+
+type _CertificateOrder CertificateOrder
 
 // NewCertificateOrder instantiates a new CertificateOrder object
 // This constructor will assign default values to properties that have it defined,
@@ -181,7 +188,7 @@ func (o *CertificateOrder) SetProductReference(v string) {
 
 // GetCertificate returns the Certificate field value if set, zero value otherwise.
 func (o *CertificateOrder) GetCertificate() Certificate {
-	if o == nil || o.Certificate == nil {
+	if o == nil || IsNil(o.Certificate) {
 		var ret Certificate
 		return ret
 	}
@@ -191,7 +198,7 @@ func (o *CertificateOrder) GetCertificate() Certificate {
 // GetCertificateOk returns a tuple with the Certificate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateOrder) GetCertificateOk() (*Certificate, bool) {
-	if o == nil || o.Certificate == nil {
+	if o == nil || IsNil(o.Certificate) {
 		return nil, false
 	}
 	return o.Certificate, true
@@ -199,7 +206,7 @@ func (o *CertificateOrder) GetCertificateOk() (*Certificate, bool) {
 
 // HasCertificate returns a boolean if a field has been set.
 func (o *CertificateOrder) HasCertificate() bool {
-	if o != nil && o.Certificate != nil {
+	if o != nil && !IsNil(o.Certificate) {
 		return true
 	}
 
@@ -211,10 +218,10 @@ func (o *CertificateOrder) SetCertificate(v Certificate) {
 	o.Certificate = &v
 }
 
-// GetCertificateChain returns the CertificateChain field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CertificateOrder) GetCertificateChain() []*string {
-	if o == nil {
-		var ret []*string
+// GetCertificateChain returns the CertificateChain field value if set, zero value otherwise.
+func (o *CertificateOrder) GetCertificateChain() []string {
+	if o == nil || IsNil(o.CertificateChain) {
+		var ret []string
 		return ret
 	}
 	return o.CertificateChain
@@ -222,9 +229,8 @@ func (o *CertificateOrder) GetCertificateChain() []*string {
 
 // GetCertificateChainOk returns a tuple with the CertificateChain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CertificateOrder) GetCertificateChainOk() ([]*string, bool) {
-	if o == nil || o.CertificateChain == nil {
+func (o *CertificateOrder) GetCertificateChainOk() ([]string, bool) {
+	if o == nil || IsNil(o.CertificateChain) {
 		return nil, false
 	}
 	return o.CertificateChain, true
@@ -232,21 +238,21 @@ func (o *CertificateOrder) GetCertificateChainOk() ([]*string, bool) {
 
 // HasCertificateChain returns a boolean if a field has been set.
 func (o *CertificateOrder) HasCertificateChain() bool {
-	if o != nil && o.CertificateChain != nil {
+	if o != nil && !IsNil(o.CertificateChain) {
 		return true
 	}
 
 	return false
 }
 
-// SetCertificateChain gets a reference to the given []*string and assigns it to the CertificateChain field.
-func (o *CertificateOrder) SetCertificateChain(v []*string) {
+// SetCertificateChain gets a reference to the given []string and assigns it to the CertificateChain field.
+func (o *CertificateOrder) SetCertificateChain(v []string) {
 	o.CertificateChain = v
 }
 
-// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetTags returns the Tags field value if set, zero value otherwise.
 func (o *CertificateOrder) GetTags() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -255,9 +261,8 @@ func (o *CertificateOrder) GetTags() []string {
 
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CertificateOrder) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -265,7 +270,7 @@ func (o *CertificateOrder) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *CertificateOrder) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -279,7 +284,7 @@ func (o *CertificateOrder) SetTags(v []string) {
 
 // GetAdditionalRecipients returns the AdditionalRecipients field value if set, zero value otherwise.
 func (o *CertificateOrder) GetAdditionalRecipients() []AdditionalRecipient {
-	if o == nil || o.AdditionalRecipients == nil {
+	if o == nil || IsNil(o.AdditionalRecipients) {
 		var ret []AdditionalRecipient
 		return ret
 	}
@@ -289,7 +294,7 @@ func (o *CertificateOrder) GetAdditionalRecipients() []AdditionalRecipient {
 // GetAdditionalRecipientsOk returns a tuple with the AdditionalRecipients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateOrder) GetAdditionalRecipientsOk() ([]AdditionalRecipient, bool) {
-	if o == nil || o.AdditionalRecipients == nil {
+	if o == nil || IsNil(o.AdditionalRecipients) {
 		return nil, false
 	}
 	return o.AdditionalRecipients, true
@@ -297,7 +302,7 @@ func (o *CertificateOrder) GetAdditionalRecipientsOk() ([]AdditionalRecipient, b
 
 // HasAdditionalRecipients returns a boolean if a field has been set.
 func (o *CertificateOrder) HasAdditionalRecipients() bool {
-	if o != nil && o.AdditionalRecipients != nil {
+	if o != nil && !IsNil(o.AdditionalRecipients) {
 		return true
 	}
 
@@ -311,7 +316,7 @@ func (o *CertificateOrder) SetAdditionalRecipients(v []AdditionalRecipient) {
 
 // GetIssuedBy returns the IssuedBy field value if set, zero value otherwise.
 func (o *CertificateOrder) GetIssuedBy() string {
-	if o == nil || o.IssuedBy == nil {
+	if o == nil || IsNil(o.IssuedBy) {
 		var ret string
 		return ret
 	}
@@ -321,7 +326,7 @@ func (o *CertificateOrder) GetIssuedBy() string {
 // GetIssuedByOk returns a tuple with the IssuedBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateOrder) GetIssuedByOk() (*string, bool) {
-	if o == nil || o.IssuedBy == nil {
+	if o == nil || IsNil(o.IssuedBy) {
 		return nil, false
 	}
 	return o.IssuedBy, true
@@ -329,7 +334,7 @@ func (o *CertificateOrder) GetIssuedByOk() (*string, bool) {
 
 // HasIssuedBy returns a boolean if a field has been set.
 func (o *CertificateOrder) HasIssuedBy() bool {
-	if o != nil && o.IssuedBy != nil {
+	if o != nil && !IsNil(o.IssuedBy) {
 		return true
 	}
 
@@ -342,38 +347,77 @@ func (o *CertificateOrder) SetIssuedBy(v string) {
 }
 
 func (o CertificateOrder) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["uuid"] = o.Uuid
-	}
-	if true {
-		toSerialize["createdOn"] = o.CreatedOn
-	}
-	if true {
-		toSerialize["status"] = o.Status
-	}
-	if true {
-		toSerialize["clientReference"] = o.ClientReference
-	}
-	if true {
-		toSerialize["productReference"] = o.ProductReference
-	}
-	if o.Certificate != nil {
-		toSerialize["certificate"] = o.Certificate
-	}
-	if o.CertificateChain != nil {
-		toSerialize["certificateChain"] = o.CertificateChain
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.AdditionalRecipients != nil {
-		toSerialize["additionalRecipients"] = o.AdditionalRecipients
-	}
-	if o.IssuedBy != nil {
-		toSerialize["issuedBy"] = o.IssuedBy
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CertificateOrder) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["uuid"] = o.Uuid
+	toSerialize["createdOn"] = o.CreatedOn
+	toSerialize["status"] = o.Status
+	toSerialize["clientReference"] = o.ClientReference
+	toSerialize["productReference"] = o.ProductReference
+	if !IsNil(o.Certificate) {
+		toSerialize["certificate"] = o.Certificate
+	}
+	if !IsNil(o.CertificateChain) {
+		toSerialize["certificateChain"] = o.CertificateChain
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.AdditionalRecipients) {
+		toSerialize["additionalRecipients"] = o.AdditionalRecipients
+	}
+	if !IsNil(o.IssuedBy) {
+		toSerialize["issuedBy"] = o.IssuedBy
+	}
+	return toSerialize, nil
+}
+
+func (o *CertificateOrder) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"uuid",
+		"createdOn",
+		"status",
+		"clientReference",
+		"productReference",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCertificateOrder := _CertificateOrder{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCertificateOrder)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CertificateOrder(varCertificateOrder)
+
+	return err
 }
 
 type NullableCertificateOrder struct {

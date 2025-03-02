@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Uuid** | **string** | Product UUID reference | [readonly] 
 **ProductName** | Pointer to **string** | Certificate product name | [optional] [readonly] 
-**ProductDescription** | Pointer to **NullableString** | Product additional description | [optional] [readonly] 
+**ProductDescription** | Pointer to **string** | Product additional description | [optional] [readonly] 
 **KeyGenerationType** | **string** | Key generation protocol | [readonly] 
 **KeyType** | [**KeyType**](KeyType.md) |  | 
 **IssuanceNotification** | **bool** | Indicate if the certificate sends a notification on issuance | [readonly] 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **PublishCertificate** | **bool** | Indicate if the certificate is published to the public LDAP after issuance | [readonly] 
 **ClientPublishCertificateOverride** | **bool** | Indicate if the certificate publication can be overridden | [readonly] 
 **ClientPublishCertificateOverrideDefault** | **bool** | Indicate the default value if publication override is enabled | [readonly] 
-**ExpirationDate** | Pointer to **NullableString** | Indicate if the certificate product has an expiration date | [optional] [readonly] 
+**ExpirationDate** | Pointer to **time.Time** | Indicate if the certificate product has an expiration date | [optional] [readonly] 
 **AllowAdditionalIssuanceNotificationRecipients** | **bool** | When enabled, additional certificate issuance notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. | [readonly] 
 **AllowAdditionalRevocationNotificationRecipients** | **bool** | When enabled, additional certificate revocation notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. | [readonly] 
 **AllowAdditionalRenewalNotificationRecipients** | **bool** | When enabled, additional certificate renewal notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. | [readonly] 
@@ -123,16 +123,6 @@ SetProductDescription sets ProductDescription field to given value.
 
 HasProductDescription returns a boolean if a field has been set.
 
-### SetProductDescriptionNil
-
-`func (o *Product) SetProductDescriptionNil(b bool)`
-
- SetProductDescriptionNil sets the value for ProductDescription to be an explicit nil
-
-### UnsetProductDescription
-`func (o *Product) UnsetProductDescription()`
-
-UnsetProductDescription ensures that no value is present for ProductDescription, not even an explicit nil
 ### GetKeyGenerationType
 
 `func (o *Product) GetKeyGenerationType() string`
@@ -315,20 +305,20 @@ SetClientPublishCertificateOverrideDefault sets ClientPublishCertificateOverride
 
 ### GetExpirationDate
 
-`func (o *Product) GetExpirationDate() string`
+`func (o *Product) GetExpirationDate() time.Time`
 
 GetExpirationDate returns the ExpirationDate field if non-nil, zero value otherwise.
 
 ### GetExpirationDateOk
 
-`func (o *Product) GetExpirationDateOk() (*string, bool)`
+`func (o *Product) GetExpirationDateOk() (*time.Time, bool)`
 
 GetExpirationDateOk returns a tuple with the ExpirationDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExpirationDate
 
-`func (o *Product) SetExpirationDate(v string)`
+`func (o *Product) SetExpirationDate(v time.Time)`
 
 SetExpirationDate sets ExpirationDate field to given value.
 
@@ -338,16 +328,6 @@ SetExpirationDate sets ExpirationDate field to given value.
 
 HasExpirationDate returns a boolean if a field has been set.
 
-### SetExpirationDateNil
-
-`func (o *Product) SetExpirationDateNil(b bool)`
-
- SetExpirationDateNil sets the value for ExpirationDate to be an explicit nil
-
-### UnsetExpirationDate
-`func (o *Product) UnsetExpirationDate()`
-
-UnsetExpirationDate ensures that no value is present for ExpirationDate, not even an explicit nil
 ### GetAllowAdditionalIssuanceNotificationRecipients
 
 `func (o *Product) GetAllowAdditionalIssuanceNotificationRecipients() bool`

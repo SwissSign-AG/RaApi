@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -14,7 +14,12 @@ package swisssign_ra_api.v2
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
+
+// checks if the Certificate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Certificate{}
 
 // Certificate struct for Certificate
 type Certificate struct {
@@ -32,6 +37,8 @@ type Certificate struct {
 	Certificate string `json:"certificate"`
 	RevocationStatus *RevocationStatus `json:"revocationStatus,omitempty"`
 }
+
+type _Certificate Certificate
 
 // NewCertificate instantiates a new Certificate object
 // This constructor will assign default values to properties that have it defined,
@@ -202,7 +209,7 @@ func (o *Certificate) SetCertificate(v string) {
 
 // GetRevocationStatus returns the RevocationStatus field value if set, zero value otherwise.
 func (o *Certificate) GetRevocationStatus() RevocationStatus {
-	if o == nil || o.RevocationStatus == nil {
+	if o == nil || IsNil(o.RevocationStatus) {
 		var ret RevocationStatus
 		return ret
 	}
@@ -212,7 +219,7 @@ func (o *Certificate) GetRevocationStatus() RevocationStatus {
 // GetRevocationStatusOk returns a tuple with the RevocationStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Certificate) GetRevocationStatusOk() (*RevocationStatus, bool) {
-	if o == nil || o.RevocationStatus == nil {
+	if o == nil || IsNil(o.RevocationStatus) {
 		return nil, false
 	}
 	return o.RevocationStatus, true
@@ -220,7 +227,7 @@ func (o *Certificate) GetRevocationStatusOk() (*RevocationStatus, bool) {
 
 // HasRevocationStatus returns a boolean if a field has been set.
 func (o *Certificate) HasRevocationStatus() bool {
-	if o != nil && o.RevocationStatus != nil {
+	if o != nil && !IsNil(o.RevocationStatus) {
 		return true
 	}
 
@@ -233,29 +240,67 @@ func (o *Certificate) SetRevocationStatus(v RevocationStatus) {
 }
 
 func (o Certificate) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["subject"] = o.Subject
-	}
-	if true {
-		toSerialize["issuer"] = o.Issuer
-	}
-	if true {
-		toSerialize["serial"] = o.Serial
-	}
-	if true {
-		toSerialize["startValidity"] = o.StartValidity
-	}
-	if true {
-		toSerialize["endValidity"] = o.EndValidity
-	}
-	if true {
-		toSerialize["certificate"] = o.Certificate
-	}
-	if o.RevocationStatus != nil {
-		toSerialize["revocationStatus"] = o.RevocationStatus
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Certificate) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["subject"] = o.Subject
+	toSerialize["issuer"] = o.Issuer
+	toSerialize["serial"] = o.Serial
+	toSerialize["startValidity"] = o.StartValidity
+	toSerialize["endValidity"] = o.EndValidity
+	toSerialize["certificate"] = o.Certificate
+	if !IsNil(o.RevocationStatus) {
+		toSerialize["revocationStatus"] = o.RevocationStatus
+	}
+	return toSerialize, nil
+}
+
+func (o *Certificate) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"subject",
+		"issuer",
+		"serial",
+		"startValidity",
+		"endValidity",
+		"certificate",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCertificate := _Certificate{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCertificate)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Certificate(varCertificate)
+
+	return err
 }
 
 type NullableCertificate struct {

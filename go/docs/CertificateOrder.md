@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **ClientReference** | **string** | Client reference UUID | [readonly] 
 **ProductReference** | **string** | Product reference UUID | [readonly] 
 **Certificate** | Pointer to [**Certificate**](Certificate.md) |  | [optional] 
-**CertificateChain** | Pointer to **[]string** | Certificate chain | [optional] [readonly] 
-**Tags** | Pointer to **[]string** | User defined tags/labels | [optional] [readonly] 
+**CertificateChain** | Pointer to **[]string** | Certificate chain | [optional] 
+**Tags** | Pointer to **[]string** | User defined tags/labels | [optional] 
 **AdditionalRecipients** | Pointer to [**[]AdditionalRecipient**](AdditionalRecipient.md) |  | [optional] 
 **IssuedBy** | Pointer to **string** | email of the person who created the order | [optional] [readonly] 
 
@@ -161,20 +161,20 @@ HasCertificate returns a boolean if a field has been set.
 
 ### GetCertificateChain
 
-`func (o *CertificateOrder) GetCertificateChain() []*string`
+`func (o *CertificateOrder) GetCertificateChain() []string`
 
 GetCertificateChain returns the CertificateChain field if non-nil, zero value otherwise.
 
 ### GetCertificateChainOk
 
-`func (o *CertificateOrder) GetCertificateChainOk() (*[]*string, bool)`
+`func (o *CertificateOrder) GetCertificateChainOk() (*[]string, bool)`
 
 GetCertificateChainOk returns a tuple with the CertificateChain field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCertificateChain
 
-`func (o *CertificateOrder) SetCertificateChain(v []*string)`
+`func (o *CertificateOrder) SetCertificateChain(v []string)`
 
 SetCertificateChain sets CertificateChain field to given value.
 
@@ -184,16 +184,6 @@ SetCertificateChain sets CertificateChain field to given value.
 
 HasCertificateChain returns a boolean if a field has been set.
 
-### SetCertificateChainNil
-
-`func (o *CertificateOrder) SetCertificateChainNil(b bool)`
-
- SetCertificateChainNil sets the value for CertificateChain to be an explicit nil
-
-### UnsetCertificateChain
-`func (o *CertificateOrder) UnsetCertificateChain()`
-
-UnsetCertificateChain ensures that no value is present for CertificateChain, not even an explicit nil
 ### GetTags
 
 `func (o *CertificateOrder) GetTags() []string`
@@ -219,16 +209,6 @@ SetTags sets Tags field to given value.
 
 HasTags returns a boolean if a field has been set.
 
-### SetTagsNil
-
-`func (o *CertificateOrder) SetTagsNil(b bool)`
-
- SetTagsNil sets the value for Tags to be an explicit nil
-
-### UnsetTags
-`func (o *CertificateOrder) UnsetTags()`
-
-UnsetTags ensures that no value is present for Tags, not even an explicit nil
 ### GetAdditionalRecipients
 
 `func (o *CertificateOrder) GetAdditionalRecipients() []AdditionalRecipient`

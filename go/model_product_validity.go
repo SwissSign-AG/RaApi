@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,17 +13,24 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
+
+// checks if the ProductValidity type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProductValidity{}
 
 // ProductValidity struct for ProductValidity
 type ProductValidity struct {
 	// Certificate validity types.   - YEARS: certificate validity in years.   - MONTHS: certificate validity in months.   - DAYS: certificate validity in days.   - HOURS: certificate validity in hours.   - MINUTES: certificate validity in minutes.   - SECONDS: certificate validity in seconds. 
 	ValidityType string `json:"validityType"`
 	// The default certificate validity
-	Validity NullableInt32 `json:"validity,omitempty"`
+	Validity *int32 `json:"validity,omitempty"`
 	// Optional certificate validity values
 	ValidityOptions []int32 `json:"validityOptions,omitempty"`
 }
+
+type _ProductValidity ProductValidity
 
 // NewProductValidity instantiates a new ProductValidity object
 // This constructor will assign default values to properties that have it defined,
@@ -67,51 +74,41 @@ func (o *ProductValidity) SetValidityType(v string) {
 	o.ValidityType = v
 }
 
-// GetValidity returns the Validity field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetValidity returns the Validity field value if set, zero value otherwise.
 func (o *ProductValidity) GetValidity() int32 {
-	if o == nil || o.Validity.Get() == nil {
+	if o == nil || IsNil(o.Validity) {
 		var ret int32
 		return ret
 	}
-	return *o.Validity.Get()
+	return *o.Validity
 }
 
 // GetValidityOk returns a tuple with the Validity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ProductValidity) GetValidityOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Validity) {
 		return nil, false
 	}
-	return o.Validity.Get(), o.Validity.IsSet()
+	return o.Validity, true
 }
 
 // HasValidity returns a boolean if a field has been set.
 func (o *ProductValidity) HasValidity() bool {
-	if o != nil && o.Validity.IsSet() {
+	if o != nil && !IsNil(o.Validity) {
 		return true
 	}
 
 	return false
 }
 
-// SetValidity gets a reference to the given NullableInt32 and assigns it to the Validity field.
+// SetValidity gets a reference to the given int32 and assigns it to the Validity field.
 func (o *ProductValidity) SetValidity(v int32) {
-	o.Validity.Set(&v)
-}
-// SetValidityNil sets the value for Validity to be an explicit nil
-func (o *ProductValidity) SetValidityNil() {
-	o.Validity.Set(nil)
-}
-
-// UnsetValidity ensures that no value is present for Validity, not even an explicit nil
-func (o *ProductValidity) UnsetValidity() {
-	o.Validity.Unset()
+	o.Validity = &v
 }
 
 // GetValidityOptions returns the ValidityOptions field value if set, zero value otherwise.
 func (o *ProductValidity) GetValidityOptions() []int32 {
-	if o == nil || o.ValidityOptions == nil {
+	if o == nil || IsNil(o.ValidityOptions) {
 		var ret []int32
 		return ret
 	}
@@ -121,7 +118,7 @@ func (o *ProductValidity) GetValidityOptions() []int32 {
 // GetValidityOptionsOk returns a tuple with the ValidityOptions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProductValidity) GetValidityOptionsOk() ([]int32, bool) {
-	if o == nil || o.ValidityOptions == nil {
+	if o == nil || IsNil(o.ValidityOptions) {
 		return nil, false
 	}
 	return o.ValidityOptions, true
@@ -129,7 +126,7 @@ func (o *ProductValidity) GetValidityOptionsOk() ([]int32, bool) {
 
 // HasValidityOptions returns a boolean if a field has been set.
 func (o *ProductValidity) HasValidityOptions() bool {
-	if o != nil && o.ValidityOptions != nil {
+	if o != nil && !IsNil(o.ValidityOptions) {
 		return true
 	}
 
@@ -142,17 +139,60 @@ func (o *ProductValidity) SetValidityOptions(v []int32) {
 }
 
 func (o ProductValidity) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["validityType"] = o.ValidityType
-	}
-	if o.Validity.IsSet() {
-		toSerialize["validity"] = o.Validity.Get()
-	}
-	if o.ValidityOptions != nil {
-		toSerialize["validityOptions"] = o.ValidityOptions
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ProductValidity) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["validityType"] = o.ValidityType
+	if !IsNil(o.Validity) {
+		toSerialize["validity"] = o.Validity
+	}
+	if !IsNil(o.ValidityOptions) {
+		toSerialize["validityOptions"] = o.ValidityOptions
+	}
+	return toSerialize, nil
+}
+
+func (o *ProductValidity) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"validityType",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProductValidity := _ProductValidity{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProductValidity)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProductValidity(varProductValidity)
+
+	return err
 }
 
 type NullableProductValidity struct {

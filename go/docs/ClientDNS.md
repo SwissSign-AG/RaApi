@@ -9,13 +9,13 @@ Name | Type | Description | Notes
 **DomainUnicode** | **string** | Client domain in unicode | [readonly] 
 **Validated** | **bool** | Indicates if the domain is validated | [readonly] 
 **TrustedDomain** | **bool** | Indicates if the domain is a trusted domain (for private PKIs). This setting is linked to the certificate product DNS validation rule for Private PKIs. | 
-**TimeValidated** | Pointer to **NullableTime** | Indicates when the domain got validated | [optional] [readonly] 
+**TimeValidated** | Pointer to **time.Time** | Indicates when the domain got validated | [optional] [readonly] 
 **ValidationMethod** | **string** | DNS validation type | [readonly] 
-**RandomValue** | Pointer to **NullableString** | The random value to add to the DNS TXT record for the domain | [optional] [readonly] 
+**RandomValue** | Pointer to **string** | The random value to add to the DNS TXT record for the domain | [optional] [readonly] 
 **RandomValueTimeCreated** | Pointer to **time.Time** | Indicates when the random value was created | [optional] [readonly] 
 **RandomValueTimeExpire** | Pointer to **time.Time** | Indicates when the random value expires | [optional] [readonly] 
-**ValidationResult** | Pointer to **NullableString** | Indicates the validation result | [optional] [readonly] 
-**TimeExpired** | Pointer to **NullableTime** | Indicates when the random value was created | [optional] [readonly] 
+**ValidationResult** | Pointer to **string** | Indicates the validation result | [optional] [readonly] 
+**TimeExpired** | Pointer to **time.Time** | Indicates when the random value was created | [optional] [readonly] 
 **Expired** | **bool** | Indicates if the pre validation of the domain has expired | [readonly] 
 **RandomValueTimeExpired** | **bool** | Indicates if the random value is expired | [readonly] 
 **Status** | Pointer to [**ClientDomainValidationStatus**](ClientDomainValidationStatus.md) |  | [optional] 
@@ -164,16 +164,6 @@ SetTimeValidated sets TimeValidated field to given value.
 
 HasTimeValidated returns a boolean if a field has been set.
 
-### SetTimeValidatedNil
-
-`func (o *ClientDNS) SetTimeValidatedNil(b bool)`
-
- SetTimeValidatedNil sets the value for TimeValidated to be an explicit nil
-
-### UnsetTimeValidated
-`func (o *ClientDNS) UnsetTimeValidated()`
-
-UnsetTimeValidated ensures that no value is present for TimeValidated, not even an explicit nil
 ### GetValidationMethod
 
 `func (o *ClientDNS) GetValidationMethod() string`
@@ -219,16 +209,6 @@ SetRandomValue sets RandomValue field to given value.
 
 HasRandomValue returns a boolean if a field has been set.
 
-### SetRandomValueNil
-
-`func (o *ClientDNS) SetRandomValueNil(b bool)`
-
- SetRandomValueNil sets the value for RandomValue to be an explicit nil
-
-### UnsetRandomValue
-`func (o *ClientDNS) UnsetRandomValue()`
-
-UnsetRandomValue ensures that no value is present for RandomValue, not even an explicit nil
 ### GetRandomValueTimeCreated
 
 `func (o *ClientDNS) GetRandomValueTimeCreated() time.Time`
@@ -304,16 +284,6 @@ SetValidationResult sets ValidationResult field to given value.
 
 HasValidationResult returns a boolean if a field has been set.
 
-### SetValidationResultNil
-
-`func (o *ClientDNS) SetValidationResultNil(b bool)`
-
- SetValidationResultNil sets the value for ValidationResult to be an explicit nil
-
-### UnsetValidationResult
-`func (o *ClientDNS) UnsetValidationResult()`
-
-UnsetValidationResult ensures that no value is present for ValidationResult, not even an explicit nil
 ### GetTimeExpired
 
 `func (o *ClientDNS) GetTimeExpired() time.Time`
@@ -339,16 +309,6 @@ SetTimeExpired sets TimeExpired field to given value.
 
 HasTimeExpired returns a boolean if a field has been set.
 
-### SetTimeExpiredNil
-
-`func (o *ClientDNS) SetTimeExpiredNil(b bool)`
-
- SetTimeExpiredNil sets the value for TimeExpired to be an explicit nil
-
-### UnsetTimeExpired
-`func (o *ClientDNS) UnsetTimeExpired()`
-
-UnsetTimeExpired ensures that no value is present for TimeExpired, not even an explicit nil
 ### GetExpired
 
 `func (o *ClientDNS) GetExpired() bool`

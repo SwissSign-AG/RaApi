@@ -4,12 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MicrosoftSecurityIdentifier** | Pointer to **NullableString** | Microsoft Security Identifier (SID) Override or add the X.509 extension is present in the certificate policy  | [optional] 
-**MicrosoftPolicyTemplateOID** | Pointer to **NullableString** | Microsoft Policy Template Object Identifier. Override or add the X.509 extension is present in the certificate policy  | [optional] 
+**MicrosoftSecurityIdentifier** | Pointer to **string** | Microsoft Security Identifier (SID) Override or add the X.509 extension is present in the certificate policy  | [optional] 
+**MicrosoftPolicyTemplateOID** | Pointer to **string** | Microsoft Policy Template Object Identifier. Override or add the X.509 extension is present in the certificate policy  | [optional] 
 **RequestDNS** | Pointer to [**RequestDNS**](RequestDNS.md) |  | [optional] 
 **RequestRFC822** | Pointer to [**RequestRFC822**](RequestRFC822.md) |  | [optional] 
 **RequestUPN** | Pointer to [**RequestUPN**](RequestUPN.md) |  | [optional] 
 **RequestIP** | Pointer to [**RequestIP**](RequestIP.md) |  | [optional] 
+**RequestRole** | Pointer to [**RequestRole**](RequestRole.md) |  | [optional] 
+**RequestDeviceSerialNumber** | Pointer to [**RequestDeviceSerialNumber**](RequestDeviceSerialNumber.md) |  | [optional] 
+**RequestScope** | Pointer to [**RequestScope**](RequestScope.md) |  | [optional] 
 
 ## Methods
 
@@ -55,16 +58,6 @@ SetMicrosoftSecurityIdentifier sets MicrosoftSecurityIdentifier field to given v
 
 HasMicrosoftSecurityIdentifier returns a boolean if a field has been set.
 
-### SetMicrosoftSecurityIdentifierNil
-
-`func (o *RequestExtensions) SetMicrosoftSecurityIdentifierNil(b bool)`
-
- SetMicrosoftSecurityIdentifierNil sets the value for MicrosoftSecurityIdentifier to be an explicit nil
-
-### UnsetMicrosoftSecurityIdentifier
-`func (o *RequestExtensions) UnsetMicrosoftSecurityIdentifier()`
-
-UnsetMicrosoftSecurityIdentifier ensures that no value is present for MicrosoftSecurityIdentifier, not even an explicit nil
 ### GetMicrosoftPolicyTemplateOID
 
 `func (o *RequestExtensions) GetMicrosoftPolicyTemplateOID() string`
@@ -90,16 +83,6 @@ SetMicrosoftPolicyTemplateOID sets MicrosoftPolicyTemplateOID field to given val
 
 HasMicrosoftPolicyTemplateOID returns a boolean if a field has been set.
 
-### SetMicrosoftPolicyTemplateOIDNil
-
-`func (o *RequestExtensions) SetMicrosoftPolicyTemplateOIDNil(b bool)`
-
- SetMicrosoftPolicyTemplateOIDNil sets the value for MicrosoftPolicyTemplateOID to be an explicit nil
-
-### UnsetMicrosoftPolicyTemplateOID
-`func (o *RequestExtensions) UnsetMicrosoftPolicyTemplateOID()`
-
-UnsetMicrosoftPolicyTemplateOID ensures that no value is present for MicrosoftPolicyTemplateOID, not even an explicit nil
 ### GetRequestDNS
 
 `func (o *RequestExtensions) GetRequestDNS() RequestDNS`
@@ -199,6 +182,81 @@ SetRequestIP sets RequestIP field to given value.
 `func (o *RequestExtensions) HasRequestIP() bool`
 
 HasRequestIP returns a boolean if a field has been set.
+
+### GetRequestRole
+
+`func (o *RequestExtensions) GetRequestRole() RequestRole`
+
+GetRequestRole returns the RequestRole field if non-nil, zero value otherwise.
+
+### GetRequestRoleOk
+
+`func (o *RequestExtensions) GetRequestRoleOk() (*RequestRole, bool)`
+
+GetRequestRoleOk returns a tuple with the RequestRole field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestRole
+
+`func (o *RequestExtensions) SetRequestRole(v RequestRole)`
+
+SetRequestRole sets RequestRole field to given value.
+
+### HasRequestRole
+
+`func (o *RequestExtensions) HasRequestRole() bool`
+
+HasRequestRole returns a boolean if a field has been set.
+
+### GetRequestDeviceSerialNumber
+
+`func (o *RequestExtensions) GetRequestDeviceSerialNumber() RequestDeviceSerialNumber`
+
+GetRequestDeviceSerialNumber returns the RequestDeviceSerialNumber field if non-nil, zero value otherwise.
+
+### GetRequestDeviceSerialNumberOk
+
+`func (o *RequestExtensions) GetRequestDeviceSerialNumberOk() (*RequestDeviceSerialNumber, bool)`
+
+GetRequestDeviceSerialNumberOk returns a tuple with the RequestDeviceSerialNumber field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestDeviceSerialNumber
+
+`func (o *RequestExtensions) SetRequestDeviceSerialNumber(v RequestDeviceSerialNumber)`
+
+SetRequestDeviceSerialNumber sets RequestDeviceSerialNumber field to given value.
+
+### HasRequestDeviceSerialNumber
+
+`func (o *RequestExtensions) HasRequestDeviceSerialNumber() bool`
+
+HasRequestDeviceSerialNumber returns a boolean if a field has been set.
+
+### GetRequestScope
+
+`func (o *RequestExtensions) GetRequestScope() RequestScope`
+
+GetRequestScope returns the RequestScope field if non-nil, zero value otherwise.
+
+### GetRequestScopeOk
+
+`func (o *RequestExtensions) GetRequestScopeOk() (*RequestScope, bool)`
+
+GetRequestScopeOk returns a tuple with the RequestScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestScope
+
+`func (o *RequestExtensions) SetRequestScope(v RequestScope)`
+
+SetRequestScope sets RequestScope field to given value.
+
+### HasRequestScope
+
+`func (o *RequestExtensions) HasRequestScope() bool`
+
+HasRequestScope returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

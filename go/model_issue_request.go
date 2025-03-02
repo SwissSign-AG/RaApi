@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,29 +13,36 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
+
+// checks if the IssueRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IssueRequest{}
 
 // IssueRequest struct for IssueRequest
 type IssueRequest struct {
 	// Product reference
-	ProductReference string `json:"productReference"`
+	ProductReference string `json:"productReference" validate:"regexp=pma-[0-9a-f-]{36}"`
 	// CSR PEM encoded with or without ----BEGIN/END CERTIFICATE REQUEST-----. When null, a key-pair is generated if the certificate policy allows it (SubjectDN and optional overrides must be provided where necessary).
-	Csr NullableString `json:"csr,omitempty"`
+	Csr *string `json:"csr,omitempty"`
 	Overrides *RequestOverrides `json:"overrides,omitempty"`
 	AdditionalRecipients []AdditionalRecipient `json:"additionalRecipients,omitempty"`
 	RegistrationDocuments []RegistrationDocument `json:"registrationDocuments,omitempty"`
 	Tags []string `json:"tags,omitempty"`
 	// User note added to issued certificate order
-	Note NullableString `json:"note,omitempty"`
+	Note *string `json:"note,omitempty"`
 	// Publish certificate to repository. Publication occurs if option is enabled on certificate policy or if the account has the option enabled to override the publication. 
 	PublishCertificate *bool `json:"publishCertificate,omitempty"`
-	// Request is sent asynchronously to the backend by default.  Setting this value to _true_ will wait until the certificate is issued and return the completed certificate order. For successful synchrone issuance, _insure_ that you have all prerequisites for DNS validation and/or Authorization fulfilled. 
+	// Request is sent asynchronously to the backend by default.  Setting this value to _true_ will wait until the certificate is issued and return the completed certificate order. For successful synchronous issuance, _insure_ that you have all prerequisites for DNS validation and/or Authorization fulfilled. 
 	Synchrone *bool `json:"synchrone,omitempty"`
 	// When server backend has T&C enabled, this value is checked. 
 	AcceptTandC *bool `json:"acceptTandC,omitempty"`
-	// Include the certificate chain in the reply (only valid when 'synchrone' is true). 
+	// Include the certificate chain in the reply (only valid when 'synchronous' is true). 
 	IncludeCertificateChain *bool `json:"includeCertificateChain,omitempty"`
 }
+
+type _IssueRequest IssueRequest
 
 // NewIssueRequest instantiates a new IssueRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -91,51 +98,41 @@ func (o *IssueRequest) SetProductReference(v string) {
 	o.ProductReference = v
 }
 
-// GetCsr returns the Csr field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetCsr returns the Csr field value if set, zero value otherwise.
 func (o *IssueRequest) GetCsr() string {
-	if o == nil || o.Csr.Get() == nil {
+	if o == nil || IsNil(o.Csr) {
 		var ret string
 		return ret
 	}
-	return *o.Csr.Get()
+	return *o.Csr
 }
 
 // GetCsrOk returns a tuple with the Csr field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *IssueRequest) GetCsrOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Csr) {
 		return nil, false
 	}
-	return o.Csr.Get(), o.Csr.IsSet()
+	return o.Csr, true
 }
 
 // HasCsr returns a boolean if a field has been set.
 func (o *IssueRequest) HasCsr() bool {
-	if o != nil && o.Csr.IsSet() {
+	if o != nil && !IsNil(o.Csr) {
 		return true
 	}
 
 	return false
 }
 
-// SetCsr gets a reference to the given NullableString and assigns it to the Csr field.
+// SetCsr gets a reference to the given string and assigns it to the Csr field.
 func (o *IssueRequest) SetCsr(v string) {
-	o.Csr.Set(&v)
-}
-// SetCsrNil sets the value for Csr to be an explicit nil
-func (o *IssueRequest) SetCsrNil() {
-	o.Csr.Set(nil)
-}
-
-// UnsetCsr ensures that no value is present for Csr, not even an explicit nil
-func (o *IssueRequest) UnsetCsr() {
-	o.Csr.Unset()
+	o.Csr = &v
 }
 
 // GetOverrides returns the Overrides field value if set, zero value otherwise.
 func (o *IssueRequest) GetOverrides() RequestOverrides {
-	if o == nil || o.Overrides == nil {
+	if o == nil || IsNil(o.Overrides) {
 		var ret RequestOverrides
 		return ret
 	}
@@ -145,7 +142,7 @@ func (o *IssueRequest) GetOverrides() RequestOverrides {
 // GetOverridesOk returns a tuple with the Overrides field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssueRequest) GetOverridesOk() (*RequestOverrides, bool) {
-	if o == nil || o.Overrides == nil {
+	if o == nil || IsNil(o.Overrides) {
 		return nil, false
 	}
 	return o.Overrides, true
@@ -153,7 +150,7 @@ func (o *IssueRequest) GetOverridesOk() (*RequestOverrides, bool) {
 
 // HasOverrides returns a boolean if a field has been set.
 func (o *IssueRequest) HasOverrides() bool {
-	if o != nil && o.Overrides != nil {
+	if o != nil && !IsNil(o.Overrides) {
 		return true
 	}
 
@@ -167,7 +164,7 @@ func (o *IssueRequest) SetOverrides(v RequestOverrides) {
 
 // GetAdditionalRecipients returns the AdditionalRecipients field value if set, zero value otherwise.
 func (o *IssueRequest) GetAdditionalRecipients() []AdditionalRecipient {
-	if o == nil || o.AdditionalRecipients == nil {
+	if o == nil || IsNil(o.AdditionalRecipients) {
 		var ret []AdditionalRecipient
 		return ret
 	}
@@ -177,7 +174,7 @@ func (o *IssueRequest) GetAdditionalRecipients() []AdditionalRecipient {
 // GetAdditionalRecipientsOk returns a tuple with the AdditionalRecipients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssueRequest) GetAdditionalRecipientsOk() ([]AdditionalRecipient, bool) {
-	if o == nil || o.AdditionalRecipients == nil {
+	if o == nil || IsNil(o.AdditionalRecipients) {
 		return nil, false
 	}
 	return o.AdditionalRecipients, true
@@ -185,7 +182,7 @@ func (o *IssueRequest) GetAdditionalRecipientsOk() ([]AdditionalRecipient, bool)
 
 // HasAdditionalRecipients returns a boolean if a field has been set.
 func (o *IssueRequest) HasAdditionalRecipients() bool {
-	if o != nil && o.AdditionalRecipients != nil {
+	if o != nil && !IsNil(o.AdditionalRecipients) {
 		return true
 	}
 
@@ -199,7 +196,7 @@ func (o *IssueRequest) SetAdditionalRecipients(v []AdditionalRecipient) {
 
 // GetRegistrationDocuments returns the RegistrationDocuments field value if set, zero value otherwise.
 func (o *IssueRequest) GetRegistrationDocuments() []RegistrationDocument {
-	if o == nil || o.RegistrationDocuments == nil {
+	if o == nil || IsNil(o.RegistrationDocuments) {
 		var ret []RegistrationDocument
 		return ret
 	}
@@ -209,7 +206,7 @@ func (o *IssueRequest) GetRegistrationDocuments() []RegistrationDocument {
 // GetRegistrationDocumentsOk returns a tuple with the RegistrationDocuments field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssueRequest) GetRegistrationDocumentsOk() ([]RegistrationDocument, bool) {
-	if o == nil || o.RegistrationDocuments == nil {
+	if o == nil || IsNil(o.RegistrationDocuments) {
 		return nil, false
 	}
 	return o.RegistrationDocuments, true
@@ -217,7 +214,7 @@ func (o *IssueRequest) GetRegistrationDocumentsOk() ([]RegistrationDocument, boo
 
 // HasRegistrationDocuments returns a boolean if a field has been set.
 func (o *IssueRequest) HasRegistrationDocuments() bool {
-	if o != nil && o.RegistrationDocuments != nil {
+	if o != nil && !IsNil(o.RegistrationDocuments) {
 		return true
 	}
 
@@ -231,7 +228,7 @@ func (o *IssueRequest) SetRegistrationDocuments(v []RegistrationDocument) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *IssueRequest) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -241,7 +238,7 @@ func (o *IssueRequest) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssueRequest) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -249,7 +246,7 @@ func (o *IssueRequest) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *IssueRequest) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -261,51 +258,41 @@ func (o *IssueRequest) SetTags(v []string) {
 	o.Tags = v
 }
 
-// GetNote returns the Note field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetNote returns the Note field value if set, zero value otherwise.
 func (o *IssueRequest) GetNote() string {
-	if o == nil || o.Note.Get() == nil {
+	if o == nil || IsNil(o.Note) {
 		var ret string
 		return ret
 	}
-	return *o.Note.Get()
+	return *o.Note
 }
 
 // GetNoteOk returns a tuple with the Note field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *IssueRequest) GetNoteOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Note) {
 		return nil, false
 	}
-	return o.Note.Get(), o.Note.IsSet()
+	return o.Note, true
 }
 
 // HasNote returns a boolean if a field has been set.
 func (o *IssueRequest) HasNote() bool {
-	if o != nil && o.Note.IsSet() {
+	if o != nil && !IsNil(o.Note) {
 		return true
 	}
 
 	return false
 }
 
-// SetNote gets a reference to the given NullableString and assigns it to the Note field.
+// SetNote gets a reference to the given string and assigns it to the Note field.
 func (o *IssueRequest) SetNote(v string) {
-	o.Note.Set(&v)
-}
-// SetNoteNil sets the value for Note to be an explicit nil
-func (o *IssueRequest) SetNoteNil() {
-	o.Note.Set(nil)
-}
-
-// UnsetNote ensures that no value is present for Note, not even an explicit nil
-func (o *IssueRequest) UnsetNote() {
-	o.Note.Unset()
+	o.Note = &v
 }
 
 // GetPublishCertificate returns the PublishCertificate field value if set, zero value otherwise.
 func (o *IssueRequest) GetPublishCertificate() bool {
-	if o == nil || o.PublishCertificate == nil {
+	if o == nil || IsNil(o.PublishCertificate) {
 		var ret bool
 		return ret
 	}
@@ -315,7 +302,7 @@ func (o *IssueRequest) GetPublishCertificate() bool {
 // GetPublishCertificateOk returns a tuple with the PublishCertificate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssueRequest) GetPublishCertificateOk() (*bool, bool) {
-	if o == nil || o.PublishCertificate == nil {
+	if o == nil || IsNil(o.PublishCertificate) {
 		return nil, false
 	}
 	return o.PublishCertificate, true
@@ -323,7 +310,7 @@ func (o *IssueRequest) GetPublishCertificateOk() (*bool, bool) {
 
 // HasPublishCertificate returns a boolean if a field has been set.
 func (o *IssueRequest) HasPublishCertificate() bool {
-	if o != nil && o.PublishCertificate != nil {
+	if o != nil && !IsNil(o.PublishCertificate) {
 		return true
 	}
 
@@ -337,7 +324,7 @@ func (o *IssueRequest) SetPublishCertificate(v bool) {
 
 // GetSynchrone returns the Synchrone field value if set, zero value otherwise.
 func (o *IssueRequest) GetSynchrone() bool {
-	if o == nil || o.Synchrone == nil {
+	if o == nil || IsNil(o.Synchrone) {
 		var ret bool
 		return ret
 	}
@@ -347,7 +334,7 @@ func (o *IssueRequest) GetSynchrone() bool {
 // GetSynchroneOk returns a tuple with the Synchrone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssueRequest) GetSynchroneOk() (*bool, bool) {
-	if o == nil || o.Synchrone == nil {
+	if o == nil || IsNil(o.Synchrone) {
 		return nil, false
 	}
 	return o.Synchrone, true
@@ -355,7 +342,7 @@ func (o *IssueRequest) GetSynchroneOk() (*bool, bool) {
 
 // HasSynchrone returns a boolean if a field has been set.
 func (o *IssueRequest) HasSynchrone() bool {
-	if o != nil && o.Synchrone != nil {
+	if o != nil && !IsNil(o.Synchrone) {
 		return true
 	}
 
@@ -369,7 +356,7 @@ func (o *IssueRequest) SetSynchrone(v bool) {
 
 // GetAcceptTandC returns the AcceptTandC field value if set, zero value otherwise.
 func (o *IssueRequest) GetAcceptTandC() bool {
-	if o == nil || o.AcceptTandC == nil {
+	if o == nil || IsNil(o.AcceptTandC) {
 		var ret bool
 		return ret
 	}
@@ -379,7 +366,7 @@ func (o *IssueRequest) GetAcceptTandC() bool {
 // GetAcceptTandCOk returns a tuple with the AcceptTandC field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssueRequest) GetAcceptTandCOk() (*bool, bool) {
-	if o == nil || o.AcceptTandC == nil {
+	if o == nil || IsNil(o.AcceptTandC) {
 		return nil, false
 	}
 	return o.AcceptTandC, true
@@ -387,7 +374,7 @@ func (o *IssueRequest) GetAcceptTandCOk() (*bool, bool) {
 
 // HasAcceptTandC returns a boolean if a field has been set.
 func (o *IssueRequest) HasAcceptTandC() bool {
-	if o != nil && o.AcceptTandC != nil {
+	if o != nil && !IsNil(o.AcceptTandC) {
 		return true
 	}
 
@@ -401,7 +388,7 @@ func (o *IssueRequest) SetAcceptTandC(v bool) {
 
 // GetIncludeCertificateChain returns the IncludeCertificateChain field value if set, zero value otherwise.
 func (o *IssueRequest) GetIncludeCertificateChain() bool {
-	if o == nil || o.IncludeCertificateChain == nil {
+	if o == nil || IsNil(o.IncludeCertificateChain) {
 		var ret bool
 		return ret
 	}
@@ -411,7 +398,7 @@ func (o *IssueRequest) GetIncludeCertificateChain() bool {
 // GetIncludeCertificateChainOk returns a tuple with the IncludeCertificateChain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssueRequest) GetIncludeCertificateChainOk() (*bool, bool) {
-	if o == nil || o.IncludeCertificateChain == nil {
+	if o == nil || IsNil(o.IncludeCertificateChain) {
 		return nil, false
 	}
 	return o.IncludeCertificateChain, true
@@ -419,7 +406,7 @@ func (o *IssueRequest) GetIncludeCertificateChainOk() (*bool, bool) {
 
 // HasIncludeCertificateChain returns a boolean if a field has been set.
 func (o *IssueRequest) HasIncludeCertificateChain() bool {
-	if o != nil && o.IncludeCertificateChain != nil {
+	if o != nil && !IsNil(o.IncludeCertificateChain) {
 		return true
 	}
 
@@ -432,41 +419,84 @@ func (o *IssueRequest) SetIncludeCertificateChain(v bool) {
 }
 
 func (o IssueRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["productReference"] = o.ProductReference
-	}
-	if o.Csr.IsSet() {
-		toSerialize["csr"] = o.Csr.Get()
-	}
-	if o.Overrides != nil {
-		toSerialize["overrides"] = o.Overrides
-	}
-	if o.AdditionalRecipients != nil {
-		toSerialize["additionalRecipients"] = o.AdditionalRecipients
-	}
-	if o.RegistrationDocuments != nil {
-		toSerialize["registrationDocuments"] = o.RegistrationDocuments
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Note.IsSet() {
-		toSerialize["note"] = o.Note.Get()
-	}
-	if o.PublishCertificate != nil {
-		toSerialize["publishCertificate"] = o.PublishCertificate
-	}
-	if o.Synchrone != nil {
-		toSerialize["synchrone"] = o.Synchrone
-	}
-	if o.AcceptTandC != nil {
-		toSerialize["acceptTandC"] = o.AcceptTandC
-	}
-	if o.IncludeCertificateChain != nil {
-		toSerialize["includeCertificateChain"] = o.IncludeCertificateChain
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IssueRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["productReference"] = o.ProductReference
+	if !IsNil(o.Csr) {
+		toSerialize["csr"] = o.Csr
+	}
+	if !IsNil(o.Overrides) {
+		toSerialize["overrides"] = o.Overrides
+	}
+	if !IsNil(o.AdditionalRecipients) {
+		toSerialize["additionalRecipients"] = o.AdditionalRecipients
+	}
+	if !IsNil(o.RegistrationDocuments) {
+		toSerialize["registrationDocuments"] = o.RegistrationDocuments
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Note) {
+		toSerialize["note"] = o.Note
+	}
+	if !IsNil(o.PublishCertificate) {
+		toSerialize["publishCertificate"] = o.PublishCertificate
+	}
+	if !IsNil(o.Synchrone) {
+		toSerialize["synchrone"] = o.Synchrone
+	}
+	if !IsNil(o.AcceptTandC) {
+		toSerialize["acceptTandC"] = o.AcceptTandC
+	}
+	if !IsNil(o.IncludeCertificateChain) {
+		toSerialize["includeCertificateChain"] = o.IncludeCertificateChain
+	}
+	return toSerialize, nil
+}
+
+func (o *IssueRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"productReference",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varIssueRequest := _IssueRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varIssueRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = IssueRequest(varIssueRequest)
+
+	return err
 }
 
 type NullableIssueRequest struct {
