@@ -19,7 +19,7 @@
 |**publishCertificate** | **Boolean** | Indicate if the certificate is published to the public LDAP after issuance |  [readonly] |
 |**clientPublishCertificateOverride** | **Boolean** | Indicate if the certificate publication can be overridden |  [readonly] |
 |**clientPublishCertificateOverrideDefault** | **Boolean** | Indicate the default value if publication override is enabled |  [readonly] |
-|**expirationDate** | **LocalDate** | Indicate if the certificate product has an expiration date |  [optional] [readonly] |
+|**expirationDate** | **OffsetDateTime** | Indicate if the certificate product has an expiration date |  [optional] [readonly] |
 |**allowAdditionalIssuanceNotificationRecipients** | **Boolean** | When enabled, additional certificate issuance notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. |  [readonly] |
 |**allowAdditionalRevocationNotificationRecipients** | **Boolean** | When enabled, additional certificate revocation notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. |  [readonly] |
 |**allowAdditionalRenewalNotificationRecipients** | **Boolean** | When enabled, additional certificate renewal notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. |  [readonly] |
@@ -45,10 +45,10 @@
 |---- | -----|
 | PKCS10 | &quot;PKCS10&quot; |
 | PKCS12 | &quot;PKCS12&quot; |
-| PKCS12WITHPIN | &quot;PKCS12withPIN&quot; |
-| PKCS12WITHCAPIN | &quot;PKCS12withCAPIN&quot; |
-| PKCS10OR12WITHPIN | &quot;PKCS10or12withPIN&quot; |
-| PKCS10OR12WITHCAPIN | &quot;PKCS10or12withCAPIN&quot; |
+| PKCS12WITH_PIN | &quot;PKCS12withPIN&quot; |
+| PKCS12WITH_CAPIN | &quot;PKCS12withCAPIN&quot; |
+| PKCS10OR12WITH_PIN | &quot;PKCS10or12withPIN&quot; |
+| PKCS10OR12WITH_CAPIN | &quot;PKCS10or12withCAPIN&quot; |
 | HSM | &quot;HSM&quot; |
 | CNG | &quot;CNG&quot; |
 

@@ -13,6 +13,9 @@
 |**requestRFC822** | [**RequestRFC822**](RequestRFC822.md) |  |  [optional] |
 |**requestUPN** | [**RequestUPN**](RequestUPN.md) |  |  [optional] |
 |**requestIP** | [**RequestIP**](RequestIP.md) |  |  [optional] |
+|**requestRole** | [**RequestRole**](RequestRole.md) |  |  [optional] |
+|**requestDeviceSerialNumber** | [**RequestDeviceSerialNumber**](RequestDeviceSerialNumber.md) |  |  [optional] |
+|**requestScope** | [**RequestScope**](RequestScope.md) |  |  [optional] |
 
 
 

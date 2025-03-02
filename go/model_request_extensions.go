@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -15,16 +15,22 @@ import (
 	"encoding/json"
 )
 
+// checks if the RequestExtensions type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RequestExtensions{}
+
 // RequestExtensions struct for RequestExtensions
 type RequestExtensions struct {
 	// Microsoft Security Identifier (SID) Override or add the X.509 extension is present in the certificate policy 
-	MicrosoftSecurityIdentifier NullableString `json:"microsoftSecurityIdentifier,omitempty"`
+	MicrosoftSecurityIdentifier *string `json:"microsoftSecurityIdentifier,omitempty"`
 	// Microsoft Policy Template Object Identifier. Override or add the X.509 extension is present in the certificate policy 
-	MicrosoftPolicyTemplateOID NullableString `json:"microsoftPolicyTemplateOID,omitempty"`
+	MicrosoftPolicyTemplateOID *string `json:"microsoftPolicyTemplateOID,omitempty"`
 	RequestDNS *RequestDNS `json:"requestDNS,omitempty"`
 	RequestRFC822 *RequestRFC822 `json:"requestRFC822,omitempty"`
 	RequestUPN *RequestUPN `json:"requestUPN,omitempty"`
 	RequestIP *RequestIP `json:"requestIP,omitempty"`
+	RequestRole *RequestRole `json:"requestRole,omitempty"`
+	RequestDeviceSerialNumber *RequestDeviceSerialNumber `json:"requestDeviceSerialNumber,omitempty"`
+	RequestScope *RequestScope `json:"requestScope,omitempty"`
 }
 
 // NewRequestExtensions instantiates a new RequestExtensions object
@@ -44,93 +50,73 @@ func NewRequestExtensionsWithDefaults() *RequestExtensions {
 	return &this
 }
 
-// GetMicrosoftSecurityIdentifier returns the MicrosoftSecurityIdentifier field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetMicrosoftSecurityIdentifier returns the MicrosoftSecurityIdentifier field value if set, zero value otherwise.
 func (o *RequestExtensions) GetMicrosoftSecurityIdentifier() string {
-	if o == nil || o.MicrosoftSecurityIdentifier.Get() == nil {
+	if o == nil || IsNil(o.MicrosoftSecurityIdentifier) {
 		var ret string
 		return ret
 	}
-	return *o.MicrosoftSecurityIdentifier.Get()
+	return *o.MicrosoftSecurityIdentifier
 }
 
 // GetMicrosoftSecurityIdentifierOk returns a tuple with the MicrosoftSecurityIdentifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RequestExtensions) GetMicrosoftSecurityIdentifierOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MicrosoftSecurityIdentifier) {
 		return nil, false
 	}
-	return o.MicrosoftSecurityIdentifier.Get(), o.MicrosoftSecurityIdentifier.IsSet()
+	return o.MicrosoftSecurityIdentifier, true
 }
 
 // HasMicrosoftSecurityIdentifier returns a boolean if a field has been set.
 func (o *RequestExtensions) HasMicrosoftSecurityIdentifier() bool {
-	if o != nil && o.MicrosoftSecurityIdentifier.IsSet() {
+	if o != nil && !IsNil(o.MicrosoftSecurityIdentifier) {
 		return true
 	}
 
 	return false
 }
 
-// SetMicrosoftSecurityIdentifier gets a reference to the given NullableString and assigns it to the MicrosoftSecurityIdentifier field.
+// SetMicrosoftSecurityIdentifier gets a reference to the given string and assigns it to the MicrosoftSecurityIdentifier field.
 func (o *RequestExtensions) SetMicrosoftSecurityIdentifier(v string) {
-	o.MicrosoftSecurityIdentifier.Set(&v)
-}
-// SetMicrosoftSecurityIdentifierNil sets the value for MicrosoftSecurityIdentifier to be an explicit nil
-func (o *RequestExtensions) SetMicrosoftSecurityIdentifierNil() {
-	o.MicrosoftSecurityIdentifier.Set(nil)
+	o.MicrosoftSecurityIdentifier = &v
 }
 
-// UnsetMicrosoftSecurityIdentifier ensures that no value is present for MicrosoftSecurityIdentifier, not even an explicit nil
-func (o *RequestExtensions) UnsetMicrosoftSecurityIdentifier() {
-	o.MicrosoftSecurityIdentifier.Unset()
-}
-
-// GetMicrosoftPolicyTemplateOID returns the MicrosoftPolicyTemplateOID field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetMicrosoftPolicyTemplateOID returns the MicrosoftPolicyTemplateOID field value if set, zero value otherwise.
 func (o *RequestExtensions) GetMicrosoftPolicyTemplateOID() string {
-	if o == nil || o.MicrosoftPolicyTemplateOID.Get() == nil {
+	if o == nil || IsNil(o.MicrosoftPolicyTemplateOID) {
 		var ret string
 		return ret
 	}
-	return *o.MicrosoftPolicyTemplateOID.Get()
+	return *o.MicrosoftPolicyTemplateOID
 }
 
 // GetMicrosoftPolicyTemplateOIDOk returns a tuple with the MicrosoftPolicyTemplateOID field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RequestExtensions) GetMicrosoftPolicyTemplateOIDOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MicrosoftPolicyTemplateOID) {
 		return nil, false
 	}
-	return o.MicrosoftPolicyTemplateOID.Get(), o.MicrosoftPolicyTemplateOID.IsSet()
+	return o.MicrosoftPolicyTemplateOID, true
 }
 
 // HasMicrosoftPolicyTemplateOID returns a boolean if a field has been set.
 func (o *RequestExtensions) HasMicrosoftPolicyTemplateOID() bool {
-	if o != nil && o.MicrosoftPolicyTemplateOID.IsSet() {
+	if o != nil && !IsNil(o.MicrosoftPolicyTemplateOID) {
 		return true
 	}
 
 	return false
 }
 
-// SetMicrosoftPolicyTemplateOID gets a reference to the given NullableString and assigns it to the MicrosoftPolicyTemplateOID field.
+// SetMicrosoftPolicyTemplateOID gets a reference to the given string and assigns it to the MicrosoftPolicyTemplateOID field.
 func (o *RequestExtensions) SetMicrosoftPolicyTemplateOID(v string) {
-	o.MicrosoftPolicyTemplateOID.Set(&v)
-}
-// SetMicrosoftPolicyTemplateOIDNil sets the value for MicrosoftPolicyTemplateOID to be an explicit nil
-func (o *RequestExtensions) SetMicrosoftPolicyTemplateOIDNil() {
-	o.MicrosoftPolicyTemplateOID.Set(nil)
-}
-
-// UnsetMicrosoftPolicyTemplateOID ensures that no value is present for MicrosoftPolicyTemplateOID, not even an explicit nil
-func (o *RequestExtensions) UnsetMicrosoftPolicyTemplateOID() {
-	o.MicrosoftPolicyTemplateOID.Unset()
+	o.MicrosoftPolicyTemplateOID = &v
 }
 
 // GetRequestDNS returns the RequestDNS field value if set, zero value otherwise.
 func (o *RequestExtensions) GetRequestDNS() RequestDNS {
-	if o == nil || o.RequestDNS == nil {
+	if o == nil || IsNil(o.RequestDNS) {
 		var ret RequestDNS
 		return ret
 	}
@@ -140,7 +126,7 @@ func (o *RequestExtensions) GetRequestDNS() RequestDNS {
 // GetRequestDNSOk returns a tuple with the RequestDNS field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RequestExtensions) GetRequestDNSOk() (*RequestDNS, bool) {
-	if o == nil || o.RequestDNS == nil {
+	if o == nil || IsNil(o.RequestDNS) {
 		return nil, false
 	}
 	return o.RequestDNS, true
@@ -148,7 +134,7 @@ func (o *RequestExtensions) GetRequestDNSOk() (*RequestDNS, bool) {
 
 // HasRequestDNS returns a boolean if a field has been set.
 func (o *RequestExtensions) HasRequestDNS() bool {
-	if o != nil && o.RequestDNS != nil {
+	if o != nil && !IsNil(o.RequestDNS) {
 		return true
 	}
 
@@ -162,7 +148,7 @@ func (o *RequestExtensions) SetRequestDNS(v RequestDNS) {
 
 // GetRequestRFC822 returns the RequestRFC822 field value if set, zero value otherwise.
 func (o *RequestExtensions) GetRequestRFC822() RequestRFC822 {
-	if o == nil || o.RequestRFC822 == nil {
+	if o == nil || IsNil(o.RequestRFC822) {
 		var ret RequestRFC822
 		return ret
 	}
@@ -172,7 +158,7 @@ func (o *RequestExtensions) GetRequestRFC822() RequestRFC822 {
 // GetRequestRFC822Ok returns a tuple with the RequestRFC822 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RequestExtensions) GetRequestRFC822Ok() (*RequestRFC822, bool) {
-	if o == nil || o.RequestRFC822 == nil {
+	if o == nil || IsNil(o.RequestRFC822) {
 		return nil, false
 	}
 	return o.RequestRFC822, true
@@ -180,7 +166,7 @@ func (o *RequestExtensions) GetRequestRFC822Ok() (*RequestRFC822, bool) {
 
 // HasRequestRFC822 returns a boolean if a field has been set.
 func (o *RequestExtensions) HasRequestRFC822() bool {
-	if o != nil && o.RequestRFC822 != nil {
+	if o != nil && !IsNil(o.RequestRFC822) {
 		return true
 	}
 
@@ -194,7 +180,7 @@ func (o *RequestExtensions) SetRequestRFC822(v RequestRFC822) {
 
 // GetRequestUPN returns the RequestUPN field value if set, zero value otherwise.
 func (o *RequestExtensions) GetRequestUPN() RequestUPN {
-	if o == nil || o.RequestUPN == nil {
+	if o == nil || IsNil(o.RequestUPN) {
 		var ret RequestUPN
 		return ret
 	}
@@ -204,7 +190,7 @@ func (o *RequestExtensions) GetRequestUPN() RequestUPN {
 // GetRequestUPNOk returns a tuple with the RequestUPN field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RequestExtensions) GetRequestUPNOk() (*RequestUPN, bool) {
-	if o == nil || o.RequestUPN == nil {
+	if o == nil || IsNil(o.RequestUPN) {
 		return nil, false
 	}
 	return o.RequestUPN, true
@@ -212,7 +198,7 @@ func (o *RequestExtensions) GetRequestUPNOk() (*RequestUPN, bool) {
 
 // HasRequestUPN returns a boolean if a field has been set.
 func (o *RequestExtensions) HasRequestUPN() bool {
-	if o != nil && o.RequestUPN != nil {
+	if o != nil && !IsNil(o.RequestUPN) {
 		return true
 	}
 
@@ -226,7 +212,7 @@ func (o *RequestExtensions) SetRequestUPN(v RequestUPN) {
 
 // GetRequestIP returns the RequestIP field value if set, zero value otherwise.
 func (o *RequestExtensions) GetRequestIP() RequestIP {
-	if o == nil || o.RequestIP == nil {
+	if o == nil || IsNil(o.RequestIP) {
 		var ret RequestIP
 		return ret
 	}
@@ -236,7 +222,7 @@ func (o *RequestExtensions) GetRequestIP() RequestIP {
 // GetRequestIPOk returns a tuple with the RequestIP field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RequestExtensions) GetRequestIPOk() (*RequestIP, bool) {
-	if o == nil || o.RequestIP == nil {
+	if o == nil || IsNil(o.RequestIP) {
 		return nil, false
 	}
 	return o.RequestIP, true
@@ -244,7 +230,7 @@ func (o *RequestExtensions) GetRequestIPOk() (*RequestIP, bool) {
 
 // HasRequestIP returns a boolean if a field has been set.
 func (o *RequestExtensions) HasRequestIP() bool {
-	if o != nil && o.RequestIP != nil {
+	if o != nil && !IsNil(o.RequestIP) {
 		return true
 	}
 
@@ -256,27 +242,140 @@ func (o *RequestExtensions) SetRequestIP(v RequestIP) {
 	o.RequestIP = &v
 }
 
+// GetRequestRole returns the RequestRole field value if set, zero value otherwise.
+func (o *RequestExtensions) GetRequestRole() RequestRole {
+	if o == nil || IsNil(o.RequestRole) {
+		var ret RequestRole
+		return ret
+	}
+	return *o.RequestRole
+}
+
+// GetRequestRoleOk returns a tuple with the RequestRole field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RequestExtensions) GetRequestRoleOk() (*RequestRole, bool) {
+	if o == nil || IsNil(o.RequestRole) {
+		return nil, false
+	}
+	return o.RequestRole, true
+}
+
+// HasRequestRole returns a boolean if a field has been set.
+func (o *RequestExtensions) HasRequestRole() bool {
+	if o != nil && !IsNil(o.RequestRole) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestRole gets a reference to the given RequestRole and assigns it to the RequestRole field.
+func (o *RequestExtensions) SetRequestRole(v RequestRole) {
+	o.RequestRole = &v
+}
+
+// GetRequestDeviceSerialNumber returns the RequestDeviceSerialNumber field value if set, zero value otherwise.
+func (o *RequestExtensions) GetRequestDeviceSerialNumber() RequestDeviceSerialNumber {
+	if o == nil || IsNil(o.RequestDeviceSerialNumber) {
+		var ret RequestDeviceSerialNumber
+		return ret
+	}
+	return *o.RequestDeviceSerialNumber
+}
+
+// GetRequestDeviceSerialNumberOk returns a tuple with the RequestDeviceSerialNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RequestExtensions) GetRequestDeviceSerialNumberOk() (*RequestDeviceSerialNumber, bool) {
+	if o == nil || IsNil(o.RequestDeviceSerialNumber) {
+		return nil, false
+	}
+	return o.RequestDeviceSerialNumber, true
+}
+
+// HasRequestDeviceSerialNumber returns a boolean if a field has been set.
+func (o *RequestExtensions) HasRequestDeviceSerialNumber() bool {
+	if o != nil && !IsNil(o.RequestDeviceSerialNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestDeviceSerialNumber gets a reference to the given RequestDeviceSerialNumber and assigns it to the RequestDeviceSerialNumber field.
+func (o *RequestExtensions) SetRequestDeviceSerialNumber(v RequestDeviceSerialNumber) {
+	o.RequestDeviceSerialNumber = &v
+}
+
+// GetRequestScope returns the RequestScope field value if set, zero value otherwise.
+func (o *RequestExtensions) GetRequestScope() RequestScope {
+	if o == nil || IsNil(o.RequestScope) {
+		var ret RequestScope
+		return ret
+	}
+	return *o.RequestScope
+}
+
+// GetRequestScopeOk returns a tuple with the RequestScope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RequestExtensions) GetRequestScopeOk() (*RequestScope, bool) {
+	if o == nil || IsNil(o.RequestScope) {
+		return nil, false
+	}
+	return o.RequestScope, true
+}
+
+// HasRequestScope returns a boolean if a field has been set.
+func (o *RequestExtensions) HasRequestScope() bool {
+	if o != nil && !IsNil(o.RequestScope) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestScope gets a reference to the given RequestScope and assigns it to the RequestScope field.
+func (o *RequestExtensions) SetRequestScope(v RequestScope) {
+	o.RequestScope = &v
+}
+
 func (o RequestExtensions) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.MicrosoftSecurityIdentifier.IsSet() {
-		toSerialize["microsoftSecurityIdentifier"] = o.MicrosoftSecurityIdentifier.Get()
-	}
-	if o.MicrosoftPolicyTemplateOID.IsSet() {
-		toSerialize["microsoftPolicyTemplateOID"] = o.MicrosoftPolicyTemplateOID.Get()
-	}
-	if o.RequestDNS != nil {
-		toSerialize["requestDNS"] = o.RequestDNS
-	}
-	if o.RequestRFC822 != nil {
-		toSerialize["requestRFC822"] = o.RequestRFC822
-	}
-	if o.RequestUPN != nil {
-		toSerialize["requestUPN"] = o.RequestUPN
-	}
-	if o.RequestIP != nil {
-		toSerialize["requestIP"] = o.RequestIP
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RequestExtensions) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.MicrosoftSecurityIdentifier) {
+		toSerialize["microsoftSecurityIdentifier"] = o.MicrosoftSecurityIdentifier
+	}
+	if !IsNil(o.MicrosoftPolicyTemplateOID) {
+		toSerialize["microsoftPolicyTemplateOID"] = o.MicrosoftPolicyTemplateOID
+	}
+	if !IsNil(o.RequestDNS) {
+		toSerialize["requestDNS"] = o.RequestDNS
+	}
+	if !IsNil(o.RequestRFC822) {
+		toSerialize["requestRFC822"] = o.RequestRFC822
+	}
+	if !IsNil(o.RequestUPN) {
+		toSerialize["requestUPN"] = o.RequestUPN
+	}
+	if !IsNil(o.RequestIP) {
+		toSerialize["requestIP"] = o.RequestIP
+	}
+	if !IsNil(o.RequestRole) {
+		toSerialize["requestRole"] = o.RequestRole
+	}
+	if !IsNil(o.RequestDeviceSerialNumber) {
+		toSerialize["requestDeviceSerialNumber"] = o.RequestDeviceSerialNumber
+	}
+	if !IsNil(o.RequestScope) {
+		toSerialize["requestScope"] = o.RequestScope
+	}
+	return toSerialize, nil
 }
 
 type NullableRequestExtensions struct {

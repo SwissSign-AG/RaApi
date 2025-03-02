@@ -5,15 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Uuid** | **string** | Certificate Order Task reference | [readonly] 
-**TimeCreated** | Pointer to **NullableTime** | Certificate Order creation date time | [optional] [readonly] 
-**TimeScheduled** | Pointer to **NullableTime** | Scheduled date time | [optional] [readonly] 
-**TimeStarted** | Pointer to **NullableTime** | Started date time | [optional] [readonly] 
-**TimeFinished** | Pointer to **NullableTime** | Finished date time | [optional] [readonly] 
+**TimeCreated** | Pointer to **time.Time** | Certificate Order creation date time | [optional] [readonly] 
+**TimeScheduled** | Pointer to **time.Time** | Scheduled date time | [optional] [readonly] 
+**TimeStarted** | Pointer to **time.Time** | Started date time | [optional] [readonly] 
+**TimeFinished** | Pointer to **time.Time** | Finished date time | [optional] [readonly] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **Type** | [**JobType**](JobType.md) |  | 
 **NumberOfExecutions** | **int32** | Number of executions | [readonly] 
-**Response** | Pointer to **NullableString** | Response | [optional] [readonly] 
-**Error** | Pointer to **NullableString** | Error message | [optional] [readonly] 
+**Response** | Pointer to **string** | Response | [optional] [readonly] 
+**Error** | Pointer to **string** | Error message | [optional] [readonly] 
 
 ## Methods
 
@@ -79,16 +79,6 @@ SetTimeCreated sets TimeCreated field to given value.
 
 HasTimeCreated returns a boolean if a field has been set.
 
-### SetTimeCreatedNil
-
-`func (o *CertificateOrderTask) SetTimeCreatedNil(b bool)`
-
- SetTimeCreatedNil sets the value for TimeCreated to be an explicit nil
-
-### UnsetTimeCreated
-`func (o *CertificateOrderTask) UnsetTimeCreated()`
-
-UnsetTimeCreated ensures that no value is present for TimeCreated, not even an explicit nil
 ### GetTimeScheduled
 
 `func (o *CertificateOrderTask) GetTimeScheduled() time.Time`
@@ -114,16 +104,6 @@ SetTimeScheduled sets TimeScheduled field to given value.
 
 HasTimeScheduled returns a boolean if a field has been set.
 
-### SetTimeScheduledNil
-
-`func (o *CertificateOrderTask) SetTimeScheduledNil(b bool)`
-
- SetTimeScheduledNil sets the value for TimeScheduled to be an explicit nil
-
-### UnsetTimeScheduled
-`func (o *CertificateOrderTask) UnsetTimeScheduled()`
-
-UnsetTimeScheduled ensures that no value is present for TimeScheduled, not even an explicit nil
 ### GetTimeStarted
 
 `func (o *CertificateOrderTask) GetTimeStarted() time.Time`
@@ -149,16 +129,6 @@ SetTimeStarted sets TimeStarted field to given value.
 
 HasTimeStarted returns a boolean if a field has been set.
 
-### SetTimeStartedNil
-
-`func (o *CertificateOrderTask) SetTimeStartedNil(b bool)`
-
- SetTimeStartedNil sets the value for TimeStarted to be an explicit nil
-
-### UnsetTimeStarted
-`func (o *CertificateOrderTask) UnsetTimeStarted()`
-
-UnsetTimeStarted ensures that no value is present for TimeStarted, not even an explicit nil
 ### GetTimeFinished
 
 `func (o *CertificateOrderTask) GetTimeFinished() time.Time`
@@ -184,16 +154,6 @@ SetTimeFinished sets TimeFinished field to given value.
 
 HasTimeFinished returns a boolean if a field has been set.
 
-### SetTimeFinishedNil
-
-`func (o *CertificateOrderTask) SetTimeFinishedNil(b bool)`
-
- SetTimeFinishedNil sets the value for TimeFinished to be an explicit nil
-
-### UnsetTimeFinished
-`func (o *CertificateOrderTask) UnsetTimeFinished()`
-
-UnsetTimeFinished ensures that no value is present for TimeFinished, not even an explicit nil
 ### GetStatus
 
 `func (o *CertificateOrderTask) GetStatus() JobStatus`
@@ -279,16 +239,6 @@ SetResponse sets Response field to given value.
 
 HasResponse returns a boolean if a field has been set.
 
-### SetResponseNil
-
-`func (o *CertificateOrderTask) SetResponseNil(b bool)`
-
- SetResponseNil sets the value for Response to be an explicit nil
-
-### UnsetResponse
-`func (o *CertificateOrderTask) UnsetResponse()`
-
-UnsetResponse ensures that no value is present for Response, not even an explicit nil
 ### GetError
 
 `func (o *CertificateOrderTask) GetError() string`
@@ -314,16 +264,6 @@ SetError sets Error field to given value.
 
 HasError returns a boolean if a field has been set.
 
-### SetErrorNil
-
-`func (o *CertificateOrderTask) SetErrorNil(b bool)`
-
- SetErrorNil sets the value for Error to be an explicit nil
-
-### UnsetError
-`func (o *CertificateOrderTask) UnsetError()`
-
-UnsetError ensures that no value is present for Error, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

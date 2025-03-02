@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -14,6 +14,9 @@ package swisssign_ra_api.v2
 import (
 	"encoding/json"
 )
+
+// checks if the RequestDNS type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RequestDNS{}
 
 // RequestDNS struct for RequestDNS
 type RequestDNS struct {
@@ -39,7 +42,7 @@ func NewRequestDNSWithDefaults() *RequestDNS {
 
 // GetValues returns the Values field value if set, zero value otherwise.
 func (o *RequestDNS) GetValues() []DNS {
-	if o == nil || o.Values == nil {
+	if o == nil || IsNil(o.Values) {
 		var ret []DNS
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *RequestDNS) GetValues() []DNS {
 // GetValuesOk returns a tuple with the Values field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RequestDNS) GetValuesOk() ([]DNS, bool) {
-	if o == nil || o.Values == nil {
+	if o == nil || IsNil(o.Values) {
 		return nil, false
 	}
 	return o.Values, true
@@ -57,7 +60,7 @@ func (o *RequestDNS) GetValuesOk() ([]DNS, bool) {
 
 // HasValues returns a boolean if a field has been set.
 func (o *RequestDNS) HasValues() bool {
-	if o != nil && o.Values != nil {
+	if o != nil && !IsNil(o.Values) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *RequestDNS) SetValues(v []DNS) {
 }
 
 func (o RequestDNS) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Values != nil {
-		toSerialize["values"] = o.Values
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RequestDNS) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Values) {
+		toSerialize["values"] = o.Values
+	}
+	return toSerialize, nil
 }
 
 type NullableRequestDNS struct {

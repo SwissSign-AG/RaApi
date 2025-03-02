@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **str** | Certificate Order reference | 
@@ -10,12 +11,28 @@ Name | Type | Description | Notes
 **client_reference** | **str** | Client reference UUID | [readonly] 
 **product_reference** | **str** | Product reference UUID | [readonly] 
 **certificate** | [**Certificate**](Certificate.md) |  | [optional] 
-**certificate_chain** | **[str, none_type], none_type** | Certificate chain | [optional] [readonly] 
-**tags** | **[str], none_type** | User defined tags/labels | [optional] [readonly] 
-**additional_recipients** | [**[AdditionalRecipient]**](AdditionalRecipient.md) |  | [optional] 
+**certificate_chain** | **List[str]** | Certificate chain | [optional] 
+**tags** | **List[str]** | User defined tags/labels | [optional] 
+**additional_recipients** | [**List[AdditionalRecipient]**](AdditionalRecipient.md) |  | [optional] 
 **issued_by** | **str** | email of the person who created the order | [optional] [readonly] 
-**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
+## Example
+
+```python
+from swisssign_ra_api.v2.models.certificate_order import CertificateOrder
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of CertificateOrder from a JSON string
+certificate_order_instance = CertificateOrder.from_json(json)
+# print the JSON string representation of the object
+print(CertificateOrder.to_json())
+
+# convert the object into a dict
+certificate_order_dict = certificate_order_instance.to_dict()
+# create an instance of CertificateOrder from a dict
+certificate_order_from_dict = CertificateOrder.from_dict(certificate_order_dict)
+```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

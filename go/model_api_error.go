@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,7 +13,12 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
+
+// checks if the APIError type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &APIError{}
 
 // APIError struct for APIError
 type APIError struct {
@@ -23,6 +28,8 @@ type APIError struct {
 	ErrorCode string `json:"errorCode"`
 	ErrorMessages []string `json:"errorMessages"`
 }
+
+type _APIError APIError
 
 // NewAPIError instantiates a new APIError object
 // This constructor will assign default values to properties that have it defined,
@@ -117,17 +124,58 @@ func (o *APIError) SetErrorMessages(v []string) {
 }
 
 func (o APIError) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["uuid"] = o.Uuid
-	}
-	if true {
-		toSerialize["errorCode"] = o.ErrorCode
-	}
-	if true {
-		toSerialize["errorMessages"] = o.ErrorMessages
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o APIError) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["uuid"] = o.Uuid
+	toSerialize["errorCode"] = o.ErrorCode
+	toSerialize["errorMessages"] = o.ErrorMessages
+	return toSerialize, nil
+}
+
+func (o *APIError) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"uuid",
+		"errorCode",
+		"errorMessages",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAPIError := _APIError{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAPIError)
+
+	if err != nil {
+		return err
+	}
+
+	*o = APIError(varAPIError)
+
+	return err
 }
 
 type NullableAPIError struct {

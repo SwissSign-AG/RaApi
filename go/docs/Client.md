@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Uuid** | **string** | Client UUID reference | [readonly] 
 **Name** | **string** | Client name | [readonly] 
-**Description** | Pointer to **NullableString** | Client description | [optional] [readonly] 
-**Products** | Pointer to [**[]Product**](Product.md) | List of available certificate products | [optional] [readonly] 
+**Description** | Pointer to **string** | Client description | [optional] [readonly] 
+**Products** | Pointer to [**[]Product**](Product.md) | List of available certificate products | [optional] 
 
 ## Methods
 
@@ -93,16 +93,6 @@ SetDescription sets Description field to given value.
 
 HasDescription returns a boolean if a field has been set.
 
-### SetDescriptionNil
-
-`func (o *Client) SetDescriptionNil(b bool)`
-
- SetDescriptionNil sets the value for Description to be an explicit nil
-
-### UnsetDescription
-`func (o *Client) UnsetDescription()`
-
-UnsetDescription ensures that no value is present for Description, not even an explicit nil
 ### GetProducts
 
 `func (o *Client) GetProducts() []Product`

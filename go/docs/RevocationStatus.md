@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **RevokedOn** | **time.Time** | Revocation date in UTC | [readonly] 
 **Reason** | [**RevocationReason**](RevocationReason.md) |  | 
 **RevokedBy** | **string** | email of the person who revoked the certificate | [readonly] 
-**RevocationRequestor** | Pointer to **NullableString** | First- and last name of revocation requestor | [optional] 
+**RevocationRequestor** | Pointer to **string** | First- and last name of revocation requestor | [optional] 
 
 ## Methods
 
@@ -113,16 +113,6 @@ SetRevocationRequestor sets RevocationRequestor field to given value.
 
 HasRevocationRequestor returns a boolean if a field has been set.
 
-### SetRevocationRequestorNil
-
-`func (o *RevocationStatus) SetRevocationRequestorNil(b bool)`
-
- SetRevocationRequestorNil sets the value for RevocationRequestor to be an explicit nil
-
-### UnsetRevocationRequestor
-`func (o *RevocationStatus) UnsetRevocationRequestor()`
-
-UnsetRevocationRequestor ensures that no value is present for RevocationRequestor, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

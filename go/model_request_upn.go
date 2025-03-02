@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,12 +13,19 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
+
+// checks if the RequestUPN type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RequestUPN{}
 
 // RequestUPN struct for RequestUPN
 type RequestUPN struct {
 	Values []string `json:"values"`
 }
+
+type _RequestUPN RequestUPN
 
 // NewRequestUPN instantiates a new RequestUPN object
 // This constructor will assign default values to properties that have it defined,
@@ -63,11 +70,54 @@ func (o *RequestUPN) SetValues(v []string) {
 }
 
 func (o RequestUPN) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["values"] = o.Values
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RequestUPN) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["values"] = o.Values
+	return toSerialize, nil
+}
+
+func (o *RequestUPN) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"values",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varRequestUPN := _RequestUPN{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varRequestUPN)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RequestUPN(varRequestUPN)
+
+	return err
 }
 
 type NullableRequestUPN struct {

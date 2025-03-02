@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,26 +13,30 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"time"
 )
+
+// checks if the SearchCertificateOrder type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SearchCertificateOrder{}
 
 // SearchCertificateOrder struct for SearchCertificateOrder
 type SearchCertificateOrder struct {
 	// Certificate Order reference
-	OrderReference NullableString `json:"orderReference,omitempty"`
+	OrderReference *string `json:"orderReference,omitempty" validate:"regexp=ord-[0-9a-f-]{36}"`
 	// Certificate serial number (Big Integer HEX encoded) with optional wildcard attributes ? and/or *
-	SerialNumber NullableString `json:"serialNumber,omitempty"`
+	SerialNumber *string `json:"serialNumber,omitempty"`
 	OrderStatus []CertificateOrderStatus `json:"orderStatus,omitempty"`
 	RevocationReason []RevocationReason `json:"revocationReason,omitempty"`
 	// Client reference UUID
 	ClientReferences []string `json:"clientReferences,omitempty"`
 	// Certificate Order not starting after Date
-	StartAfter NullableString `json:"startAfter,omitempty"`
+	StartAfter *time.Time `json:"startAfter,omitempty"`
 	// Certificate Order not starting before Date
-	StartBefore NullableString `json:"startBefore,omitempty"`
+	StartBefore *time.Time `json:"startBefore,omitempty"`
 	// Any certificate attribute OID or value with optional wildcard attributes ? and/or *
-	Attribute NullableString `json:"attribute,omitempty"`
+	Attribute *string `json:"attribute,omitempty"`
 	// Include the certificate chain in the certificate order when available
-	IncludeCertificateChain NullableBool `json:"includeCertificateChain,omitempty"`
+	IncludeCertificateChain *bool `json:"includeCertificateChain,omitempty"`
 	// Customer label/tags
 	Tags []string `json:"tags,omitempty"`
 }
@@ -54,93 +58,73 @@ func NewSearchCertificateOrderWithDefaults() *SearchCertificateOrder {
 	return &this
 }
 
-// GetOrderReference returns the OrderReference field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetOrderReference returns the OrderReference field value if set, zero value otherwise.
 func (o *SearchCertificateOrder) GetOrderReference() string {
-	if o == nil || o.OrderReference.Get() == nil {
+	if o == nil || IsNil(o.OrderReference) {
 		var ret string
 		return ret
 	}
-	return *o.OrderReference.Get()
+	return *o.OrderReference
 }
 
 // GetOrderReferenceOk returns a tuple with the OrderReference field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SearchCertificateOrder) GetOrderReferenceOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrderReference) {
 		return nil, false
 	}
-	return o.OrderReference.Get(), o.OrderReference.IsSet()
+	return o.OrderReference, true
 }
 
 // HasOrderReference returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasOrderReference() bool {
-	if o != nil && o.OrderReference.IsSet() {
+	if o != nil && !IsNil(o.OrderReference) {
 		return true
 	}
 
 	return false
 }
 
-// SetOrderReference gets a reference to the given NullableString and assigns it to the OrderReference field.
+// SetOrderReference gets a reference to the given string and assigns it to the OrderReference field.
 func (o *SearchCertificateOrder) SetOrderReference(v string) {
-	o.OrderReference.Set(&v)
-}
-// SetOrderReferenceNil sets the value for OrderReference to be an explicit nil
-func (o *SearchCertificateOrder) SetOrderReferenceNil() {
-	o.OrderReference.Set(nil)
+	o.OrderReference = &v
 }
 
-// UnsetOrderReference ensures that no value is present for OrderReference, not even an explicit nil
-func (o *SearchCertificateOrder) UnsetOrderReference() {
-	o.OrderReference.Unset()
-}
-
-// GetSerialNumber returns the SerialNumber field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetSerialNumber returns the SerialNumber field value if set, zero value otherwise.
 func (o *SearchCertificateOrder) GetSerialNumber() string {
-	if o == nil || o.SerialNumber.Get() == nil {
+	if o == nil || IsNil(o.SerialNumber) {
 		var ret string
 		return ret
 	}
-	return *o.SerialNumber.Get()
+	return *o.SerialNumber
 }
 
 // GetSerialNumberOk returns a tuple with the SerialNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SearchCertificateOrder) GetSerialNumberOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SerialNumber) {
 		return nil, false
 	}
-	return o.SerialNumber.Get(), o.SerialNumber.IsSet()
+	return o.SerialNumber, true
 }
 
 // HasSerialNumber returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasSerialNumber() bool {
-	if o != nil && o.SerialNumber.IsSet() {
+	if o != nil && !IsNil(o.SerialNumber) {
 		return true
 	}
 
 	return false
 }
 
-// SetSerialNumber gets a reference to the given NullableString and assigns it to the SerialNumber field.
+// SetSerialNumber gets a reference to the given string and assigns it to the SerialNumber field.
 func (o *SearchCertificateOrder) SetSerialNumber(v string) {
-	o.SerialNumber.Set(&v)
-}
-// SetSerialNumberNil sets the value for SerialNumber to be an explicit nil
-func (o *SearchCertificateOrder) SetSerialNumberNil() {
-	o.SerialNumber.Set(nil)
+	o.SerialNumber = &v
 }
 
-// UnsetSerialNumber ensures that no value is present for SerialNumber, not even an explicit nil
-func (o *SearchCertificateOrder) UnsetSerialNumber() {
-	o.SerialNumber.Unset()
-}
-
-// GetOrderStatus returns the OrderStatus field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetOrderStatus returns the OrderStatus field value if set, zero value otherwise.
 func (o *SearchCertificateOrder) GetOrderStatus() []CertificateOrderStatus {
-	if o == nil {
+	if o == nil || IsNil(o.OrderStatus) {
 		var ret []CertificateOrderStatus
 		return ret
 	}
@@ -149,9 +133,8 @@ func (o *SearchCertificateOrder) GetOrderStatus() []CertificateOrderStatus {
 
 // GetOrderStatusOk returns a tuple with the OrderStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SearchCertificateOrder) GetOrderStatusOk() ([]CertificateOrderStatus, bool) {
-	if o == nil || o.OrderStatus == nil {
+	if o == nil || IsNil(o.OrderStatus) {
 		return nil, false
 	}
 	return o.OrderStatus, true
@@ -159,7 +142,7 @@ func (o *SearchCertificateOrder) GetOrderStatusOk() ([]CertificateOrderStatus, b
 
 // HasOrderStatus returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasOrderStatus() bool {
-	if o != nil && o.OrderStatus != nil {
+	if o != nil && !IsNil(o.OrderStatus) {
 		return true
 	}
 
@@ -171,9 +154,9 @@ func (o *SearchCertificateOrder) SetOrderStatus(v []CertificateOrderStatus) {
 	o.OrderStatus = v
 }
 
-// GetRevocationReason returns the RevocationReason field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetRevocationReason returns the RevocationReason field value if set, zero value otherwise.
 func (o *SearchCertificateOrder) GetRevocationReason() []RevocationReason {
-	if o == nil {
+	if o == nil || IsNil(o.RevocationReason) {
 		var ret []RevocationReason
 		return ret
 	}
@@ -182,9 +165,8 @@ func (o *SearchCertificateOrder) GetRevocationReason() []RevocationReason {
 
 // GetRevocationReasonOk returns a tuple with the RevocationReason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SearchCertificateOrder) GetRevocationReasonOk() ([]RevocationReason, bool) {
-	if o == nil || o.RevocationReason == nil {
+	if o == nil || IsNil(o.RevocationReason) {
 		return nil, false
 	}
 	return o.RevocationReason, true
@@ -192,7 +174,7 @@ func (o *SearchCertificateOrder) GetRevocationReasonOk() ([]RevocationReason, bo
 
 // HasRevocationReason returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasRevocationReason() bool {
-	if o != nil && o.RevocationReason != nil {
+	if o != nil && !IsNil(o.RevocationReason) {
 		return true
 	}
 
@@ -204,9 +186,9 @@ func (o *SearchCertificateOrder) SetRevocationReason(v []RevocationReason) {
 	o.RevocationReason = v
 }
 
-// GetClientReferences returns the ClientReferences field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetClientReferences returns the ClientReferences field value if set, zero value otherwise.
 func (o *SearchCertificateOrder) GetClientReferences() []string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientReferences) {
 		var ret []string
 		return ret
 	}
@@ -215,9 +197,8 @@ func (o *SearchCertificateOrder) GetClientReferences() []string {
 
 // GetClientReferencesOk returns a tuple with the ClientReferences field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SearchCertificateOrder) GetClientReferencesOk() ([]string, bool) {
-	if o == nil || o.ClientReferences == nil {
+	if o == nil || IsNil(o.ClientReferences) {
 		return nil, false
 	}
 	return o.ClientReferences, true
@@ -225,7 +206,7 @@ func (o *SearchCertificateOrder) GetClientReferencesOk() ([]string, bool) {
 
 // HasClientReferences returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasClientReferences() bool {
-	if o != nil && o.ClientReferences != nil {
+	if o != nil && !IsNil(o.ClientReferences) {
 		return true
 	}
 
@@ -237,177 +218,137 @@ func (o *SearchCertificateOrder) SetClientReferences(v []string) {
 	o.ClientReferences = v
 }
 
-// GetStartAfter returns the StartAfter field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SearchCertificateOrder) GetStartAfter() string {
-	if o == nil || o.StartAfter.Get() == nil {
-		var ret string
+// GetStartAfter returns the StartAfter field value if set, zero value otherwise.
+func (o *SearchCertificateOrder) GetStartAfter() time.Time {
+	if o == nil || IsNil(o.StartAfter) {
+		var ret time.Time
 		return ret
 	}
-	return *o.StartAfter.Get()
+	return *o.StartAfter
 }
 
 // GetStartAfterOk returns a tuple with the StartAfter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SearchCertificateOrder) GetStartAfterOk() (*string, bool) {
-	if o == nil {
+func (o *SearchCertificateOrder) GetStartAfterOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.StartAfter) {
 		return nil, false
 	}
-	return o.StartAfter.Get(), o.StartAfter.IsSet()
+	return o.StartAfter, true
 }
 
 // HasStartAfter returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasStartAfter() bool {
-	if o != nil && o.StartAfter.IsSet() {
+	if o != nil && !IsNil(o.StartAfter) {
 		return true
 	}
 
 	return false
 }
 
-// SetStartAfter gets a reference to the given NullableString and assigns it to the StartAfter field.
-func (o *SearchCertificateOrder) SetStartAfter(v string) {
-	o.StartAfter.Set(&v)
-}
-// SetStartAfterNil sets the value for StartAfter to be an explicit nil
-func (o *SearchCertificateOrder) SetStartAfterNil() {
-	o.StartAfter.Set(nil)
+// SetStartAfter gets a reference to the given time.Time and assigns it to the StartAfter field.
+func (o *SearchCertificateOrder) SetStartAfter(v time.Time) {
+	o.StartAfter = &v
 }
 
-// UnsetStartAfter ensures that no value is present for StartAfter, not even an explicit nil
-func (o *SearchCertificateOrder) UnsetStartAfter() {
-	o.StartAfter.Unset()
-}
-
-// GetStartBefore returns the StartBefore field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SearchCertificateOrder) GetStartBefore() string {
-	if o == nil || o.StartBefore.Get() == nil {
-		var ret string
+// GetStartBefore returns the StartBefore field value if set, zero value otherwise.
+func (o *SearchCertificateOrder) GetStartBefore() time.Time {
+	if o == nil || IsNil(o.StartBefore) {
+		var ret time.Time
 		return ret
 	}
-	return *o.StartBefore.Get()
+	return *o.StartBefore
 }
 
 // GetStartBeforeOk returns a tuple with the StartBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SearchCertificateOrder) GetStartBeforeOk() (*string, bool) {
-	if o == nil {
+func (o *SearchCertificateOrder) GetStartBeforeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.StartBefore) {
 		return nil, false
 	}
-	return o.StartBefore.Get(), o.StartBefore.IsSet()
+	return o.StartBefore, true
 }
 
 // HasStartBefore returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasStartBefore() bool {
-	if o != nil && o.StartBefore.IsSet() {
+	if o != nil && !IsNil(o.StartBefore) {
 		return true
 	}
 
 	return false
 }
 
-// SetStartBefore gets a reference to the given NullableString and assigns it to the StartBefore field.
-func (o *SearchCertificateOrder) SetStartBefore(v string) {
-	o.StartBefore.Set(&v)
-}
-// SetStartBeforeNil sets the value for StartBefore to be an explicit nil
-func (o *SearchCertificateOrder) SetStartBeforeNil() {
-	o.StartBefore.Set(nil)
+// SetStartBefore gets a reference to the given time.Time and assigns it to the StartBefore field.
+func (o *SearchCertificateOrder) SetStartBefore(v time.Time) {
+	o.StartBefore = &v
 }
 
-// UnsetStartBefore ensures that no value is present for StartBefore, not even an explicit nil
-func (o *SearchCertificateOrder) UnsetStartBefore() {
-	o.StartBefore.Unset()
-}
-
-// GetAttribute returns the Attribute field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetAttribute returns the Attribute field value if set, zero value otherwise.
 func (o *SearchCertificateOrder) GetAttribute() string {
-	if o == nil || o.Attribute.Get() == nil {
+	if o == nil || IsNil(o.Attribute) {
 		var ret string
 		return ret
 	}
-	return *o.Attribute.Get()
+	return *o.Attribute
 }
 
 // GetAttributeOk returns a tuple with the Attribute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SearchCertificateOrder) GetAttributeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Attribute) {
 		return nil, false
 	}
-	return o.Attribute.Get(), o.Attribute.IsSet()
+	return o.Attribute, true
 }
 
 // HasAttribute returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasAttribute() bool {
-	if o != nil && o.Attribute.IsSet() {
+	if o != nil && !IsNil(o.Attribute) {
 		return true
 	}
 
 	return false
 }
 
-// SetAttribute gets a reference to the given NullableString and assigns it to the Attribute field.
+// SetAttribute gets a reference to the given string and assigns it to the Attribute field.
 func (o *SearchCertificateOrder) SetAttribute(v string) {
-	o.Attribute.Set(&v)
-}
-// SetAttributeNil sets the value for Attribute to be an explicit nil
-func (o *SearchCertificateOrder) SetAttributeNil() {
-	o.Attribute.Set(nil)
+	o.Attribute = &v
 }
 
-// UnsetAttribute ensures that no value is present for Attribute, not even an explicit nil
-func (o *SearchCertificateOrder) UnsetAttribute() {
-	o.Attribute.Unset()
-}
-
-// GetIncludeCertificateChain returns the IncludeCertificateChain field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetIncludeCertificateChain returns the IncludeCertificateChain field value if set, zero value otherwise.
 func (o *SearchCertificateOrder) GetIncludeCertificateChain() bool {
-	if o == nil || o.IncludeCertificateChain.Get() == nil {
+	if o == nil || IsNil(o.IncludeCertificateChain) {
 		var ret bool
 		return ret
 	}
-	return *o.IncludeCertificateChain.Get()
+	return *o.IncludeCertificateChain
 }
 
 // GetIncludeCertificateChainOk returns a tuple with the IncludeCertificateChain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SearchCertificateOrder) GetIncludeCertificateChainOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IncludeCertificateChain) {
 		return nil, false
 	}
-	return o.IncludeCertificateChain.Get(), o.IncludeCertificateChain.IsSet()
+	return o.IncludeCertificateChain, true
 }
 
 // HasIncludeCertificateChain returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasIncludeCertificateChain() bool {
-	if o != nil && o.IncludeCertificateChain.IsSet() {
+	if o != nil && !IsNil(o.IncludeCertificateChain) {
 		return true
 	}
 
 	return false
 }
 
-// SetIncludeCertificateChain gets a reference to the given NullableBool and assigns it to the IncludeCertificateChain field.
+// SetIncludeCertificateChain gets a reference to the given bool and assigns it to the IncludeCertificateChain field.
 func (o *SearchCertificateOrder) SetIncludeCertificateChain(v bool) {
-	o.IncludeCertificateChain.Set(&v)
-}
-// SetIncludeCertificateChainNil sets the value for IncludeCertificateChain to be an explicit nil
-func (o *SearchCertificateOrder) SetIncludeCertificateChainNil() {
-	o.IncludeCertificateChain.Set(nil)
+	o.IncludeCertificateChain = &v
 }
 
-// UnsetIncludeCertificateChain ensures that no value is present for IncludeCertificateChain, not even an explicit nil
-func (o *SearchCertificateOrder) UnsetIncludeCertificateChain() {
-	o.IncludeCertificateChain.Unset()
-}
-
-// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetTags returns the Tags field value if set, zero value otherwise.
 func (o *SearchCertificateOrder) GetTags() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -416,9 +357,8 @@ func (o *SearchCertificateOrder) GetTags() []string {
 
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SearchCertificateOrder) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -426,7 +366,7 @@ func (o *SearchCertificateOrder) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *SearchCertificateOrder) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -439,38 +379,46 @@ func (o *SearchCertificateOrder) SetTags(v []string) {
 }
 
 func (o SearchCertificateOrder) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.OrderReference.IsSet() {
-		toSerialize["orderReference"] = o.OrderReference.Get()
-	}
-	if o.SerialNumber.IsSet() {
-		toSerialize["serialNumber"] = o.SerialNumber.Get()
-	}
-	if o.OrderStatus != nil {
-		toSerialize["orderStatus"] = o.OrderStatus
-	}
-	if o.RevocationReason != nil {
-		toSerialize["revocationReason"] = o.RevocationReason
-	}
-	if o.ClientReferences != nil {
-		toSerialize["clientReferences"] = o.ClientReferences
-	}
-	if o.StartAfter.IsSet() {
-		toSerialize["startAfter"] = o.StartAfter.Get()
-	}
-	if o.StartBefore.IsSet() {
-		toSerialize["startBefore"] = o.StartBefore.Get()
-	}
-	if o.Attribute.IsSet() {
-		toSerialize["attribute"] = o.Attribute.Get()
-	}
-	if o.IncludeCertificateChain.IsSet() {
-		toSerialize["includeCertificateChain"] = o.IncludeCertificateChain.Get()
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SearchCertificateOrder) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.OrderReference) {
+		toSerialize["orderReference"] = o.OrderReference
+	}
+	if !IsNil(o.SerialNumber) {
+		toSerialize["serialNumber"] = o.SerialNumber
+	}
+	if !IsNil(o.OrderStatus) {
+		toSerialize["orderStatus"] = o.OrderStatus
+	}
+	if !IsNil(o.RevocationReason) {
+		toSerialize["revocationReason"] = o.RevocationReason
+	}
+	if !IsNil(o.ClientReferences) {
+		toSerialize["clientReferences"] = o.ClientReferences
+	}
+	if !IsNil(o.StartAfter) {
+		toSerialize["startAfter"] = o.StartAfter
+	}
+	if !IsNil(o.StartBefore) {
+		toSerialize["startBefore"] = o.StartBefore
+	}
+	if !IsNil(o.Attribute) {
+		toSerialize["attribute"] = o.Attribute
+	}
+	if !IsNil(o.IncludeCertificateChain) {
+		toSerialize["includeCertificateChain"] = o.IncludeCertificateChain
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableSearchCertificateOrder struct {

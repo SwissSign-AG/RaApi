@@ -1,22 +1,29 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   contact:
     email: ssc@swisssign.com
     name: SwissSign Support
+    url: https://support.swisspki.com
   description: See https://github.com/SwissSign-AG/RaApi/README.md
   title: SwissSign RA REST API
-  version: 2.5.17
+  version: 3.4.4
 servers:
 - description: Pre Production
   url: https://api.ra.pre.swisssign.ch
 - description: Production
   url: https://api.ra.swisssign.ch
+tags:
+- description: Registration Authority APIs
+  name: RA
 paths:
   /v2/jwt/{userName}:
     post:
-      description: "Helper service to generate a JWT derived from you login username\
-        \ and API Key\n---\n* Use the generated JWT in the header of __each__ HTTP\
-        \ request to the service\n\n`Authorization: Bearer <encoded JWT>`\n"
+      description: |
+        Helper service to generate a JWT derived from you login username and API Key
+        ---
+        * Use the generated JWT in the header of __each__ HTTP request to the service
+
+        `Authorization: Bearer <encoded JWT>`
       operationId: jwt
       parameters:
       - explode: false
@@ -67,23 +74,23 @@ paths:
           description: Internal server error
       summary: Produce a user JWT
       tags:
-      - api_registration
+      - RA
   /v2/clients:
     post:
-      description: "Search for clients for which the RA Operator can issue, revoke\
-        \ or pre validate DNS entries.\nThe Client information includes the list of\
-        \ assigned certificate products.\nThe result list is limited to the maximum\
-        \ (default is 300) query result list settings\n"
+      description: |
+        Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries.
+        The Client information includes the list of assigned certificate products.
+        The result list is limited to the maximum (default is 300) query result list settings
       operationId: searchClients
       parameters:
-      - explode: true
+      - description: search query string with optional wildcard attributes ? and/or
+          *
+        example: C?mpan* Ltd
+        explode: true
         in: query
         name: search
         required: false
         schema:
-          description: search query string with optional wildcard attributes ? and/or
-            *
-          example: C?mpan* Ltd
           type: string
         style: form
       responses:
@@ -93,7 +100,6 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/Client'
-                readOnly: true
                 type: array
           description: success
         "400":
@@ -124,28 +130,28 @@ paths:
       - BearerAuth: []
       summary: Search Clients available to the RA Operator
       tags:
-      - api_registration
+      - RA
   /v2/clients/paged:
     post:
-      description: "Search for clients for which the RA Operator can issue, revoke\
-        \ or pre validate DNS entries.\nThe Client information includes the list of\
-        \ assigned certificate products.\nThe search supports paging\n"
+      description: |
+        Search for clients for which the RA Operator can issue, revoke or pre validate DNS entries.
+        The Client information includes the list of assigned certificate products.
+        The search supports paging
       operationId: searchPagedClients
       parameters:
-      - explode: true
+      - description: search query string with optional wildcard attributes ? and/or
+          *
+        example: C?mpan* Ltd
+        explode: true
         in: query
         name: search
         required: false
         schema:
-          description: search query string with optional wildcard attributes ? and/or
-            *
-          example: C?mpan* Ltd
           type: string
         style: form
-      - description: "The number of items to return. When unset or < 0, the maximum\
-          \ (default is 300) server side configured length setting is used.\nIf length\
-          \ > maximum (default is 300) server side configured length, then the server\
-          \ side setting is used.\n"
+      - description: |
+          The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used.
+          If length > maximum (default is 300) server side configured length, then the server side setting is used.
         explode: true
         in: query
         name: length
@@ -182,12 +188,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/APIError'
           description: Unauthorized
-        "403":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIError'
-          description: Forbidden
         "404":
           content:
             application/json:
@@ -204,7 +204,7 @@ paths:
       - BearerAuth: []
       summary: Search Clients available to the RA Operator
       tags:
-      - api_registration
+      - RA
   /v2/client/{clientReference}:
     post:
       description: |
@@ -219,9 +219,9 @@ paths:
         schema:
           description: Client reference UUID
           example: cli-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
           pattern: "cli-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       responses:
         "200":
@@ -258,7 +258,7 @@ paths:
       - BearerAuth: []
       summary: Get a client given its reference Id
       tags:
-      - api_registration
+      - RA
   /v2/issue/csr/{productReference}:
     post:
       description: |
@@ -273,23 +273,29 @@ paths:
         schema:
           description: Product reference UUID
           example: pma-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
           pattern: "pma-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       requestBody:
         content:
           text/plain:
-            example: "----BEGIN CERTIFICATE REQUEST-----\nMIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh\n\
-              ... [snipped] ...\n6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP\n\
-              -----END CERTIFICATE REQUEST-----\n"
             schema:
+              example: |
+                ----BEGIN CERTIFICATE REQUEST-----
+                MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
+                ... [snipped] ...
+                6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP
+                -----END CERTIFICATE REQUEST-----
               type: string
           application/json:
-            example: "----BEGIN CERTIFICATE REQUEST-----\nMIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh\n\
-              ... [snipped] ...\n6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP\n\
-              -----END CERTIFICATE REQUEST-----\n"
             schema:
+              example: |
+                ----BEGIN CERTIFICATE REQUEST-----
+                MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
+                ... [snipped] ...
+                6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP
+                -----END CERTIFICATE REQUEST-----
               type: string
         description: Certificate Request in Base64 with start/end beacon
         required: true
@@ -328,7 +334,7 @@ paths:
       - BearerAuth: []
       summary: Issue certificate using CSR
       tags:
-      - api_registration
+      - RA
   /v2/issue:
     post:
       description: |
@@ -376,7 +382,52 @@ paths:
       - BearerAuth: []
       summary: Issue certificate using extended request attributes
       tags:
-      - api_registration
+      - RA
+  /v2/validate:
+    post:
+      description: |
+        Validates the request but does not issue any certificate
+      operationId: validateIssueRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueRequest'
+        description: Validate Issue Request
+        required: true
+      responses:
+        "204":
+          description: success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal server error
+      security:
+      - BearerAuth: []
+      summary: Validate an issue request structure. Validates the request but does
+        not issue any certificate
+      tags:
+      - RA
   /v2/order/{orderReference}/status:
     post:
       description: |
@@ -428,7 +479,7 @@ paths:
       - BearerAuth: []
       summary: Retrieve a Certificate Order status given the Order reference
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}:
     post:
       description: |
@@ -480,11 +531,11 @@ paths:
       - BearerAuth: []
       summary: Retrieve a Certificate Order given the Order reference
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}/certificate/chain:
     post:
-      description: "Retrieve the certificate chain base64 encoded text. First element\
-        \ in list is leaf certificate, last element is Root certificate.\n"
+      description: |
+        Retrieve the certificate chain base64 encoded text. First element in list is leaf certificate, last element is Root certificate.
       operationId: getCertificateChain
       parameters:
       - explode: false
@@ -504,7 +555,6 @@ paths:
               schema:
                 items:
                   type: string
-                readOnly: true
                 type: array
           description: success
         "400":
@@ -535,7 +585,7 @@ paths:
       - BearerAuth: []
       summary: Retrieve the certificate chain for the given Order reference
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}/tasks:
     post:
       description: |
@@ -559,7 +609,6 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/CertificateOrderTask'
-                readOnly: true
                 type: array
           description: success
         "400":
@@ -590,7 +639,7 @@ paths:
       - BearerAuth: []
       summary: Retrieve a Certificate Order Tasks given the Order reference
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}/tags:
     post:
       description: |
@@ -613,8 +662,8 @@ paths:
             schema:
               items:
                 example: my-cmdb-label
-                nullable: false
                 type: string
+                nullable: false
               type: array
         description: List of user defined tags/labels
         required: true
@@ -653,7 +702,7 @@ paths:
       - BearerAuth: []
       summary: Replace Certificate Order custom tags
       tags:
-      - api_registration
+      - RA
   /v2/orders:
     post:
       description: |
@@ -674,7 +723,6 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/CertificateOrder'
-                readOnly: true
                 type: array
           description: success
         "400":
@@ -705,7 +753,7 @@ paths:
       - BearerAuth: []
       summary: Search Certificate Orders
       tags:
-      - api_registration
+      - RA
   /v2/orders/paged:
     post:
       description: |
@@ -713,10 +761,9 @@ paths:
         The search supports paging
       operationId: searchPagedCertificateOrders
       parameters:
-      - description: "The number of items to return. When unset or < 0, the maximum\
-          \ (default is 300) server side configured length setting is used.\nIf length\
-          \ > maximum (default is 300) server side configured length, then the server\
-          \ side setting is used.\n"
+      - description: |
+          The number of items to return. When unset or < 0, the maximum (default is 300) server side configured length setting is used.
+          If length > maximum (default is 300) server side configured length, then the server side setting is used.
         explode: true
         in: query
         name: length
@@ -776,7 +823,7 @@ paths:
       - BearerAuth: []
       summary: Search Certificate Orders
       tags:
-      - api_registration
+      - RA
   /v2/revoke:
     post:
       description: |
@@ -822,7 +869,7 @@ paths:
       - BearerAuth: []
       summary: Revoke certificates
       tags:
-      - api_registration
+      - RA
   /v2/client/domain/{clientReference}/list:
     post:
       description: |
@@ -837,9 +884,9 @@ paths:
         schema:
           description: Client reference UUID
           example: cli-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
           pattern: "cli-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       responses:
         "200":
@@ -848,7 +895,6 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/ClientDNS'
-                readOnly: true
                 type: array
           description: success
         "400":
@@ -877,10 +923,10 @@ paths:
           description: Internal server error
       security:
       - BearerAuth: []
-      summary: Get the list of prevalidated domains for the selected client given
+      summary: Get the list of pre validated domains for the selected client given
         its reference Id
       tags:
-      - api_registration
+      - RA
   /v2/client/domain/{clientReference}/register:
     post:
       description: |
@@ -895,9 +941,9 @@ paths:
         schema:
           description: Client reference UUID
           example: cli-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
           pattern: "cli-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       requestBody:
         content:
@@ -906,8 +952,8 @@ paths:
               items:
                 description: Domain name
                 example: déjà.vu.com
-                nullable: false
                 type: string
+                nullable: false
               type: array
         description: Client domains
         required: true
@@ -918,7 +964,6 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/ClientDNS'
-                readOnly: true
                 type: array
           description: success
         "400":
@@ -947,14 +992,14 @@ paths:
           description: Internal server error
       security:
       - BearerAuth: []
-      summary: Register new prevalidated domains for the selected client given its
+      summary: Register new pre validated domains for the selected client given its
         reference Id
       tags:
-      - api_registration
+      - RA
   /v2/client/domain/{prevalidatedDomainReference}:
     post:
       description: |
-        Get pre validatied domain token for the selected identifier
+        Get pre validated domain token for the selected identifier
       operationId: getClientPrevalidatedDomain
       parameters:
       - description: Pre validated domain reference UUID
@@ -963,11 +1008,11 @@ paths:
         name: prevalidatedDomainReference
         required: true
         schema:
-          description: Pre validated fomain reference UUID
+          description: Pre validated domain reference UUID
           example: cld-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
           pattern: "cld-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       responses:
         "200":
@@ -1002,9 +1047,9 @@ paths:
           description: Internal server error
       security:
       - BearerAuth: []
-      summary: Get prevalidated domains for the selected domain reference Id
+      summary: Get pre validated domains for the selected domain reference Id
       tags:
-      - api_registration
+      - RA
   /v2/client/domain/{prevalidatedDomainReference}/validate:
     post:
       description: |
@@ -1017,11 +1062,11 @@ paths:
         name: prevalidatedDomainReference
         required: true
         schema:
-          description: Pre validated fomain reference UUID
+          description: Pre validated domain reference UUID
           example: cld-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
           pattern: "cld-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       responses:
         "200":
@@ -1058,7 +1103,7 @@ paths:
       - BearerAuth: []
       summary: Prevalidate domain for the selected domain reference Id
       tags:
-      - api_registration
+      - RA
   /v2/client/domain/{prevalidatedDomainReference}/delete:
     post:
       description: |
@@ -1073,9 +1118,9 @@ paths:
         schema:
           description: Pre validated domain reference UUID
           example: cld-2263d498-6569-46d6-9359-f08a1d298d2d
-          nullable: false
           pattern: "cld-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       responses:
         "204":
@@ -1106,9 +1151,9 @@ paths:
           description: Internal server error
       security:
       - BearerAuth: []
-      summary: Delete prevalidated domain for the selected reference Id
+      summary: Delete pre validated domain for the selected reference Id
       tags:
-      - api_registration
+      - RA
   /v2/client/domain/{prevalidatedDomainReference}/token/reset:
     post:
       description: |
@@ -1123,9 +1168,9 @@ paths:
         schema:
           description: Pre validated domain reference UUID
           example: cld-2263d498-6569-46d6-9359-f08a1d298d2d
-          nullable: false
           pattern: "cld-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       responses:
         "200":
@@ -1160,9 +1205,9 @@ paths:
           description: Internal server error
       security:
       - BearerAuth: []
-      summary: Reset prevalidated domain token for the selected reference Id
+      summary: Reset pre validated domain token for the selected reference Id
       tags:
-      - api_registration
+      - RA
   /v2/client/domain/{prevalidatedDomainReference}/token/delete:
     post:
       description: |
@@ -1177,9 +1222,9 @@ paths:
         schema:
           description: Pre validated domain reference UUID
           example: cld-2263d498-6569-46d6-9359-f08a1d298d2d
-          nullable: false
           pattern: "cld-[0-9a-f-]{36}"
           type: string
+          nullable: false
         style: simple
       responses:
         "200":
@@ -1214,9 +1259,9 @@ paths:
           description: Internal server error
       security:
       - BearerAuth: []
-      summary: Delete prevalidated domain token for the selected reference Id
+      summary: Delete pre validated domain token for the selected reference Id
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}/list/recipients:
     post:
       description: |
@@ -1270,13 +1315,13 @@ paths:
       - BearerAuth: []
       summary: Obtain a list of additional Certificate Order recipients
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}/add/recipients:
     post:
       description: |
         Add additional recipients to Certificate Order.
         Existing users are skipped.
-        Retuns list of effectively added additional recipients.
+        Returns list of effectively added additional recipients.
       operationId: addCertificateOrderAdditionalRecipients
       parameters:
       - explode: false
@@ -1335,13 +1380,13 @@ paths:
       - BearerAuth: []
       summary: Add additional recipients to Certificate Order
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}/delete/recipients:
     post:
       description: |
         Delete additional recipients to Certificate Order.
         Unknown users are skipped.
-        Retuns list of effectively deleted additional recipients.
+        Returns list of effectively deleted additional recipients.
       operationId: deleteCertificateOrderAdditionalRecipients
       parameters:
       - explode: false
@@ -1400,12 +1445,13 @@ paths:
       - BearerAuth: []
       summary: Delete additional recipients to Certificate Order
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}/publish:
     post:
-      description: "Publish or republish a certificate to the external source (LDAP,\
-        \ SFTP or file system).\nPublication rule must be enabled on the issued certificate.\n\
-        An error is raised if the certificate is already published.\n"
+      description: |
+        Publish or republish a certificate to the external source (LDAP, SFTP or file system).
+        Publication rule must be enabled on the issued certificate.
+        An error is raised if the certificate is already published.
       operationId: publishCertificate
       parameters:
       - explode: false
@@ -1449,12 +1495,13 @@ paths:
       - BearerAuth: []
       summary: Send a certificate publication request for selected Certificate Order
       tags:
-      - api_registration
+      - RA
   /v2/order/{orderReference}/unpublish:
     post:
-      description: "Remove the certificate from the external source (LDAP, SFTP or\
-        \ file system).\nPublication rule must be enabled on the issued certificate.\n\
-        An error is raised if the certificate is already un published.\n"
+      description: |
+        Remove the certificate from the external source (LDAP, SFTP or file system).
+        Publication rule must be enabled on the issued certificate.
+        An error is raised if the certificate is already un published.
       operationId: unpublishCertificate
       parameters:
       - explode: false
@@ -1499,75 +1546,42 @@ paths:
       summary: Send a certificate un-publication request for selected Certificate
         Order
       tags:
-      - api_registration
+      - RA
 components:
   schemas:
-    ClientDomainValidationStatus:
-      description: Status of the domain pre validation
-      enum:
-      - PENDING
-      - EXPIRED
-      - VALID
-      - NOT_VALIDATED
-      example: not_validated
-      nullable: false
-      readOnly: true
-      type: string
-    RevocationRequest:
+    APIError:
       example:
-        serialNumber: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
-        issuerName: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
-        revocationRequestor: John Doe
-        revocationReason: CESSATION_OF_OPERATION
+        errorMessages:
+        - Invalid identifier for product xyz
+        - Invalid identifier for product xyz
+        errorCode: <000.000.0000>
+        uuid: 123e4567-e89b-12d3-a456-426614174000
       properties:
-        serialNumber:
-          description: Certificate serial number (Big Integer HEX encoded)
-          example: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+        uuid:
+          description: end user error UUID reference
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          readOnly: true
+          type: string
           nullable: false
+        errorCode:
+          description: Error code
+          example: <000.000.0000>
+          readOnly: true
           type: string
-        revocationReason:
-          description: Revocation reason
-          enum:
-          - UNUSED
-          - KEY_COMPROMISE
-          - AFFILIATION_CHANGED
-          - SUPERSEDED
-          - CESSATION_OF_OPERATION
-          example: CESSATION_OF_OPERATION
           nullable: false
-          type: string
-        issuerName:
-          description: Certificate issuer distinguished name
-          example: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
-          nullable: false
-          type: string
-        revocationRequestor:
-          description: First- and last name of revocation requestor. Revocation requestor
-            must be used when API account is of type SERVICE_ACCOUNT
-          example: John Doe
-          nullable: true
-          type: string
-      required:
-      - issuerName
-      - revocationReason
-      - serialNumber
-      type: object
-    RequestUPN:
-      example:
-        values:
-        - upn@sample.org
-        - upn@sample.org
-      properties:
-        values:
+        errorMessages:
           items:
-            description: User Principal Name entry
-            example: upn@sample.org
-            nullable: false
+            description: Error message
+            example: Invalid identifier for product xyz
+            readOnly: true
             type: string
+            nullable: false
           type: array
       required:
-      - values
-      type: object
+      - errorCode
+      - errorMessages
+      - uuid
     KeyType:
       description: Key generation type
       enum:
@@ -1591,38 +1605,51 @@ components:
       - EC_brainpool512r1
       - EC_frp256v1
       example: RSA_2048
-      nullable: false
       readOnly: true
       type: string
-    DNS:
+      nullable: false
+    ProductValidity:
       example:
-        includeWWWDomain: true
-        dns: support.sample.org
-        includeBaseDomainForWildcard: true
+        validityType: HOURS
+        validityOptions:
+        - 0
+        - 0
+        validity: 1
       properties:
-        dns:
-          description: requested domain name (gets converted to punycode if required)
-          example: support.sample.org
-          nullable: false
-          type: string
-        includeBaseDomainForWildcard:
+        validityType:
           description: |
-            Append base domain to wildcard DNS.
-            Adds sample.org when *.sample.org is requested.
-            Applies only to certificate policies which allow wildcard issuance.
-            This flag has no effect if the certificate policy does not include the wildcard option.
-          example: true
+            Certificate validity types.
+              - YEARS: certificate validity in years.
+              - MONTHS: certificate validity in months.
+              - DAYS: certificate validity in days.
+              - HOURS: certificate validity in hours.
+              - MINUTES: certificate validity in minutes.
+              - SECONDS: certificate validity in seconds.
+          enum:
+          - YEARS
+          - MONTHS
+          - DAYS
+          - HOURS
+          - MINUTES
+          - SECONDS
+          example: HOURS
+          readOnly: true
+          type: string
           nullable: false
-          type: boolean
-        includeWWWDomain:
-          description: "Append www to requested DNS. \nAdds www.sample.org when sample.org\
-            \ is requested.\nWhen enabled, www is prefixed to all requested DNS.\n"
-          example: true
+        validity:
+          description: The default certificate validity
+          example: 1
+          readOnly: true
+          type: integer
+          nullable: true
+        validityOptions:
+          description: Optional certificate validity values
+          items:
+            type: integer
+          type: array
           nullable: false
-          type: boolean
       required:
-      - dns
-      type: object
+      - validityType
     Product:
       example:
         allowAdditionalAuthorizationAcceptedNotificationRecipients: true
@@ -1647,7 +1674,7 @@ components:
         allowAdditionalRenewalNotificationRecipients: true
         requiresRegistrationDocumentsOnRegister: true
         productDescription: SSL NCP policy with domain validation
-        expirationDate: 2022-02-15T00:00:00.000+00:00
+        expirationDate: 2022-02-12T05:10:50.52Z
         renewalRule: true
         requiresRegistrationDocuments: true
         allowAdditionalRevocationNotificationRecipients: true
@@ -1663,22 +1690,22 @@ components:
         uuid:
           description: Product UUID reference
           example: pma-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
           pattern: "pma-[0-9a-f-]{36}"
           readOnly: true
           type: string
+          nullable: false
         productName:
           description: Certificate product name
           example: SSL Silver
-          nullable: false
           readOnly: true
           type: string
+          nullable: false
         productDescription:
           description: Product additional description
           example: SSL NCP policy with domain validation
-          nullable: true
           readOnly: true
           type: string
+          nullable: true
         keyGenerationType:
           description: Key generation protocol
           enum:
@@ -1691,172 +1718,172 @@ components:
           - HSM
           - CNG
           example: PKCS10
-          nullable: false
           readOnly: true
           type: string
+          nullable: false
         keyType:
           $ref: '#/components/schemas/KeyType'
         issuanceNotification:
           description: Indicate if the certificate sends a notification on issuance
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         revocationNotification:
           description: Indicate if the certificate sends a notification on revocation
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         authorization:
           description: Indicate if the certificate requires an authorization on issuance/revocation
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         renewalRule:
           description: Indicate if the certificate sends a notification for renewal
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         publishCertificate:
           description: Indicate if the certificate is published to the public LDAP
             after issuance
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         clientPublishCertificateOverride:
           description: Indicate if the certificate publication can be overridden
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         clientPublishCertificateOverrideDefault:
           description: Indicate the default value if publication override is enabled
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         expirationDate:
           description: Indicate if the certificate product has an expiration date
-          example: 2022-02-15
-          format: date
-          nullable: true
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
           readOnly: true
           type: string
+          nullable: true
         allowAdditionalIssuanceNotificationRecipients:
           description: "When enabled, additional certificate issuance notification\
             \ recipients can be added to the certificate order. Additional recipients\
             \ are skipped when disabled."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         allowAdditionalRevocationNotificationRecipients:
           description: "When enabled, additional certificate revocation notification\
             \ recipients can be added to the certificate order. Additional recipients\
             \ are skipped when disabled."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         allowAdditionalRenewalNotificationRecipients:
           description: "When enabled, additional certificate renewal notification\
             \ recipients can be added to the certificate order. Additional recipients\
             \ are skipped when disabled."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         allowAdditionalAuthorizationNotificationRecipients:
           description: "When enabled, additional authorization notification recipients\
             \ can be added to the certificate order. Additional recipients are skipped\
             \ when disabled."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         allowAdditionalAuthorizationAcceptedNotificationRecipients:
           description: "When enabled, additional authorization notification recipients\
             \ (for accepted requests) can be added to the certificate order. Additional\
             \ recipients are skipped when disabled."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         allowAdditionalAuthorizationRejectedNotificationRecipients:
           description: "When enabled, additional authorization notification recipients\
             \ (for rejected requests) can be added to the certificate order. Additional\
             \ recipients are skipped when disabled."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         isCABDNSValidationRequired:
           description: "When enabled, indicates CAB DNS or HTTP domain validation\
             \ is required."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         allowAdditionalCABDNSNotificationRecipients:
           description: "When enabled, indicates that additional notification recipients\
             \ can be added to the certificate order. Additional recipients are skipped\
             \ when disabled."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         isCABDNSEmailLinkValidationRequired:
           description: "When enabled, indicates CAB DNS via constructed email link\
             \ to domain owner is required."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         isEmailBoxValidationRequired:
           description: "When enabled, indicates that the recipient must validate the\
             \ email box via a link."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         requiresRegistrationDocuments:
           description: "When enabled, registration documents must provided with the\
             \ certificate order. Documents are skipped when disabled."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         requiresRegistrationDocumentsOnRegister:
           description: "When enabled, registration documents must provided when submitting\
             \ the certificate order. When disabled, documents can be added to the\
             \ certificate order at a later time via the RA UI."
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         allowRegistrationDocumentsPDF:
           description: PDF registration document are allowed.
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         allowRegistrationDocumentsJPG:
           description: JPG/PNG registration images are allowed.
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         isGenerateRevocationCode:
           description: Indicates if a revocation code is issued for the recipient
             (link to self service revocation).
           example: true
-          nullable: false
           readOnly: true
           type: boolean
+          nullable: false
         productValidity:
           $ref: '#/components/schemas/ProductValidity'
       required:
@@ -1879,974 +1906,12 @@ components:
       - issuanceNotification
       - keyGenerationType
       - keyType
-      - name
       - publishCertificate
       - renewalRule
       - requiresRegistrationDocuments
       - requiresRegistrationDocumentsOnRegister
       - revocationNotification
       - uuid
-      type: object
-    RequestRFC822:
-      example:
-        values:
-        - sample@sample.org
-        - sample@sample.org
-      properties:
-        values:
-          items:
-            description: RFC822 entry
-            example: sample@sample.org
-            nullable: false
-            type: string
-          type: array
-      required:
-      - values
-      type: object
-    CertificateOrderStatus:
-      description: Status of the certificate Order
-      enum:
-      - NEW
-      - KEY_VALIDATION
-      - PRE_VALIDATION
-      - GENERATE_TBS
-      - PENDING_AUTH
-      - PRE_ISSUE
-      - ISSUE
-      - POST_VALIDATION
-      - FINALIZE_ISSUANCE
-      - ISSUED
-      - REVOKED
-      - FAILED
-      - REJECTED
-      - PENDING_CSR_RENEWAL
-      - UNKNOWN
-      example: ISSUED
-      nullable: false
-      readOnly: true
-      type: string
-    SearchCertificateOrder:
-      example:
-        serialNumber: 3893409CB*66E1F09?
-        clientReferences:
-        - cli-123e4567-e89b-12d3-a456-426614174000
-        startAfter: 2018-03-20T00:00:00.000+00:00
-        startBefore: 2018-03-25T00:00:00.000+00:00
-        orderReference: ord-f0725b50-c533-4802-a844-de57bfb7a80e
-        orderStatus:
-        - ISSUED
-        - ISSUED
-        attribute: s?me@emai* or 2.5.4.r or street
-        revocationReason:
-        - SUPERSEDED
-        - SUPERSEDED
-        includeCertificateChain: true
-        tags:
-        - my.cmdb-tag
-        - my.cmdb-label
-      properties:
-        orderReference:
-          description: Certificate Order reference
-          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
-          nullable: true
-          pattern: "ord-[0-9a-f-]{36}"
-          type: string
-        serialNumber:
-          description: Certificate serial number (Big Integer HEX encoded) with optional
-            wildcard attributes ? and/or *
-          example: 3893409CB*66E1F09?
-          nullable: true
-          type: string
-        orderStatus:
-          items:
-            $ref: '#/components/schemas/CertificateOrderStatus'
-          nullable: true
-          type: array
-        revocationReason:
-          items:
-            $ref: '#/components/schemas/RevocationReason'
-          nullable: true
-          type: array
-        clientReferences:
-          description: Client reference UUID
-          example:
-          - cli-123e4567-e89b-12d3-a456-426614174000
-          items:
-            pattern: "cli-[0-9a-f-]{36}"
-            type: string
-          nullable: true
-          type: array
-        startAfter:
-          description: Certificate Order not starting after Date
-          example: 2018-03-20
-          format: date
-          nullable: true
-          type: string
-        startBefore:
-          description: Certificate Order not starting before Date
-          example: 2018-03-25
-          format: date
-          nullable: true
-          type: string
-        attribute:
-          description: Any certificate attribute OID or value with optional wildcard
-            attributes ? and/or *
-          example: s?me@emai* or 2.5.4.r or street
-          nullable: true
-          type: string
-        includeCertificateChain:
-          description: Include the certificate chain in the certificate order when
-            available
-          example: true
-          nullable: true
-          type: boolean
-        tags:
-          description: Customer label/tags
-          example:
-          - my.cmdb-tag
-          - my.cmdb-label
-          items:
-            nullable: false
-            type: string
-          nullable: true
-          type: array
-      type: object
-    ClientDNS:
-      example:
-        domainUnicode: déjà.vu.com
-        timeValidated: 2022-01-12T23:20:50.52Z
-        validationResult: Validated XYZ ...
-        trustedDomain: true
-        randomValueTimeExpired: false
-        randomValue: ""
-        randomValueTimeCreated: 2022-01-12T23:20:50.52Z
-        uuid: cld-10877aec-412f-4b96-a5d4-f5f95da8634e
-        timeExpired: 2022-01-12T23:20:50.52Z
-        expired: false
-        validated: true
-        validationMethod: cabdns
-        domain: xn--dj-kia8a.vu.com
-        randomValueTimeExpire: 2022-01-12T23:20:50.52Z
-        status: not_validated
-      properties:
-        uuid:
-          description: Pre validated client domain reference
-          example: cld-10877aec-412f-4b96-a5d4-f5f95da8634e
-          nullable: false
-          pattern: "cld-[0-9a-f-]{36}"
-          readOnly: true
-          type: string
-        domain:
-          description: Client domain in punycode
-          example: xn--dj-kia8a.vu.com
-          nullable: false
-          type: string
-        domainUnicode:
-          description: Client domain in unicode
-          example: déjà.vu.com
-          nullable: false
-          readOnly: true
-          type: string
-        validated:
-          description: Indicates if the domain is validated
-          example: true
-          nullable: false
-          readOnly: true
-          type: boolean
-        trustedDomain:
-          description: Indicates if the domain is a trusted domain (for private PKIs).
-            This setting is linked to the certificate product DNS validation rule
-            for Private PKIs.
-          example: true
-          nullable: false
-          readOnly: false
-          type: boolean
-        timeValidated:
-          description: Indicates when the domain got validated
-          example: 2022-01-12T23:20:50.52Z
-          format: date-time
-          nullable: true
-          readOnly: true
-          type: string
-        validationMethod:
-          description: DNS validation type
-          example: cabdns
-          nullable: false
-          readOnly: true
-          type: string
-        randomValue:
-          description: The random value to add to the DNS TXT record for the domain
-          example: ""
-          nullable: true
-          readOnly: true
-          type: string
-        randomValueTimeCreated:
-          description: Indicates when the random value was created
-          example: 2022-01-12T23:20:50.52Z
-          format: date-time
-          nullable: false
-          readOnly: true
-          type: string
-        randomValueTimeExpire:
-          description: Indicates when the random value expires
-          example: 2022-01-12T23:20:50.52Z
-          format: date-time
-          nullable: false
-          readOnly: true
-          type: string
-        validationResult:
-          description: Indicates the validation result
-          example: Validated XYZ ...
-          nullable: true
-          readOnly: true
-          type: string
-        timeExpired:
-          description: Indicates when the random value was created
-          example: 2022-01-12T23:20:50.52Z
-          format: date-time
-          nullable: true
-          readOnly: true
-          type: string
-        expired:
-          description: Indicates if the pre validation of the domain has expired
-          example: false
-          nullable: false
-          readOnly: true
-          type: boolean
-        randomValueTimeExpired:
-          description: Indicates if the random value is expired
-          example: false
-          nullable: false
-          readOnly: true
-          type: boolean
-        status:
-          $ref: '#/components/schemas/ClientDomainValidationStatus'
-      required:
-      - createdOn
-      - domain
-      - domainUnicode
-      - expired
-      - randomValueTimeExpired
-      - trustedDomain
-      - uuid
-      - validated
-      - validationMethod
-      type: object
-    JobStatus:
-      description: Status of the certificate Order Task
-      enum:
-      - WAITING
-      - PENDING
-      - PROCESSING
-      - SUCCESS
-      - FAILED
-      - SCHEDULE_REQUEST
-      - SCHEDULE_RESPONSE
-      - RETRY
-      - CONNECTION_OR_CHANNEL_CLOSED
-      - UNKNOWN
-      example: SUCCESS
-      nullable: false
-      readOnly: true
-      type: string
-    IssueRequest:
-      example:
-        additionalRecipients:
-        - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
-          language: NEUTRAL
-          email: shared.mailbox@sample.org
-        - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
-          language: NEUTRAL
-          email: shared.mailbox@sample.org
-        note: user free text
-        csr: |
-          ----BEGIN CERTIFICATE REQUEST-----
-          MIICijCCAXICAQAwGTEXMBUGA1UEAwwOd3d3LnNhbXBsZS5vcmcwggEiMA0GCSqG
-          SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCY6+oWhcAadQJ3kuNHZIbujX6yt11MN7RN
-          YIf1+tCFK/zHlbrekiochGQXHasbbTcAqVPM+atvvPl5BMQO6BW8/RzpKC05WAQL
-          wM580Qnq7WcOUX+h+tU6v0W/mRF0KyEt2eI7W+J1ec27AYS2SMeDVyVN/dY7Ca8o
-          x+glgw6MRjh4EQyk9E6v0BU5DaHqvUEhFArloW/t3XCps2Oxd15gqjm0tuEzaXul
-          6VOM4e7CjQuapG1D4mD6TZwEl9A26eVROiRbsgWMCjSYOrCDxsel873kDJoYv+8E
-          YxbAxFlzg7RVBI0Th3vUAgawaPjMz7q2xOOYv+L64fI4s0WQFbbrAgMBAAGgLDAq
-          BgkqhkiG9w0BCQ4xHTAbMBkGA1UdEQQSMBCCDnd3dy5zYW1wbGUub3JnMA0GCSqG
-          SIb3DQEBCwUAA4IBAQAzegZ0PvLM22mie5eolWC9VHH00s3eazvYYpvzecsfDr9k
-          o8omcsfZVE679R7WmAmicPLC8NYMTPGQHStu3MKyxAzw/GHvi2C1BSBx3lx0WDno
-          Jh02r5J/qurxGTZihSr9GnUAU1I3Ht5Lboz/ITEslNMOzZFFIm7e2knfqchhyQRS
-          ilT3LgHWAc490z/lWg63IbC4DVfl5SRtupKjFixyJKU7rHnkBb9fwBGn/mcQPcvq
-          g9W5jRRvcCfmufSdtuzkuvVTR7AcqzrlAFhmwMv1Yll2eMv2qD40jjb0sF45bcu0
-          CRg0mu4um+/DZaWV6IUOiTPj6wewH+909Ov8f2G+
-          ----END CERTIFICATE REQUEST-----
-        productReference: pma-10877aec-412f-4b96-a5d4-f5f95da8634e
-        synchrone: true
-        overrides:
-          requestExtensions:
-            requestUPN:
-              values:
-              - upn@sample.org
-              - upn@sample.org
-            microsoftSecurityIdentifier: S-1-5-32
-            microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
-            requestIP:
-              values:
-              - 1.1.1.1
-              - 1.1.1.1
-            requestRFC822:
-              values:
-              - sample@sample.org
-              - sample@sample.org
-            requestDNS:
-              values:
-              - includeWWWDomain: true
-                dns: support.sample.org
-                includeBaseDomainForWildcard: true
-              - includeWWWDomain: true
-                dns: support.sample.org
-                includeBaseDomainForWildcard: true
-          validity: 1
-          subjectDN: "c=US,l=Denver,o=Acme Ltd,cn=Sample"
-        registrationDocuments:
-        - document: document
-          documentName: my_document.pdf
-        - document: document
-          documentName: my_document.pdf
-        publishCertificate: true
-        acceptTandC: true
-        tags:
-        - my-cmdb-label
-        - my-cmdb-label
-        includeCertificateChain: true
-      properties:
-        productReference:
-          description: Product reference
-          example: pma-10877aec-412f-4b96-a5d4-f5f95da8634e
-          nullable: false
-          pattern: "pma-[0-9a-f-]{36}"
-          type: string
-        csr:
-          description: "CSR PEM encoded with or without ----BEGIN/END CERTIFICATE\
-            \ REQUEST-----. When null, a key-pair is generated if the certificate\
-            \ policy allows it (SubjectDN and optional overrides must be provided\
-            \ where necessary)."
-          example: |
-            ----BEGIN CERTIFICATE REQUEST-----
-            MIICijCCAXICAQAwGTEXMBUGA1UEAwwOd3d3LnNhbXBsZS5vcmcwggEiMA0GCSqG
-            SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCY6+oWhcAadQJ3kuNHZIbujX6yt11MN7RN
-            YIf1+tCFK/zHlbrekiochGQXHasbbTcAqVPM+atvvPl5BMQO6BW8/RzpKC05WAQL
-            wM580Qnq7WcOUX+h+tU6v0W/mRF0KyEt2eI7W+J1ec27AYS2SMeDVyVN/dY7Ca8o
-            x+glgw6MRjh4EQyk9E6v0BU5DaHqvUEhFArloW/t3XCps2Oxd15gqjm0tuEzaXul
-            6VOM4e7CjQuapG1D4mD6TZwEl9A26eVROiRbsgWMCjSYOrCDxsel873kDJoYv+8E
-            YxbAxFlzg7RVBI0Th3vUAgawaPjMz7q2xOOYv+L64fI4s0WQFbbrAgMBAAGgLDAq
-            BgkqhkiG9w0BCQ4xHTAbMBkGA1UdEQQSMBCCDnd3dy5zYW1wbGUub3JnMA0GCSqG
-            SIb3DQEBCwUAA4IBAQAzegZ0PvLM22mie5eolWC9VHH00s3eazvYYpvzecsfDr9k
-            o8omcsfZVE679R7WmAmicPLC8NYMTPGQHStu3MKyxAzw/GHvi2C1BSBx3lx0WDno
-            Jh02r5J/qurxGTZihSr9GnUAU1I3Ht5Lboz/ITEslNMOzZFFIm7e2knfqchhyQRS
-            ilT3LgHWAc490z/lWg63IbC4DVfl5SRtupKjFixyJKU7rHnkBb9fwBGn/mcQPcvq
-            g9W5jRRvcCfmufSdtuzkuvVTR7AcqzrlAFhmwMv1Yll2eMv2qD40jjb0sF45bcu0
-            CRg0mu4um+/DZaWV6IUOiTPj6wewH+909Ov8f2G+
-            ----END CERTIFICATE REQUEST-----
-          nullable: true
-          type: string
-        overrides:
-          $ref: '#/components/schemas/RequestOverrides'
-        additionalRecipients:
-          items:
-            $ref: '#/components/schemas/AdditionalRecipient'
-          type: array
-        registrationDocuments:
-          items:
-            $ref: '#/components/schemas/RegistrationDocument'
-          type: array
-        tags:
-          items:
-            description: User defined tag/label
-            example: my-cmdb-label
-            nullable: false
-            readOnly: false
-            type: string
-          type: array
-        note:
-          description: User note added to issued certificate order
-          example: user free text
-          nullable: true
-          type: string
-        publishCertificate:
-          description: |
-            Publish certificate to repository.
-            Publication occurs if option is enabled on certificate policy or if the account
-            has the option enabled to override the publication.
-          nullable: false
-          type: boolean
-        synchrone:
-          default: false
-          description: "Request is sent asynchronously to the backend by default.\
-            \ \nSetting this value to _true_ will wait until the certificate is issued\
-            \ and return the completed certificate order.\nFor successful synchrone\
-            \ issuance, _insure_ that you have all prerequisites for DNS validation\
-            \ and/or Authorization fulfilled.\n"
-          example: true
-          nullable: false
-          type: boolean
-        acceptTandC:
-          default: true
-          description: "When server backend has T&C enabled, this value is checked.\n"
-          example: true
-          nullable: false
-          type: boolean
-        includeCertificateChain:
-          default: false
-          description: |
-            Include the certificate chain in the reply (only valid when 'synchrone' is true).
-          example: true
-          nullable: false
-          type: boolean
-      required:
-      - productReference
-      type: object
-    RequestOverrides:
-      example:
-        requestExtensions:
-          requestUPN:
-            values:
-            - upn@sample.org
-            - upn@sample.org
-          microsoftSecurityIdentifier: S-1-5-32
-          microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
-          requestIP:
-            values:
-            - 1.1.1.1
-            - 1.1.1.1
-          requestRFC822:
-            values:
-            - sample@sample.org
-            - sample@sample.org
-          requestDNS:
-            values:
-            - includeWWWDomain: true
-              dns: support.sample.org
-              includeBaseDomainForWildcard: true
-            - includeWWWDomain: true
-              dns: support.sample.org
-              includeBaseDomainForWildcard: true
-        validity: 1
-        subjectDN: "c=US,l=Denver,o=Acme Ltd,cn=Sample"
-      properties:
-        subjectDN:
-          description: "Override the CSR Subject Distinguished Name with user provided\
-            \ value\nSupported attributes are (lower or uppercase):\n  - c, country\
-            \ (Country)\n  - o, organization (Organization)\n  - ou, organizationalUnit\
-            \ (Organizational Unit)\n  - t, title (Title) \n  - cn, commonName (Common\
-            \ Name)\n  - sn, surName (Surname)\n  - gn, givenName (Given name)\n \
-            \ - i, initials (Initials)\n  - street, streetAddress (Street Address)\n\
-            \  - serialnumber (Serial number)\n  - l, locality (Locality)\n  - st,\
-            \ state (State)\n  - e, email, emailAddress (Email)\n  - dc, domainController\
-            \ (Domain Controller)\n  - uid (UID)\n  - generationQualifier, generation\
-            \ (Generation Qualifier)\n  - description (Description)\n  - role (Role)\n\
-            \  - joil (Jurisdiction of Incorporation, Locality)\n  - joist (Jurisdiction\
-            \ of Incorporation, State)\n  - joic (Jurisdiction of Incorporation, Country)\n\
-            \  - orgId, organizationIdentifier (Organization Identifier)\n  - uniqueIdentifier\
-            \ (Unique Identifier)\n  - name (Name)\n  - pseudonym (Pseudonym)\n  -\
-            \ postalAddress (Postal Address)\n  - postalCode (Postal Code)\n  - unstructuredaddress\
-            \ (Unstructed Address)\n  - unstructuredname (Unstructed Name)\n  - dn\
-            \ (DN Qualifier)\n  - nameatbirth (Name at Birth)\n  - countryofcitizenship\
-            \ (Country of Citizenship)\n  - countryofresidence (Country of Residence)\n\
-            \  - gender (Gender)\n  - placeofbirth (Place of Birth)\n  - dateofbirth\
-            \ (Date of Birth)\n  - businesscategory (Business Category)\n  - telephonenumber\
-            \ (Telephone Number)\n  - scionisdasnumber (SCION ISD AS Number)\n  -\
-            \ tpmmanufacturer (TPM Manufacturer)\n  - tpmmodel (TPM Model)\n  - tpmversion\
-            \ (TPM Version)\n"
-          example: "c=US,l=Denver,o=Acme Ltd,cn=Sample"
-          nullable: true
-          type: string
-        validity:
-          description: |
-            Optional certificate validity set if enabled on the Product
-          example: 1
-          minimum: 1
-          nullable: true
-          type: integer
-        requestExtensions:
-          $ref: '#/components/schemas/RequestExtensions'
-      type: object
-    CertificateOrder:
-      example:
-        additionalRecipients:
-        - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
-          language: NEUTRAL
-          email: shared.mailbox@sample.org
-        - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
-          language: NEUTRAL
-          email: shared.mailbox@sample.org
-        certificateChain:
-        - certificateChain
-        - certificateChain
-        issuedBy: some@email.org
-        clientReference: cli-123e4567-e89b-12d3-a456-426614174000
-        certificate:
-          serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
-          endValidity: 2023-01-12T23:20:50.52Z
-          subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
-          revocationStatus:
-            revokedOn: 2022-02-12T05:10:50.52Z
-            reason: SUPERSEDED
-            revokedBy: some@email.org
-            revocationRequestor: John Doe
-          startValidity: 2022-01-12T23:20:50.52Z
-          certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
-          issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
-        productReference: pma-123e4567-e89b-12d3-a456-426614174000
-        uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
-        createdOn: 2022-02-12T05:10:50.52Z
-        status: ISSUED
-        tags:
-        - my-cmdb-label
-        - my-cmdb-label
-      properties:
-        uuid:
-          description: Certificate Order reference
-          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
-          nullable: false
-          pattern: "ord-[0-9a-f-]{36}"
-          type: string
-        createdOn:
-          description: Certificate Order creation date time
-          example: 2022-02-12T05:10:50.52Z
-          format: date-time
-          nullable: false
-          type: string
-        status:
-          $ref: '#/components/schemas/CertificateOrderStatus'
-        clientReference:
-          description: Client reference UUID
-          example: cli-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
-          pattern: "cli-[0-9a-f-]{36}"
-          readOnly: true
-          type: string
-        productReference:
-          description: Product reference UUID
-          example: pma-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
-          pattern: "pma-[0-9a-f-]{36}"
-          readOnly: true
-          type: string
-        certificate:
-          $ref: '#/components/schemas/Certificate'
-        certificateChain:
-          description: Certificate chain
-          items:
-            nullable: true
-            readOnly: true
-            type: string
-          nullable: true
-          readOnly: true
-          type: array
-        tags:
-          description: User defined tags/labels
-          items:
-            example: my-cmdb-label
-            nullable: false
-            readOnly: true
-            type: string
-          nullable: true
-          readOnly: true
-          type: array
-        additionalRecipients:
-          items:
-            $ref: '#/components/schemas/AdditionalRecipient'
-          type: array
-        issuedBy:
-          description: email of the person who created the order
-          example: some@email.org
-          format: email
-          nullable: false
-          readOnly: true
-          type: string
-      required:
-      - clientReference
-      - createdOn
-      - productReference
-      - status
-      - uuid
-      type: object
-    CertificateOrderTask:
-      example:
-        timeScheduled: 2022-02-12T05:10:50.52Z
-        response: Processed successfully
-        timeCreated: 2022-02-12T05:10:50.52Z
-        timeStarted: 2022-02-12T05:10:50.52Z
-        timeFinished: 2022-02-12T05:10:50.52Z
-        numberOfExecutions: 2
-        type: ISSUE_FINALIZE_ISSUE_CERTIFICATE_JOB
-        error: Error processing xyz ...
-        uuid: job-f0725b50-c533-4802-a844-de57bfb7a80e
-        status: SUCCESS
-      properties:
-        uuid:
-          description: Certificate Order Task reference
-          example: job-f0725b50-c533-4802-a844-de57bfb7a80e
-          nullable: false
-          pattern: "job-[0-9a-f-]{36}"
-          readOnly: true
-          type: string
-        timeCreated:
-          description: Certificate Order creation date time
-          example: 2022-02-12T05:10:50.52Z
-          format: date-time
-          nullable: true
-          readOnly: true
-          type: string
-        timeScheduled:
-          description: Scheduled date time
-          example: 2022-02-12T05:10:50.52Z
-          format: date-time
-          nullable: true
-          readOnly: true
-          type: string
-        timeStarted:
-          description: Started date time
-          example: 2022-02-12T05:10:50.52Z
-          format: date-time
-          nullable: true
-          readOnly: true
-          type: string
-        timeFinished:
-          description: Finished date time
-          example: 2022-02-12T05:10:50.52Z
-          format: date-time
-          nullable: true
-          readOnly: true
-          type: string
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        type:
-          $ref: '#/components/schemas/JobType'
-        numberOfExecutions:
-          description: Number of executions
-          example: 2
-          minimum: 0
-          nullable: false
-          readOnly: true
-          type: integer
-        response:
-          description: Response
-          example: Processed successfully
-          nullable: true
-          readOnly: true
-          type: string
-        error:
-          description: Error message
-          example: Error processing xyz ...
-          nullable: true
-          readOnly: true
-          type: string
-      required:
-      - numberOfExecutions
-      - status
-      - type
-      - uuid
-      type: object
-    RequestIP:
-      example:
-        values:
-        - 1.1.1.1
-        - 1.1.1.1
-      properties:
-        values:
-          items:
-            description: IP entry
-            example: 1.1.1.1
-            nullable: false
-            type: string
-          type: array
-      required:
-      - values
-      type: object
-    RegistrationDocument:
-      example:
-        document: document
-        documentName: my_document.pdf
-      properties:
-        documentName:
-          description: document name
-          example: my_document.pdf
-          nullable: false
-          type: string
-        document:
-          description: Base64 encoded byte array of the document content
-          nullable: false
-          type: string
-      required:
-      - document
-      - documentName
-      type: object
-    RevocationStatus:
-      example:
-        revokedOn: 2022-02-12T05:10:50.52Z
-        reason: SUPERSEDED
-        revokedBy: some@email.org
-        revocationRequestor: John Doe
-      properties:
-        revokedOn:
-          description: Revocation date in UTC
-          example: 2022-02-12T05:10:50.52Z
-          format: date-time
-          nullable: false
-          readOnly: true
-          type: string
-        reason:
-          $ref: '#/components/schemas/RevocationReason'
-        revokedBy:
-          description: email of the person who revoked the certificate
-          example: some@email.org
-          format: email
-          nullable: false
-          readOnly: true
-          type: string
-        revocationRequestor:
-          description: First- and last name of revocation requestor
-          example: John Doe
-          nullable: true
-          type: string
-      required:
-      - reason
-      - revokedBy
-      - revokedOn
-      type: object
-    APIError:
-      properties:
-        uuid:
-          description: end user error UUID reference
-          example: 123e4567-e89b-12d3-a456-426614174000
-          format: uuid
-          nullable: false
-          readOnly: true
-          type: string
-        errorCode:
-          description: Error code
-          example: <000.000.0000>
-          nullable: false
-          readOnly: true
-          type: string
-        errorMessages:
-          items:
-            description: Error message
-            example: Invalid identifier for product xyz
-            nullable: false
-            readOnly: true
-            type: string
-          type: array
-      required:
-      - errorCode
-      - errorMessages
-      - uuid
-      type: object
-    Client:
-      example:
-        name: Company XYZ
-        description: Some information about Company XYZ
-        uuid: cli-123e4567-e89b-12d3-a456-426614174000
-        products:
-        - allowAdditionalAuthorizationAcceptedNotificationRecipients: true
-          isCABDNSValidationRequired: true
-          isCABDNSEmailLinkValidationRequired: true
-          productValidity:
-            validityType: HOURS
-            validityOptions:
-            - 0
-            - 0
-            validity: 1
-          isGenerateRevocationCode: true
-          uuid: pma-123e4567-e89b-12d3-a456-426614174000
-          productName: SSL Silver
-          allowRegistrationDocumentsJPG: true
-          keyGenerationType: PKCS10
-          authorization: true
-          revocationNotification: true
-          allowAdditionalCABDNSNotificationRecipients: true
-          allowRegistrationDocumentsPDF: true
-          keyType: RSA_2048
-          allowAdditionalRenewalNotificationRecipients: true
-          requiresRegistrationDocumentsOnRegister: true
-          productDescription: SSL NCP policy with domain validation
-          expirationDate: 2022-02-15T00:00:00.000+00:00
-          renewalRule: true
-          requiresRegistrationDocuments: true
-          allowAdditionalRevocationNotificationRecipients: true
-          publishCertificate: true
-          allowAdditionalAuthorizationNotificationRecipients: true
-          allowAdditionalAuthorizationRejectedNotificationRecipients: true
-          isEmailBoxValidationRequired: true
-          issuanceNotification: true
-          clientPublishCertificateOverrideDefault: true
-          clientPublishCertificateOverride: true
-          allowAdditionalIssuanceNotificationRecipients: true
-        - allowAdditionalAuthorizationAcceptedNotificationRecipients: true
-          isCABDNSValidationRequired: true
-          isCABDNSEmailLinkValidationRequired: true
-          productValidity:
-            validityType: HOURS
-            validityOptions:
-            - 0
-            - 0
-            validity: 1
-          isGenerateRevocationCode: true
-          uuid: pma-123e4567-e89b-12d3-a456-426614174000
-          productName: SSL Silver
-          allowRegistrationDocumentsJPG: true
-          keyGenerationType: PKCS10
-          authorization: true
-          revocationNotification: true
-          allowAdditionalCABDNSNotificationRecipients: true
-          allowRegistrationDocumentsPDF: true
-          keyType: RSA_2048
-          allowAdditionalRenewalNotificationRecipients: true
-          requiresRegistrationDocumentsOnRegister: true
-          productDescription: SSL NCP policy with domain validation
-          expirationDate: 2022-02-15T00:00:00.000+00:00
-          renewalRule: true
-          requiresRegistrationDocuments: true
-          allowAdditionalRevocationNotificationRecipients: true
-          publishCertificate: true
-          allowAdditionalAuthorizationNotificationRecipients: true
-          allowAdditionalAuthorizationRejectedNotificationRecipients: true
-          isEmailBoxValidationRequired: true
-          issuanceNotification: true
-          clientPublishCertificateOverrideDefault: true
-          clientPublishCertificateOverride: true
-          allowAdditionalIssuanceNotificationRecipients: true
-      properties:
-        uuid:
-          description: Client UUID reference
-          example: cli-123e4567-e89b-12d3-a456-426614174000
-          nullable: false
-          pattern: "cli-[0-9a-f-]{36}"
-          readOnly: true
-          type: string
-        name:
-          description: Client name
-          example: Company XYZ
-          nullable: false
-          readOnly: true
-          type: string
-        description:
-          description: Client description
-          example: Some information about Company XYZ
-          nullable: true
-          readOnly: true
-          type: string
-        products:
-          description: List of available certificate products
-          items:
-            $ref: '#/components/schemas/Product'
-          nullable: false
-          readOnly: true
-          type: array
-      required:
-      - name
-      - uuid
-      type: object
-    RevocationReason:
-      description: Revocation reason
-      enum:
-      - UNUSED
-      - KEY_COMPROMISE
-      - C_A_COMPROMISE
-      - AFFILIATION_CHANGED
-      - SUPERSEDED
-      - CESSATION_OF_OPERATION
-      - CERTIFICATE_HOLD
-      - REMOVE_FROM_CRL
-      - PRIVILEGE_WITHDRAWN
-      - A_A_COMPROMISE
-      example: SUPERSEDED
-      nullable: false
-      readOnly: true
-      type: string
-    AdditionalRecipientType:
-      description: "Notification type for additional recipient.\n  - DNS_OWNER_CHECK_EMAIL_LINK:\
-        \ send notification for DNS validation (email link) to additional recipient.\
-        \ Requires notification enabled for 'Additional recipient' on notification\
-        \ template.\n  - DNS_CAB: send notification for CAB DNS change or CAB Agreed\
-        \ upon to additional recipient. Requires notification enabled for 'Additional\
-        \ recipient' on notification template.\n  - ISSUANCE: send notification for\
-        \ certificate issuance to additional recipient. Requires notification enabled\
-        \ for 'Additional recipient' on notification template.\n  - REVOCATION: send\
-        \ notification for certificate revocation to additional recipient. Requires\
-        \ notification enabled for 'Additional recipient' on notification template.\n\
-        \  - RENEWAL: send notification for certificate renewal to additional recipient.\
-        \ Requires notification enabled for 'Additional recipient' on notification\
-        \ template.\n  - RECOVERY: send notification for key recovery to additional\
-        \ recipient. Requires notification enabled for 'Additional recipient' on notification\
-        \ template.\n  - ISSUANCE_AUTHORIZATION: send notification for certificate\
-        \ issuance authorization to additional recipient. Requires notification enabled\
-        \ for 'Additional recipient' on notification template.\n  - ISSUANCE_AUTHORIZATION_ACCEPTED:\
-        \ send notification for accepted certificate issuance authorization to additional\
-        \ recipient. Requires notification enabled for 'Additional recipient' on notification\
-        \ template.\n  - ISSUANCE_AUTHORIZATION_REJECTED: send notification for rejected\
-        \ certificate issuance authorization to additional recipient. Requires notification\
-        \ enabled for 'Additional recipient' on notification template.\n"
-      enum:
-      - DNS_OWNER_CHECK_EMAIL_LINK
-      - DNS_CAB
-      - ISSUANCE
-      - REVOCATION
-      - RENEWAL
-      - RECOVERY
-      - ISSUANCE_AUTHORIZATION
-      - ISSUANCE_AUTHORIZATION_ACCEPTED
-      - ISSUANCE_AUTHORIZATION_REJECTED
-      example: DNS_OWNER_CHECK_EMAIL_LINK
-      nullable: false
-      readOnly: true
-      type: string
-    RequestExtensions:
-      example:
-        requestUPN:
-          values:
-          - upn@sample.org
-          - upn@sample.org
-        microsoftSecurityIdentifier: S-1-5-32
-        microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
-        requestIP:
-          values:
-          - 1.1.1.1
-          - 1.1.1.1
-        requestRFC822:
-          values:
-          - sample@sample.org
-          - sample@sample.org
-        requestDNS:
-          values:
-          - includeWWWDomain: true
-            dns: support.sample.org
-            includeBaseDomainForWildcard: true
-          - includeWWWDomain: true
-            dns: support.sample.org
-            includeBaseDomainForWildcard: true
-      properties:
-        microsoftSecurityIdentifier:
-          description: |
-            Microsoft Security Identifier (SID)
-            Override or add the X.509 extension is present in the certificate policy
-          example: S-1-5-32
-          nullable: true
-          type: string
-        microsoftPolicyTemplateOID:
-          description: |
-            Microsoft Policy Template Object Identifier.
-            Override or add the X.509 extension is present in the certificate policy
-          example: 2.16.756.3.2.1.0
-          nullable: true
-          type: string
-        requestDNS:
-          $ref: '#/components/schemas/RequestDNS'
-        requestRFC822:
-          $ref: '#/components/schemas/RequestRFC822'
-        requestUPN:
-          $ref: '#/components/schemas/RequestUPN'
-        requestIP:
-          $ref: '#/components/schemas/RequestIP'
-      type: object
     Clients:
       example:
         recordsFiltered: 6
@@ -2877,7 +1942,7 @@ components:
             allowAdditionalRenewalNotificationRecipients: true
             requiresRegistrationDocumentsOnRegister: true
             productDescription: SSL NCP policy with domain validation
-            expirationDate: 2022-02-15T00:00:00.000+00:00
+            expirationDate: 2022-02-12T05:10:50.52Z
             renewalRule: true
             requiresRegistrationDocuments: true
             allowAdditionalRevocationNotificationRecipients: true
@@ -2911,7 +1976,7 @@ components:
             allowAdditionalRenewalNotificationRecipients: true
             requiresRegistrationDocumentsOnRegister: true
             productDescription: SSL NCP policy with domain validation
-            expirationDate: 2022-02-15T00:00:00.000+00:00
+            expirationDate: 2022-02-12T05:10:50.52Z
             renewalRule: true
             requiresRegistrationDocuments: true
             allowAdditionalRevocationNotificationRecipients: true
@@ -2949,7 +2014,7 @@ components:
             allowAdditionalRenewalNotificationRecipients: true
             requiresRegistrationDocumentsOnRegister: true
             productDescription: SSL NCP policy with domain validation
-            expirationDate: 2022-02-15T00:00:00.000+00:00
+            expirationDate: 2022-02-12T05:10:50.52Z
             renewalRule: true
             requiresRegistrationDocuments: true
             allowAdditionalRevocationNotificationRecipients: true
@@ -2983,7 +2048,7 @@ components:
             allowAdditionalRenewalNotificationRecipients: true
             requiresRegistrationDocumentsOnRegister: true
             productDescription: SSL NCP policy with domain validation
-            expirationDate: 2022-02-15T00:00:00.000+00:00
+            expirationDate: 2022-02-12T05:10:50.52Z
             renewalRule: true
             requiresRegistrationDocuments: true
             allowAdditionalRevocationNotificationRecipients: true
@@ -2999,22 +2064,22 @@ components:
         recordsTotal: 1
       properties:
         draw:
-          nullable: false
           readOnly: true
           type: integer
+          nullable: false
         recordsFiltered:
           description: "Total records, after filtering (i.e. the total number of records\
             \ after filtering has been applied - not just the number of records being\
             \ returned for this page of data)."
-          nullable: false
           readOnly: true
           type: integer
+          nullable: false
         recordsTotal:
           description: "Total records, before filtering (i.e. the total number of\
             \ records in the database)"
-          nullable: false
           readOnly: true
           type: integer
+          nullable: false
         data:
           items:
             $ref: '#/components/schemas/Client'
@@ -3024,7 +2089,296 @@ components:
       - draw
       - recordsFiltered
       - recordsTotal
-      type: object
+    Client:
+      example:
+        name: Company XYZ
+        description: Some information about Company XYZ
+        uuid: cli-123e4567-e89b-12d3-a456-426614174000
+        products:
+        - allowAdditionalAuthorizationAcceptedNotificationRecipients: true
+          isCABDNSValidationRequired: true
+          isCABDNSEmailLinkValidationRequired: true
+          productValidity:
+            validityType: HOURS
+            validityOptions:
+            - 0
+            - 0
+            validity: 1
+          isGenerateRevocationCode: true
+          uuid: pma-123e4567-e89b-12d3-a456-426614174000
+          productName: SSL Silver
+          allowRegistrationDocumentsJPG: true
+          keyGenerationType: PKCS10
+          authorization: true
+          revocationNotification: true
+          allowAdditionalCABDNSNotificationRecipients: true
+          allowRegistrationDocumentsPDF: true
+          keyType: RSA_2048
+          allowAdditionalRenewalNotificationRecipients: true
+          requiresRegistrationDocumentsOnRegister: true
+          productDescription: SSL NCP policy with domain validation
+          expirationDate: 2022-02-12T05:10:50.52Z
+          renewalRule: true
+          requiresRegistrationDocuments: true
+          allowAdditionalRevocationNotificationRecipients: true
+          publishCertificate: true
+          allowAdditionalAuthorizationNotificationRecipients: true
+          allowAdditionalAuthorizationRejectedNotificationRecipients: true
+          isEmailBoxValidationRequired: true
+          issuanceNotification: true
+          clientPublishCertificateOverrideDefault: true
+          clientPublishCertificateOverride: true
+          allowAdditionalIssuanceNotificationRecipients: true
+        - allowAdditionalAuthorizationAcceptedNotificationRecipients: true
+          isCABDNSValidationRequired: true
+          isCABDNSEmailLinkValidationRequired: true
+          productValidity:
+            validityType: HOURS
+            validityOptions:
+            - 0
+            - 0
+            validity: 1
+          isGenerateRevocationCode: true
+          uuid: pma-123e4567-e89b-12d3-a456-426614174000
+          productName: SSL Silver
+          allowRegistrationDocumentsJPG: true
+          keyGenerationType: PKCS10
+          authorization: true
+          revocationNotification: true
+          allowAdditionalCABDNSNotificationRecipients: true
+          allowRegistrationDocumentsPDF: true
+          keyType: RSA_2048
+          allowAdditionalRenewalNotificationRecipients: true
+          requiresRegistrationDocumentsOnRegister: true
+          productDescription: SSL NCP policy with domain validation
+          expirationDate: 2022-02-12T05:10:50.52Z
+          renewalRule: true
+          requiresRegistrationDocuments: true
+          allowAdditionalRevocationNotificationRecipients: true
+          publishCertificate: true
+          allowAdditionalAuthorizationNotificationRecipients: true
+          allowAdditionalAuthorizationRejectedNotificationRecipients: true
+          isEmailBoxValidationRequired: true
+          issuanceNotification: true
+          clientPublishCertificateOverrideDefault: true
+          clientPublishCertificateOverride: true
+          allowAdditionalIssuanceNotificationRecipients: true
+      properties:
+        uuid:
+          description: Client UUID reference
+          example: cli-123e4567-e89b-12d3-a456-426614174000
+          pattern: "cli-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+          nullable: false
+        name:
+          description: Client name
+          example: Company XYZ
+          readOnly: true
+          type: string
+          nullable: false
+        description:
+          description: Client description
+          example: Some information about Company XYZ
+          readOnly: true
+          type: string
+          nullable: true
+        products:
+          description: List of available certificate products
+          items:
+            $ref: '#/components/schemas/Product'
+          type: array
+          nullable: false
+      required:
+      - name
+      - uuid
+    RevocationRequest:
+      example:
+        serialNumber: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+        issuerName: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+        revocationRequestor: John Doe
+        revocationReason: CESSATION_OF_OPERATION
+      properties:
+        serialNumber:
+          description: Certificate serial number (Big Integer HEX encoded)
+          example: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+          type: string
+          nullable: false
+        revocationReason:
+          description: Revocation reason
+          enum:
+          - UNUSED
+          - KEY_COMPROMISE
+          - AFFILIATION_CHANGED
+          - SUPERSEDED
+          - CESSATION_OF_OPERATION
+          example: CESSATION_OF_OPERATION
+          type: string
+          nullable: false
+        issuerName:
+          description: Certificate issuer distinguished name
+          example: "DC=COM,DC=Some Domain,OU=Some Organizational Unit,CN=Some SubCA"
+          type: string
+          nullable: false
+        revocationRequestor:
+          description: First- and last name of revocation requestor. Revocation requestor
+            must be used when API account is of type SERVICE_ACCOUNT
+          example: John Doe
+          type: string
+          nullable: true
+      required:
+      - issuerName
+      - revocationReason
+      - serialNumber
+    RevocationReason:
+      description: Revocation reason
+      enum:
+      - UNUSED
+      - KEY_COMPROMISE
+      - C_A_COMPROMISE
+      - AFFILIATION_CHANGED
+      - SUPERSEDED
+      - CESSATION_OF_OPERATION
+      - CERTIFICATE_HOLD
+      - REMOVE_FROM_CRL
+      - PRIVILEGE_WITHDRAWN
+      - A_A_COMPROMISE
+      example: SUPERSEDED
+      readOnly: true
+      type: string
+      nullable: false
+    RevocationStatus:
+      example:
+        revokedOn: 2022-02-12T05:10:50.52Z
+        reason: SUPERSEDED
+        revokedBy: some@email.org
+        revocationRequestor: John Doe
+      properties:
+        revokedOn:
+          description: Revocation date in UTC
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: false
+        reason:
+          $ref: '#/components/schemas/RevocationReason'
+        revokedBy:
+          description: email of the person who revoked the certificate
+          example: some@email.org
+          format: email
+          readOnly: true
+          type: string
+          nullable: false
+        revocationRequestor:
+          description: First- and last name of revocation requestor
+          example: John Doe
+          type: string
+          nullable: true
+      required:
+      - reason
+      - revokedBy
+      - revokedOn
+    Certificate:
+      example:
+        serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+        endValidity: 2023-01-12T23:20:50.52Z
+        subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+        revocationStatus:
+          revokedOn: 2022-02-12T05:10:50.52Z
+          reason: SUPERSEDED
+          revokedBy: some@email.org
+          revocationRequestor: John Doe
+        startValidity: 2022-01-12T23:20:50.52Z
+        certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+        issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+      properties:
+        subject:
+          description: Certificate Subject Distinguished Name
+          example: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+          readOnly: true
+          type: string
+          nullable: false
+        issuer:
+          description: Certificate Issuer Distinguished Name
+          example: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+          readOnly: true
+          type: string
+          nullable: false
+        serial:
+          description: Certificate serial number (Big Integer HEX encoded)
+          example: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+          readOnly: true
+          type: string
+          nullable: false
+        startValidity:
+          description: Certificate start validity in UTC
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: false
+        endValidity:
+          description: Certificate start validity in UTC
+          example: 2023-01-12T23:20:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: false
+        certificate:
+          description: base64 encoded DER certificate
+          example: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+          readOnly: true
+          type: string
+          nullable: false
+        revocationStatus:
+          $ref: '#/components/schemas/RevocationStatus'
+      required:
+      - certificate
+      - endValidity
+      - issuer
+      - serial
+      - startValidity
+      - subject
+    CertificateOrderStatus:
+      description: Status of the certificate Order
+      enum:
+      - NEW
+      - KEY_VALIDATION
+      - PRE_VALIDATION
+      - GENERATE_TBS
+      - PENDING_AUTH
+      - PRE_ISSUE
+      - ISSUE
+      - POST_VALIDATION
+      - FINALIZE_ISSUANCE
+      - ISSUED
+      - REVOKED
+      - FAILED
+      - REJECTED
+      - PENDING_CSR_RENEWAL
+      - UNKNOWN
+      example: ISSUED
+      readOnly: true
+      type: string
+      nullable: false
+    JobStatus:
+      description: Status of the certificate Order Task
+      enum:
+      - WAITING
+      - PENDING
+      - PROCESSING
+      - SUCCESS
+      - FAILED
+      - SCHEDULE_REQUEST
+      - SCHEDULE_RESPONSE
+      - RETRY
+      - CONNECTION_OR_CHANNEL_CLOSED
+      - UNKNOWN
+      example: SUCCESS
+      readOnly: true
+      type: string
+      nullable: false
     JobType:
       description: Certificate Order Task Type
       enum:
@@ -3074,50 +2428,9 @@ components:
       - SNOW_REVOKE_ALL_CLIENT_CERTIFICATES_JOB
       - SNOW_REVOKE_ALL_POLICY_MAPPING_CERTIFICATES_JOB
       example: ISSUE_FINALIZE_ISSUE_CERTIFICATE_JOB
-      nullable: false
       readOnly: true
       type: string
-    ProductValidity:
-      example:
-        validityType: HOURS
-        validityOptions:
-        - 0
-        - 0
-        validity: 1
-      properties:
-        validityType:
-          description: "Certificate validity types.\n  - YEARS: certificate validity\
-            \ in years.\n  - MONTHS: certificate validity in months.\n  - DAYS: certificate\
-            \ validity in days.\n  - HOURS: certificate validity in hours.\n  - MINUTES:\
-            \ certificate validity in minutes.\n  - SECONDS: certificate validity\
-            \ in seconds.\n"
-          enum:
-          - YEARS
-          - MONTHS
-          - DAYS
-          - HOURS
-          - MINUTES
-          - SECONDS
-          example: HOURS
-          nullable: false
-          readOnly: true
-          type: string
-        validity:
-          description: The default certificate validity
-          example: 1
-          nullable: true
-          readOnly: true
-          type: integer
-        validityOptions:
-          description: Optional certificate validity values
-          items:
-            type: integer
-          nullable: false
-          readOnly: true
-          type: array
-      required:
-      - validityType
-      type: object
+      nullable: false
     CertificateOrders:
       example:
         recordsFiltered: 6
@@ -3190,22 +2503,22 @@ components:
         recordsTotal: 1
       properties:
         draw:
-          nullable: false
           readOnly: true
           type: integer
+          nullable: false
         recordsFiltered:
           description: "Total records, after filtering (i.e. the total number of records\
             \ after filtering has been applied - not just the number of records being\
             \ returned for this page of data)."
-          nullable: false
           readOnly: true
           type: integer
+          nullable: false
         recordsTotal:
           description: "Total records, before filtering (i.e. the total number of\
             \ records in the database)"
-          nullable: false
           readOnly: true
           type: integer
+          nullable: false
         data:
           items:
             $ref: '#/components/schemas/CertificateOrder'
@@ -3215,7 +2528,423 @@ components:
       - draw
       - recordsFiltered
       - recordsTotal
-      type: object
+    CertificateOrder:
+      example:
+        additionalRecipients:
+        - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
+          language: NEUTRAL
+          email: shared.mailbox@sample.org
+        - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
+          language: NEUTRAL
+          email: shared.mailbox@sample.org
+        certificateChain:
+        - certificateChain
+        - certificateChain
+        issuedBy: some@email.org
+        clientReference: cli-123e4567-e89b-12d3-a456-426614174000
+        certificate:
+          serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
+          endValidity: 2023-01-12T23:20:50.52Z
+          subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
+          revocationStatus:
+            revokedOn: 2022-02-12T05:10:50.52Z
+            reason: SUPERSEDED
+            revokedBy: some@email.org
+            revocationRequestor: John Doe
+          startValidity: 2022-01-12T23:20:50.52Z
+          certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
+          issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+        productReference: pma-123e4567-e89b-12d3-a456-426614174000
+        uuid: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+        createdOn: 2022-02-12T05:10:50.52Z
+        status: ISSUED
+        tags:
+        - my-cmdb-label
+        - my-cmdb-label
+      properties:
+        uuid:
+          description: Certificate Order reference
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+          nullable: false
+        createdOn:
+          description: Certificate Order creation date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          type: string
+          nullable: false
+        status:
+          $ref: '#/components/schemas/CertificateOrderStatus'
+        clientReference:
+          description: Client reference UUID
+          example: cli-123e4567-e89b-12d3-a456-426614174000
+          pattern: "cli-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+          nullable: false
+        productReference:
+          description: Product reference UUID
+          example: pma-123e4567-e89b-12d3-a456-426614174000
+          pattern: "pma-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+          nullable: false
+        certificate:
+          $ref: '#/components/schemas/Certificate'
+        certificateChain:
+          description: Certificate chain
+          items:
+            readOnly: true
+            type: string
+            nullable: true
+          type: array
+          nullable: true
+        tags:
+          description: User defined tags/labels
+          items:
+            example: my-cmdb-label
+            readOnly: true
+            type: string
+            nullable: false
+          type: array
+          nullable: true
+        additionalRecipients:
+          items:
+            $ref: '#/components/schemas/AdditionalRecipient'
+          type: array
+        issuedBy:
+          description: email of the person who created the order
+          example: some@email.org
+          format: email
+          readOnly: true
+          type: string
+          nullable: false
+      required:
+      - clientReference
+      - createdOn
+      - productReference
+      - status
+      - uuid
+    CertificateOrderTask:
+      example:
+        timeScheduled: 2022-02-12T05:10:50.52Z
+        response: Processed successfully
+        timeCreated: 2022-02-12T05:10:50.52Z
+        timeStarted: 2022-02-12T05:10:50.52Z
+        timeFinished: 2022-02-12T05:10:50.52Z
+        numberOfExecutions: 2
+        type: ISSUE_FINALIZE_ISSUE_CERTIFICATE_JOB
+        error: Error processing xyz ...
+        uuid: job-f0725b50-c533-4802-a844-de57bfb7a80e
+        status: SUCCESS
+      properties:
+        uuid:
+          description: Certificate Order Task reference
+          example: job-f0725b50-c533-4802-a844-de57bfb7a80e
+          pattern: "job-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+          nullable: false
+        timeCreated:
+          description: Certificate Order creation date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: true
+        timeScheduled:
+          description: Scheduled date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: true
+        timeStarted:
+          description: Started date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: true
+        timeFinished:
+          description: Finished date time
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: true
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        type:
+          $ref: '#/components/schemas/JobType'
+        numberOfExecutions:
+          description: Number of executions
+          example: 2
+          minimum: 0
+          readOnly: true
+          type: integer
+          nullable: false
+        response:
+          description: Response
+          example: Processed successfully
+          readOnly: true
+          type: string
+          nullable: true
+        error:
+          description: Error message
+          example: Error processing xyz ...
+          readOnly: true
+          type: string
+          nullable: true
+      required:
+      - numberOfExecutions
+      - status
+      - type
+      - uuid
+    SearchCertificateOrder:
+      example:
+        serialNumber: 3893409CB*66E1F09?
+        clientReferences:
+        - cli-123e4567-e89b-12d3-a456-426614174000
+        startAfter: 2022-02-12T05:10:50.52Z
+        startBefore: 2022-02-12T05:10:50.52Z
+        orderReference: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+        orderStatus:
+        - ISSUED
+        - ISSUED
+        attribute: s?me@emai* or 2.5.4.r or street
+        revocationReason:
+        - SUPERSEDED
+        - SUPERSEDED
+        includeCertificateChain: true
+        tags:
+        - my.cmdb-tag
+        - my.cmdb-label
+      properties:
+        orderReference:
+          description: Certificate Order reference
+          example: ord-f0725b50-c533-4802-a844-de57bfb7a80e
+          pattern: "ord-[0-9a-f-]{36}"
+          type: string
+          nullable: true
+        serialNumber:
+          description: Certificate serial number (Big Integer HEX encoded) with optional
+            wildcard attributes ? and/or *
+          example: 3893409CB*66E1F09?
+          type: string
+          nullable: true
+        orderStatus:
+          items:
+            $ref: '#/components/schemas/CertificateOrderStatus'
+          type: array
+          nullable: true
+        revocationReason:
+          items:
+            $ref: '#/components/schemas/RevocationReason'
+          type: array
+          nullable: true
+        clientReferences:
+          description: Client reference UUID
+          example:
+          - cli-123e4567-e89b-12d3-a456-426614174000
+          items:
+            pattern: "cli-[0-9a-f-]{36}"
+            type: string
+          type: array
+          nullable: true
+        startAfter:
+          description: Certificate Order not starting after Date
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          type: string
+          nullable: true
+        startBefore:
+          description: Certificate Order not starting before Date
+          example: 2022-02-12T05:10:50.52Z
+          format: date-time
+          type: string
+          nullable: true
+        attribute:
+          description: Any certificate attribute OID or value with optional wildcard
+            attributes ? and/or *
+          example: s?me@emai* or 2.5.4.r or street
+          type: string
+          nullable: true
+        includeCertificateChain:
+          description: Include the certificate chain in the certificate order when
+            available
+          example: true
+          type: boolean
+          nullable: true
+        tags:
+          description: Customer label/tags
+          example:
+          - my.cmdb-tag
+          - my.cmdb-label
+          items:
+            type: string
+            nullable: false
+          type: array
+          nullable: true
+    ClientDomainValidationStatus:
+      description: Status of the domain pre validation
+      enum:
+      - PENDING
+      - EXPIRED
+      - VALID
+      - NOT_VALIDATED
+      example: NOT_VALIDATED
+      readOnly: true
+      type: string
+      nullable: false
+    ClientDNS:
+      example:
+        domainUnicode: déjà.vu.com
+        timeValidated: 2022-01-12T23:20:50.52Z
+        validationResult: Validated XYZ ...
+        trustedDomain: true
+        randomValueTimeExpired: false
+        randomValue: ""
+        randomValueTimeCreated: 2022-01-12T23:20:50.52Z
+        uuid: cld-10877aec-412f-4b96-a5d4-f5f95da8634e
+        timeExpired: 2022-01-12T23:20:50.52Z
+        expired: false
+        validated: true
+        validationMethod: cabdns
+        domain: xn--dj-kia8a.vu.com
+        randomValueTimeExpire: 2022-01-12T23:20:50.52Z
+        status: NOT_VALIDATED
+      properties:
+        uuid:
+          description: Pre validated client domain reference
+          example: cld-10877aec-412f-4b96-a5d4-f5f95da8634e
+          pattern: "cld-[0-9a-f-]{36}"
+          readOnly: true
+          type: string
+          nullable: false
+        domain:
+          description: Client domain in punycode
+          example: xn--dj-kia8a.vu.com
+          type: string
+          nullable: false
+        domainUnicode:
+          description: Client domain in unicode
+          example: déjà.vu.com
+          readOnly: true
+          type: string
+          nullable: false
+        validated:
+          description: Indicates if the domain is validated
+          example: true
+          readOnly: true
+          type: boolean
+          nullable: false
+        trustedDomain:
+          description: Indicates if the domain is a trusted domain (for private PKIs).
+            This setting is linked to the certificate product DNS validation rule
+            for Private PKIs.
+          example: true
+          readOnly: false
+          type: boolean
+          nullable: false
+        timeValidated:
+          description: Indicates when the domain got validated
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: true
+        validationMethod:
+          description: DNS validation type
+          example: cabdns
+          readOnly: true
+          type: string
+          nullable: false
+        randomValue:
+          description: The random value to add to the DNS TXT record for the domain
+          example: ""
+          readOnly: true
+          type: string
+          nullable: true
+        randomValueTimeCreated:
+          description: Indicates when the random value was created
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: false
+        randomValueTimeExpire:
+          description: Indicates when the random value expires
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: false
+        validationResult:
+          description: Indicates the validation result
+          example: Validated XYZ ...
+          readOnly: true
+          type: string
+          nullable: true
+        timeExpired:
+          description: Indicates when the random value was created
+          example: 2022-01-12T23:20:50.52Z
+          format: date-time
+          readOnly: true
+          type: string
+          nullable: true
+        expired:
+          description: Indicates if the pre validation of the domain has expired
+          example: false
+          readOnly: true
+          type: boolean
+          nullable: false
+        randomValueTimeExpired:
+          description: Indicates if the random value is expired
+          example: false
+          readOnly: true
+          type: boolean
+          nullable: false
+        status:
+          $ref: '#/components/schemas/ClientDomainValidationStatus'
+      required:
+      - domain
+      - domainUnicode
+      - expired
+      - randomValueTimeExpired
+      - trustedDomain
+      - uuid
+      - validated
+      - validationMethod
+    DNS:
+      example:
+        includeWWWDomain: true
+        dns: support.sample.org
+        includeBaseDomainForWildcard: true
+      properties:
+        dns:
+          description: requested domain name (gets converted to punycode if required)
+          example: support.sample.org
+          type: string
+          nullable: false
+        includeBaseDomainForWildcard:
+          description: |
+            Append base domain to wildcard DNS.
+            Adds sample.org when *.sample.org is requested.
+            Applies only to certificate policies which allow wildcard issuance.
+            This flag has no effect if the certificate policy does not include the wildcard option.
+          example: true
+          type: boolean
+          nullable: false
+        includeWWWDomain:
+          description: "Append www to requested DNS. \nAdds www.sample.org when sample.org\
+            \ is requested.\nWhen enabled, www is prefixed to all requested DNS.\n"
+          example: true
+          type: boolean
+          nullable: false
+      required:
+      - dns
     RequestDNS:
       example:
         values:
@@ -3230,71 +2959,219 @@ components:
           items:
             $ref: '#/components/schemas/DNS'
           type: array
-      required:
-      - dnsList
-      type: object
-    Certificate:
+    RequestRFC822:
       example:
-        serial: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
-        endValidity: 2023-01-12T23:20:50.52Z
-        subject: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
-        revocationStatus:
-          revokedOn: 2022-02-12T05:10:50.52Z
-          reason: SUPERSEDED
-          revokedBy: some@email.org
-          revocationRequestor: John Doe
-        startValidity: 2022-01-12T23:20:50.52Z
-        certificate: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
-        issuer: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
+        values:
+        - sample@sample.org
+        - sample@sample.org
       properties:
-        subject:
-          description: Certificate Subject Distinguished Name
-          example: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Some Name"
-          nullable: false
-          readOnly: true
-          type: string
-        issuer:
-          description: Certificate Issuer Distinguished Name
-          example: "DC=COM,DC=Domain,OU=Some Organizational Unit,CN=Issuer Name"
-          nullable: false
-          readOnly: true
-          type: string
-        serial:
-          description: Certificate serial number (Big Integer HEX encoded)
-          example: 3893409CB666E1F092B7B6F28E1EAF4582AA7F21
-          nullable: false
-          readOnly: true
-          type: string
-        startValidity:
-          description: Certificate start validity in UTC
-          example: 2022-01-12T23:20:50.52Z
-          format: date-time
-          nullable: false
-          readOnly: true
-          type: string
-        endValidity:
-          description: Certificate start validity in UTC
-          example: 2023-01-12T23:20:50.52Z
-          format: date-time
-          nullable: false
-          readOnly: true
-          type: string
-        certificate:
-          description: base64 encoded DER certificate
-          example: "... [snipped] ... dGhpcyBpcyBhbiBleGFtcGxl ... [snipped] ..."
-          nullable: false
-          readOnly: true
-          type: string
-        revocationStatus:
-          $ref: '#/components/schemas/RevocationStatus'
+        values:
+          items:
+            description: RFC822 entry
+            example: sample@sample.org
+            type: string
+            nullable: false
+          type: array
       required:
-      - certificate
-      - endValidity
-      - issuer
-      - serial
-      - startValidity
-      - subject
-      type: object
+      - values
+    RequestUPN:
+      example:
+        values:
+        - upn@sample.org
+        - upn@sample.org
+      properties:
+        values:
+          items:
+            description: User Principal Name entry
+            example: upn@sample.org
+            type: string
+            nullable: false
+          type: array
+      required:
+      - values
+    RequestIP:
+      example:
+        values:
+        - 1.1.1.1
+        - 1.1.1.1
+      properties:
+        values:
+          items:
+            description: IP entry
+            example: 1.1.1.1
+            type: string
+            nullable: false
+          type: array
+      required:
+      - values
+    RequestRole:
+      example:
+        value: MY_ROLE
+      properties:
+        value:
+          description: Role extension as defined in OID 1.3.6.1.4.1.43121.1.4.2.0.1
+            (UTF8String)
+          example: MY_ROLE
+          readOnly: false
+          type: string
+          nullable: true
+      required:
+      - value
+    RequestDeviceSerialNumber:
+      example:
+        value: ABCDEF123456XYZ
+      properties:
+        value:
+          description: Device Serial Number extension as defined in OID 1.3.6.1.4.1.43121.1.4.2.0.2
+            (UTF8String)
+          example: ABCDEF123456XYZ
+          readOnly: false
+          type: string
+          nullable: true
+      required:
+      - value
+    RequestScope:
+      example:
+        value: 00FF01FE02FD03FC
+      properties:
+        value:
+          description: Scope extension as defined in OID 1.3.6.1.4.1.43121.1.4.2.0.3
+            (HEX encoded OCTET STRING)
+          example: 00FF01FE02FD03FC
+          readOnly: false
+          type: string
+          nullable: true
+      required:
+      - value
+    RequestExtensions:
+      example:
+        requestDeviceSerialNumber:
+          value: ABCDEF123456XYZ
+        requestUPN:
+          values:
+          - upn@sample.org
+          - upn@sample.org
+        microsoftSecurityIdentifier: S-1-5-32
+        microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
+        requestScope:
+          value: 00FF01FE02FD03FC
+        requestRole:
+          value: MY_ROLE
+        requestIP:
+          values:
+          - 1.1.1.1
+          - 1.1.1.1
+        requestRFC822:
+          values:
+          - sample@sample.org
+          - sample@sample.org
+        requestDNS:
+          values:
+          - includeWWWDomain: true
+            dns: support.sample.org
+            includeBaseDomainForWildcard: true
+          - includeWWWDomain: true
+            dns: support.sample.org
+            includeBaseDomainForWildcard: true
+      properties:
+        microsoftSecurityIdentifier:
+          description: |
+            Microsoft Security Identifier (SID)
+            Override or add the X.509 extension is present in the certificate policy
+          example: S-1-5-32
+          type: string
+          nullable: true
+        microsoftPolicyTemplateOID:
+          description: |
+            Microsoft Policy Template Object Identifier.
+            Override or add the X.509 extension is present in the certificate policy
+          example: 2.16.756.3.2.1.0
+          type: string
+          nullable: true
+        requestDNS:
+          $ref: '#/components/schemas/RequestDNS'
+        requestRFC822:
+          $ref: '#/components/schemas/RequestRFC822'
+        requestUPN:
+          $ref: '#/components/schemas/RequestUPN'
+        requestIP:
+          $ref: '#/components/schemas/RequestIP'
+        requestRole:
+          $ref: '#/components/schemas/RequestRole'
+        requestDeviceSerialNumber:
+          $ref: '#/components/schemas/RequestDeviceSerialNumber'
+        requestScope:
+          $ref: '#/components/schemas/RequestScope'
+    RequestOverrides:
+      example:
+        requestExtensions:
+          requestDeviceSerialNumber:
+            value: ABCDEF123456XYZ
+          requestUPN:
+            values:
+            - upn@sample.org
+            - upn@sample.org
+          microsoftSecurityIdentifier: S-1-5-32
+          microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
+          requestScope:
+            value: 00FF01FE02FD03FC
+          requestRole:
+            value: MY_ROLE
+          requestIP:
+            values:
+            - 1.1.1.1
+            - 1.1.1.1
+          requestRFC822:
+            values:
+            - sample@sample.org
+            - sample@sample.org
+          requestDNS:
+            values:
+            - includeWWWDomain: true
+              dns: support.sample.org
+              includeBaseDomainForWildcard: true
+            - includeWWWDomain: true
+              dns: support.sample.org
+              includeBaseDomainForWildcard: true
+        validity: 1
+        subjectDN: "c=US,l=Denver,o=Acme Ltd,cn=Sample"
+      properties:
+        subjectDN:
+          description: "Override the CSR Subject Distinguished Name with user provided\
+            \ value\nSupported attributes are (lower or uppercase):\n  - c, country\
+            \ (Country)\n  - o, organization (Organization)\n  - ou, organizationalUnit\
+            \ (Organizational Unit)\n  - t, title (Title) \n  - cn, commonName (Common\
+            \ Name)\n  - sn, surName (Surname)\n  - gn, givenName (Given name)\n \
+            \ - i, initials (Initials)\n  - street, streetAddress (Street Address)\n\
+            \  - serialnumber (Serial number)\n  - l, locality (Locality)\n  - st,\
+            \ state (State)\n  - e, email, emailAddress (Email)\n  - dc, domainController\
+            \ (Domain Controller)\n  - uid (UID)\n  - generationQualifier, generation\
+            \ (Generation Qualifier)\n  - description (Description)\n  - role (Role)\n\
+            \  - joil (Jurisdiction of Incorporation, Locality)\n  - joist (Jurisdiction\
+            \ of Incorporation, State)\n  - joic (Jurisdiction of Incorporation, Country)\n\
+            \  - orgId, organizationIdentifier (Organization Identifier)\n  - uniqueIdentifier\
+            \ (Unique Identifier)\n  - name (Name)\n  - pseudonym (Pseudonym)\n  -\
+            \ postalAddress (Postal Address)\n  - postalCode (Postal Code)\n  - unstructuredaddress\
+            \ (Unstructed Address)\n  - unstructuredname (Unstructed Name)\n  - dn\
+            \ (DN Qualifier)\n  - nameatbirth (Name at Birth)\n  - countryofcitizenship\
+            \ (Country of Citizenship)\n  - countryofresidence (Country of Residence)\n\
+            \  - gender (Gender)\n  - placeofbirth (Place of Birth)\n  - dateofbirth\
+            \ (Date of Birth)\n  - businesscategory (Business Category)\n  - telephonenumber\
+            \ (Telephone Number)\n  - scionisdasnumber (SCION ISD AS Number)\n  -\
+            \ tpmmanufacturer (TPM Manufacturer)\n  - tpmmodel (TPM Model)\n  - tpmversion\
+            \ (TPM Version)\n"
+          example: "c=US,l=Denver,o=Acme Ltd,cn=Sample"
+          type: string
+          nullable: true
+        validity:
+          description: |
+            Optional certificate validity set if enabled on the Product
+          example: 1
+          minimum: 1
+          type: integer
+          nullable: true
+        requestExtensions:
+          $ref: '#/components/schemas/RequestExtensions'
     AdditionalRecipient:
       example:
         recipientType: DNS_OWNER_CHECK_EMAIL_LINK
@@ -3304,31 +3181,20 @@ components:
         email:
           description: RFC822 email
           example: shared.mailbox@sample.org
-          nullable: false
           type: string
+          nullable: false
         recipientType:
-          description: "Notification type for additional recipient.\n  - DNS_OWNER_CHECK_EMAIL_LINK:\
-            \ send notification for DNS validation (email link) to additional recipient.\
-            \ Requires notification enabled for 'Additional recipient' on notification\
-            \ template.\n  - DNS_CAB: send notification for CAB DNS change or CAB\
-            \ Agreed upon to additional recipient. Requires notification enabled for\
-            \ 'Additional recipient' on notification template.\n  - ISSUANCE: send\
-            \ notification for certificate issuance to additional recipient. Requires\
-            \ notification enabled for 'Additional recipient' on notification template.\n\
-            \  - REVOCATION: send notification for certificate revocation to additional\
-            \ recipient. Requires notification enabled for 'Additional recipient'\
-            \ on notification template.\n  - RENEWAL: send notification for certificate\
-            \ renewal to additional recipient. Requires notification enabled for 'Additional\
-            \ recipient' on notification template.\n  - RECOVERY: send notification\
-            \ for key recovery to additional recipient. Requires notification enabled\
-            \ for 'Additional recipient' on notification template.\n  - AUTHORIZATION:\
-            \ send notification for authorization to additional recipient. Requires\
-            \ notification enabled for 'Additional recipient' on notification template.\n\
-            \  - AUTHORIZATION_ACCEPTED: send notification for accepted authorization\
-            \ to additional recipient. Requires notification enabled for 'Additional\
-            \ recipient' on notification template.\n  - AUTHORIZATION_REJECTED: send\
-            \ notification for issuance authorization to additional recipient. Requires\
-            \ notification enabled for 'Additional recipient' on notification template.\n"
+          description: |
+            Notification type for additional recipient.
+              - DNS_OWNER_CHECK_EMAIL_LINK: send notification for DNS validation (email link) to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
+              - DNS_CAB: send notification for CAB DNS change or CAB Agreed upon to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
+              - ISSUANCE: send notification for certificate issuance to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
+              - REVOCATION: send notification for certificate revocation to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
+              - RENEWAL: send notification for certificate renewal to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
+              - RECOVERY: send notification for key recovery to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
+              - AUTHORIZATION: send notification for authorization to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
+              - AUTHORIZATION_ACCEPTED: send notification for accepted authorization to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
+              - AUTHORIZATION_REJECTED: send notification for issuance authorization to additional recipient. Requires notification enabled for 'Additional recipient' on notification template.
           enum:
           - DNS_OWNER_CHECK_EMAIL_LINK
           - DNS_CAB
@@ -3340,33 +3206,207 @@ components:
           - AUTHORIZATION_ACCEPTED
           - AUTHORIZATION_REJECTED
           example: DNS_OWNER_CHECK_EMAIL_LINK
-          nullable: false
           type: string
+          nullable: false
         language:
-          description: "Notification language for additional recipient.\nThe NEUTRAL\
-            \ type is the default notification is no notification with type of DE,\
-            \ FR or EN is defined.\nThis is usually a notification which contains\
-            \ a message in three languages.\n"
+          description: |
+            Notification language for additional recipient.
+            The NEUTRAL type is the default notification is no notification with type of DE, FR or EN is defined.
+            This is usually a notification which contains a message in three languages.
           enum:
           - NEUTRAL
           - EN
           - FR
           - DE
           example: NEUTRAL
-          nullable: false
           type: string
+          nullable: false
       required:
       - email
       - language
       - recipientType
-      type: object
+    RegistrationDocument:
+      example:
+        document: document
+        documentName: my_document.pdf
+      properties:
+        documentName:
+          description: document name
+          example: my_document.pdf
+          type: string
+          nullable: false
+        document:
+          description: Base64 encoded byte array of the document content
+          type: string
+          nullable: false
+      required:
+      - document
+      - documentName
+    IssueRequest:
+      example:
+        additionalRecipients:
+        - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
+          language: NEUTRAL
+          email: shared.mailbox@sample.org
+        - recipientType: DNS_OWNER_CHECK_EMAIL_LINK
+          language: NEUTRAL
+          email: shared.mailbox@sample.org
+        note: user free text
+        csr: |
+          ----BEGIN CERTIFICATE REQUEST-----
+          MIICijCCAXICAQAwGTEXMBUGA1UEAwwOd3d3LnNhbXBsZS5vcmcwggEiMA0GCSqG
+          SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCY6+oWhcAadQJ3kuNHZIbujX6yt11MN7RN
+          YIf1+tCFK/zHlbrekiochGQXHasbbTcAqVPM+atvvPl5BMQO6BW8/RzpKC05WAQL
+          wM580Qnq7WcOUX+h+tU6v0W/mRF0KyEt2eI7W+J1ec27AYS2SMeDVyVN/dY7Ca8o
+          x+glgw6MRjh4EQyk9E6v0BU5DaHqvUEhFArloW/t3XCps2Oxd15gqjm0tuEzaXul
+          6VOM4e7CjQuapG1D4mD6TZwEl9A26eVROiRbsgWMCjSYOrCDxsel873kDJoYv+8E
+          YxbAxFlzg7RVBI0Th3vUAgawaPjMz7q2xOOYv+L64fI4s0WQFbbrAgMBAAGgLDAq
+          BgkqhkiG9w0BCQ4xHTAbMBkGA1UdEQQSMBCCDnd3dy5zYW1wbGUub3JnMA0GCSqG
+          SIb3DQEBCwUAA4IBAQAzegZ0PvLM22mie5eolWC9VHH00s3eazvYYpvzecsfDr9k
+          o8omcsfZVE679R7WmAmicPLC8NYMTPGQHStu3MKyxAzw/GHvi2C1BSBx3lx0WDno
+          Jh02r5J/qurxGTZihSr9GnUAU1I3Ht5Lboz/ITEslNMOzZFFIm7e2knfqchhyQRS
+          ilT3LgHWAc490z/lWg63IbC4DVfl5SRtupKjFixyJKU7rHnkBb9fwBGn/mcQPcvq
+          g9W5jRRvcCfmufSdtuzkuvVTR7AcqzrlAFhmwMv1Yll2eMv2qD40jjb0sF45bcu0
+          CRg0mu4um+/DZaWV6IUOiTPj6wewH+909Ov8f2G+
+          ----END CERTIFICATE REQUEST-----
+        productReference: pma-10877aec-412f-4b96-a5d4-f5f95da8634e
+        synchrone: true
+        overrides:
+          requestExtensions:
+            requestDeviceSerialNumber:
+              value: ABCDEF123456XYZ
+            requestUPN:
+              values:
+              - upn@sample.org
+              - upn@sample.org
+            microsoftSecurityIdentifier: S-1-5-32
+            microsoftPolicyTemplateOID: 2.16.756.3.2.1.0
+            requestScope:
+              value: 00FF01FE02FD03FC
+            requestRole:
+              value: MY_ROLE
+            requestIP:
+              values:
+              - 1.1.1.1
+              - 1.1.1.1
+            requestRFC822:
+              values:
+              - sample@sample.org
+              - sample@sample.org
+            requestDNS:
+              values:
+              - includeWWWDomain: true
+                dns: support.sample.org
+                includeBaseDomainForWildcard: true
+              - includeWWWDomain: true
+                dns: support.sample.org
+                includeBaseDomainForWildcard: true
+          validity: 1
+          subjectDN: "c=US,l=Denver,o=Acme Ltd,cn=Sample"
+        registrationDocuments:
+        - document: document
+          documentName: my_document.pdf
+        - document: document
+          documentName: my_document.pdf
+        publishCertificate: true
+        acceptTandC: true
+        tags:
+        - my-cmdb-label
+        - my-cmdb-label
+        includeCertificateChain: true
+      properties:
+        productReference:
+          description: Product reference
+          example: pma-10877aec-412f-4b96-a5d4-f5f95da8634e
+          pattern: "pma-[0-9a-f-]{36}"
+          type: string
+          nullable: false
+        csr:
+          description: "CSR PEM encoded with or without ----BEGIN/END CERTIFICATE\
+            \ REQUEST-----. When null, a key-pair is generated if the certificate\
+            \ policy allows it (SubjectDN and optional overrides must be provided\
+            \ where necessary)."
+          example: |
+            ----BEGIN CERTIFICATE REQUEST-----
+            MIICijCCAXICAQAwGTEXMBUGA1UEAwwOd3d3LnNhbXBsZS5vcmcwggEiMA0GCSqG
+            SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCY6+oWhcAadQJ3kuNHZIbujX6yt11MN7RN
+            YIf1+tCFK/zHlbrekiochGQXHasbbTcAqVPM+atvvPl5BMQO6BW8/RzpKC05WAQL
+            wM580Qnq7WcOUX+h+tU6v0W/mRF0KyEt2eI7W+J1ec27AYS2SMeDVyVN/dY7Ca8o
+            x+glgw6MRjh4EQyk9E6v0BU5DaHqvUEhFArloW/t3XCps2Oxd15gqjm0tuEzaXul
+            6VOM4e7CjQuapG1D4mD6TZwEl9A26eVROiRbsgWMCjSYOrCDxsel873kDJoYv+8E
+            YxbAxFlzg7RVBI0Th3vUAgawaPjMz7q2xOOYv+L64fI4s0WQFbbrAgMBAAGgLDAq
+            BgkqhkiG9w0BCQ4xHTAbMBkGA1UdEQQSMBCCDnd3dy5zYW1wbGUub3JnMA0GCSqG
+            SIb3DQEBCwUAA4IBAQAzegZ0PvLM22mie5eolWC9VHH00s3eazvYYpvzecsfDr9k
+            o8omcsfZVE679R7WmAmicPLC8NYMTPGQHStu3MKyxAzw/GHvi2C1BSBx3lx0WDno
+            Jh02r5J/qurxGTZihSr9GnUAU1I3Ht5Lboz/ITEslNMOzZFFIm7e2knfqchhyQRS
+            ilT3LgHWAc490z/lWg63IbC4DVfl5SRtupKjFixyJKU7rHnkBb9fwBGn/mcQPcvq
+            g9W5jRRvcCfmufSdtuzkuvVTR7AcqzrlAFhmwMv1Yll2eMv2qD40jjb0sF45bcu0
+            CRg0mu4um+/DZaWV6IUOiTPj6wewH+909Ov8f2G+
+            ----END CERTIFICATE REQUEST-----
+          type: string
+          nullable: true
+        overrides:
+          $ref: '#/components/schemas/RequestOverrides'
+        additionalRecipients:
+          items:
+            $ref: '#/components/schemas/AdditionalRecipient'
+          type: array
+        registrationDocuments:
+          items:
+            $ref: '#/components/schemas/RegistrationDocument'
+          type: array
+        tags:
+          items:
+            description: User defined tag/label
+            example: my-cmdb-label
+            readOnly: false
+            type: string
+            nullable: false
+          type: array
+        note:
+          description: User note added to issued certificate order
+          example: user free text
+          type: string
+          nullable: true
+        publishCertificate:
+          description: |
+            Publish certificate to repository.
+            Publication occurs if option is enabled on certificate policy or if the account
+            has the option enabled to override the publication.
+          type: boolean
+          nullable: false
+        synchrone:
+          default: false
+          description: "Request is sent asynchronously to the backend by default.\
+            \ \nSetting this value to _true_ will wait until the certificate is issued\
+            \ and return the completed certificate order.\nFor successful synchronous\
+            \ issuance, _insure_ that you have all prerequisites for DNS validation\
+            \ and/or Authorization fulfilled.\n"
+          example: true
+          type: boolean
+          nullable: false
+        acceptTandC:
+          default: true
+          description: |
+            When server backend has T&C enabled, this value is checked.
+          example: true
+          type: boolean
+          nullable: false
+        includeCertificateChain:
+          default: false
+          description: |
+            Include the certificate chain in the reply (only valid when 'synchronous' is true).
+          example: true
+          type: boolean
+          nullable: false
+      required:
+      - productReference
     jwt_request:
       properties:
         userSecret:
+          required:
+          - userSecret
           type: string
-      required:
-      - userSecret
-      type: object
   securitySchemes:
     BearerAuth:
       bearerFormat: JWT

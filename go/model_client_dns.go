@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -14,12 +14,17 @@ package swisssign_ra_api.v2
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
+
+// checks if the ClientDNS type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientDNS{}
 
 // ClientDNS struct for ClientDNS
 type ClientDNS struct {
 	// Pre validated client domain reference
-	Uuid string `json:"uuid"`
+	Uuid string `json:"uuid" validate:"regexp=cld-[0-9a-f-]{36}"`
 	// Client domain in punycode
 	Domain string `json:"domain"`
 	// Client domain in unicode
@@ -29,25 +34,27 @@ type ClientDNS struct {
 	// Indicates if the domain is a trusted domain (for private PKIs). This setting is linked to the certificate product DNS validation rule for Private PKIs.
 	TrustedDomain bool `json:"trustedDomain"`
 	// Indicates when the domain got validated
-	TimeValidated NullableTime `json:"timeValidated,omitempty"`
+	TimeValidated *time.Time `json:"timeValidated,omitempty"`
 	// DNS validation type
 	ValidationMethod string `json:"validationMethod"`
 	// The random value to add to the DNS TXT record for the domain
-	RandomValue NullableString `json:"randomValue,omitempty"`
+	RandomValue *string `json:"randomValue,omitempty"`
 	// Indicates when the random value was created
 	RandomValueTimeCreated *time.Time `json:"randomValueTimeCreated,omitempty"`
 	// Indicates when the random value expires
 	RandomValueTimeExpire *time.Time `json:"randomValueTimeExpire,omitempty"`
 	// Indicates the validation result
-	ValidationResult NullableString `json:"validationResult,omitempty"`
+	ValidationResult *string `json:"validationResult,omitempty"`
 	// Indicates when the random value was created
-	TimeExpired NullableTime `json:"timeExpired,omitempty"`
+	TimeExpired *time.Time `json:"timeExpired,omitempty"`
 	// Indicates if the pre validation of the domain has expired
 	Expired bool `json:"expired"`
 	// Indicates if the random value is expired
 	RandomValueTimeExpired bool `json:"randomValueTimeExpired"`
 	Status *ClientDomainValidationStatus `json:"status,omitempty"`
 }
+
+type _ClientDNS ClientDNS
 
 // NewClientDNS instantiates a new ClientDNS object
 // This constructor will assign default values to properties that have it defined,
@@ -194,46 +201,36 @@ func (o *ClientDNS) SetTrustedDomain(v bool) {
 	o.TrustedDomain = v
 }
 
-// GetTimeValidated returns the TimeValidated field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetTimeValidated returns the TimeValidated field value if set, zero value otherwise.
 func (o *ClientDNS) GetTimeValidated() time.Time {
-	if o == nil || o.TimeValidated.Get() == nil {
+	if o == nil || IsNil(o.TimeValidated) {
 		var ret time.Time
 		return ret
 	}
-	return *o.TimeValidated.Get()
+	return *o.TimeValidated
 }
 
 // GetTimeValidatedOk returns a tuple with the TimeValidated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientDNS) GetTimeValidatedOk() (*time.Time, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TimeValidated) {
 		return nil, false
 	}
-	return o.TimeValidated.Get(), o.TimeValidated.IsSet()
+	return o.TimeValidated, true
 }
 
 // HasTimeValidated returns a boolean if a field has been set.
 func (o *ClientDNS) HasTimeValidated() bool {
-	if o != nil && o.TimeValidated.IsSet() {
+	if o != nil && !IsNil(o.TimeValidated) {
 		return true
 	}
 
 	return false
 }
 
-// SetTimeValidated gets a reference to the given NullableTime and assigns it to the TimeValidated field.
+// SetTimeValidated gets a reference to the given time.Time and assigns it to the TimeValidated field.
 func (o *ClientDNS) SetTimeValidated(v time.Time) {
-	o.TimeValidated.Set(&v)
-}
-// SetTimeValidatedNil sets the value for TimeValidated to be an explicit nil
-func (o *ClientDNS) SetTimeValidatedNil() {
-	o.TimeValidated.Set(nil)
-}
-
-// UnsetTimeValidated ensures that no value is present for TimeValidated, not even an explicit nil
-func (o *ClientDNS) UnsetTimeValidated() {
-	o.TimeValidated.Unset()
+	o.TimeValidated = &v
 }
 
 // GetValidationMethod returns the ValidationMethod field value
@@ -260,51 +257,41 @@ func (o *ClientDNS) SetValidationMethod(v string) {
 	o.ValidationMethod = v
 }
 
-// GetRandomValue returns the RandomValue field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetRandomValue returns the RandomValue field value if set, zero value otherwise.
 func (o *ClientDNS) GetRandomValue() string {
-	if o == nil || o.RandomValue.Get() == nil {
+	if o == nil || IsNil(o.RandomValue) {
 		var ret string
 		return ret
 	}
-	return *o.RandomValue.Get()
+	return *o.RandomValue
 }
 
 // GetRandomValueOk returns a tuple with the RandomValue field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientDNS) GetRandomValueOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RandomValue) {
 		return nil, false
 	}
-	return o.RandomValue.Get(), o.RandomValue.IsSet()
+	return o.RandomValue, true
 }
 
 // HasRandomValue returns a boolean if a field has been set.
 func (o *ClientDNS) HasRandomValue() bool {
-	if o != nil && o.RandomValue.IsSet() {
+	if o != nil && !IsNil(o.RandomValue) {
 		return true
 	}
 
 	return false
 }
 
-// SetRandomValue gets a reference to the given NullableString and assigns it to the RandomValue field.
+// SetRandomValue gets a reference to the given string and assigns it to the RandomValue field.
 func (o *ClientDNS) SetRandomValue(v string) {
-	o.RandomValue.Set(&v)
-}
-// SetRandomValueNil sets the value for RandomValue to be an explicit nil
-func (o *ClientDNS) SetRandomValueNil() {
-	o.RandomValue.Set(nil)
-}
-
-// UnsetRandomValue ensures that no value is present for RandomValue, not even an explicit nil
-func (o *ClientDNS) UnsetRandomValue() {
-	o.RandomValue.Unset()
+	o.RandomValue = &v
 }
 
 // GetRandomValueTimeCreated returns the RandomValueTimeCreated field value if set, zero value otherwise.
 func (o *ClientDNS) GetRandomValueTimeCreated() time.Time {
-	if o == nil || o.RandomValueTimeCreated == nil {
+	if o == nil || IsNil(o.RandomValueTimeCreated) {
 		var ret time.Time
 		return ret
 	}
@@ -314,7 +301,7 @@ func (o *ClientDNS) GetRandomValueTimeCreated() time.Time {
 // GetRandomValueTimeCreatedOk returns a tuple with the RandomValueTimeCreated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientDNS) GetRandomValueTimeCreatedOk() (*time.Time, bool) {
-	if o == nil || o.RandomValueTimeCreated == nil {
+	if o == nil || IsNil(o.RandomValueTimeCreated) {
 		return nil, false
 	}
 	return o.RandomValueTimeCreated, true
@@ -322,7 +309,7 @@ func (o *ClientDNS) GetRandomValueTimeCreatedOk() (*time.Time, bool) {
 
 // HasRandomValueTimeCreated returns a boolean if a field has been set.
 func (o *ClientDNS) HasRandomValueTimeCreated() bool {
-	if o != nil && o.RandomValueTimeCreated != nil {
+	if o != nil && !IsNil(o.RandomValueTimeCreated) {
 		return true
 	}
 
@@ -336,7 +323,7 @@ func (o *ClientDNS) SetRandomValueTimeCreated(v time.Time) {
 
 // GetRandomValueTimeExpire returns the RandomValueTimeExpire field value if set, zero value otherwise.
 func (o *ClientDNS) GetRandomValueTimeExpire() time.Time {
-	if o == nil || o.RandomValueTimeExpire == nil {
+	if o == nil || IsNil(o.RandomValueTimeExpire) {
 		var ret time.Time
 		return ret
 	}
@@ -346,7 +333,7 @@ func (o *ClientDNS) GetRandomValueTimeExpire() time.Time {
 // GetRandomValueTimeExpireOk returns a tuple with the RandomValueTimeExpire field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientDNS) GetRandomValueTimeExpireOk() (*time.Time, bool) {
-	if o == nil || o.RandomValueTimeExpire == nil {
+	if o == nil || IsNil(o.RandomValueTimeExpire) {
 		return nil, false
 	}
 	return o.RandomValueTimeExpire, true
@@ -354,7 +341,7 @@ func (o *ClientDNS) GetRandomValueTimeExpireOk() (*time.Time, bool) {
 
 // HasRandomValueTimeExpire returns a boolean if a field has been set.
 func (o *ClientDNS) HasRandomValueTimeExpire() bool {
-	if o != nil && o.RandomValueTimeExpire != nil {
+	if o != nil && !IsNil(o.RandomValueTimeExpire) {
 		return true
 	}
 
@@ -366,88 +353,68 @@ func (o *ClientDNS) SetRandomValueTimeExpire(v time.Time) {
 	o.RandomValueTimeExpire = &v
 }
 
-// GetValidationResult returns the ValidationResult field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetValidationResult returns the ValidationResult field value if set, zero value otherwise.
 func (o *ClientDNS) GetValidationResult() string {
-	if o == nil || o.ValidationResult.Get() == nil {
+	if o == nil || IsNil(o.ValidationResult) {
 		var ret string
 		return ret
 	}
-	return *o.ValidationResult.Get()
+	return *o.ValidationResult
 }
 
 // GetValidationResultOk returns a tuple with the ValidationResult field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientDNS) GetValidationResultOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ValidationResult) {
 		return nil, false
 	}
-	return o.ValidationResult.Get(), o.ValidationResult.IsSet()
+	return o.ValidationResult, true
 }
 
 // HasValidationResult returns a boolean if a field has been set.
 func (o *ClientDNS) HasValidationResult() bool {
-	if o != nil && o.ValidationResult.IsSet() {
+	if o != nil && !IsNil(o.ValidationResult) {
 		return true
 	}
 
 	return false
 }
 
-// SetValidationResult gets a reference to the given NullableString and assigns it to the ValidationResult field.
+// SetValidationResult gets a reference to the given string and assigns it to the ValidationResult field.
 func (o *ClientDNS) SetValidationResult(v string) {
-	o.ValidationResult.Set(&v)
-}
-// SetValidationResultNil sets the value for ValidationResult to be an explicit nil
-func (o *ClientDNS) SetValidationResultNil() {
-	o.ValidationResult.Set(nil)
+	o.ValidationResult = &v
 }
 
-// UnsetValidationResult ensures that no value is present for ValidationResult, not even an explicit nil
-func (o *ClientDNS) UnsetValidationResult() {
-	o.ValidationResult.Unset()
-}
-
-// GetTimeExpired returns the TimeExpired field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetTimeExpired returns the TimeExpired field value if set, zero value otherwise.
 func (o *ClientDNS) GetTimeExpired() time.Time {
-	if o == nil || o.TimeExpired.Get() == nil {
+	if o == nil || IsNil(o.TimeExpired) {
 		var ret time.Time
 		return ret
 	}
-	return *o.TimeExpired.Get()
+	return *o.TimeExpired
 }
 
 // GetTimeExpiredOk returns a tuple with the TimeExpired field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientDNS) GetTimeExpiredOk() (*time.Time, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TimeExpired) {
 		return nil, false
 	}
-	return o.TimeExpired.Get(), o.TimeExpired.IsSet()
+	return o.TimeExpired, true
 }
 
 // HasTimeExpired returns a boolean if a field has been set.
 func (o *ClientDNS) HasTimeExpired() bool {
-	if o != nil && o.TimeExpired.IsSet() {
+	if o != nil && !IsNil(o.TimeExpired) {
 		return true
 	}
 
 	return false
 }
 
-// SetTimeExpired gets a reference to the given NullableTime and assigns it to the TimeExpired field.
+// SetTimeExpired gets a reference to the given time.Time and assigns it to the TimeExpired field.
 func (o *ClientDNS) SetTimeExpired(v time.Time) {
-	o.TimeExpired.Set(&v)
-}
-// SetTimeExpiredNil sets the value for TimeExpired to be an explicit nil
-func (o *ClientDNS) SetTimeExpiredNil() {
-	o.TimeExpired.Set(nil)
-}
-
-// UnsetTimeExpired ensures that no value is present for TimeExpired, not even an explicit nil
-func (o *ClientDNS) UnsetTimeExpired() {
-	o.TimeExpired.Unset()
+	o.TimeExpired = &v
 }
 
 // GetExpired returns the Expired field value
@@ -500,7 +467,7 @@ func (o *ClientDNS) SetRandomValueTimeExpired(v bool) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *ClientDNS) GetStatus() ClientDomainValidationStatus {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret ClientDomainValidationStatus
 		return ret
 	}
@@ -510,7 +477,7 @@ func (o *ClientDNS) GetStatus() ClientDomainValidationStatus {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientDNS) GetStatusOk() (*ClientDomainValidationStatus, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -518,7 +485,7 @@ func (o *ClientDNS) GetStatusOk() (*ClientDomainValidationStatus, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *ClientDNS) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -531,53 +498,89 @@ func (o *ClientDNS) SetStatus(v ClientDomainValidationStatus) {
 }
 
 func (o ClientDNS) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["uuid"] = o.Uuid
-	}
-	if true {
-		toSerialize["domain"] = o.Domain
-	}
-	if true {
-		toSerialize["domainUnicode"] = o.DomainUnicode
-	}
-	if true {
-		toSerialize["validated"] = o.Validated
-	}
-	if true {
-		toSerialize["trustedDomain"] = o.TrustedDomain
-	}
-	if o.TimeValidated.IsSet() {
-		toSerialize["timeValidated"] = o.TimeValidated.Get()
-	}
-	if true {
-		toSerialize["validationMethod"] = o.ValidationMethod
-	}
-	if o.RandomValue.IsSet() {
-		toSerialize["randomValue"] = o.RandomValue.Get()
-	}
-	if o.RandomValueTimeCreated != nil {
-		toSerialize["randomValueTimeCreated"] = o.RandomValueTimeCreated
-	}
-	if o.RandomValueTimeExpire != nil {
-		toSerialize["randomValueTimeExpire"] = o.RandomValueTimeExpire
-	}
-	if o.ValidationResult.IsSet() {
-		toSerialize["validationResult"] = o.ValidationResult.Get()
-	}
-	if o.TimeExpired.IsSet() {
-		toSerialize["timeExpired"] = o.TimeExpired.Get()
-	}
-	if true {
-		toSerialize["expired"] = o.Expired
-	}
-	if true {
-		toSerialize["randomValueTimeExpired"] = o.RandomValueTimeExpired
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientDNS) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["uuid"] = o.Uuid
+	toSerialize["domain"] = o.Domain
+	toSerialize["domainUnicode"] = o.DomainUnicode
+	toSerialize["validated"] = o.Validated
+	toSerialize["trustedDomain"] = o.TrustedDomain
+	if !IsNil(o.TimeValidated) {
+		toSerialize["timeValidated"] = o.TimeValidated
+	}
+	toSerialize["validationMethod"] = o.ValidationMethod
+	if !IsNil(o.RandomValue) {
+		toSerialize["randomValue"] = o.RandomValue
+	}
+	if !IsNil(o.RandomValueTimeCreated) {
+		toSerialize["randomValueTimeCreated"] = o.RandomValueTimeCreated
+	}
+	if !IsNil(o.RandomValueTimeExpire) {
+		toSerialize["randomValueTimeExpire"] = o.RandomValueTimeExpire
+	}
+	if !IsNil(o.ValidationResult) {
+		toSerialize["validationResult"] = o.ValidationResult
+	}
+	if !IsNil(o.TimeExpired) {
+		toSerialize["timeExpired"] = o.TimeExpired
+	}
+	toSerialize["expired"] = o.Expired
+	toSerialize["randomValueTimeExpired"] = o.RandomValueTimeExpired
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	return toSerialize, nil
+}
+
+func (o *ClientDNS) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"uuid",
+		"domain",
+		"domainUnicode",
+		"validated",
+		"trustedDomain",
+		"validationMethod",
+		"expired",
+		"randomValueTimeExpired",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varClientDNS := _ClientDNS{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varClientDNS)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ClientDNS(varClientDNS)
+
+	return err
 }
 
 type NullableClientDNS struct {

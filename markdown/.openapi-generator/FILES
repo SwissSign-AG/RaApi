@@ -1,8 +1,7 @@
 .openapi-generator-ignore
-Apis/ApiRegistrationApi.md
+Apis/RAApi.md
 Models/APIError.md
 Models/AdditionalRecipient.md
-Models/AdditionalRecipientType.md
 Models/Certificate.md
 Models/CertificateOrder.md
 Models/CertificateOrderStatus.md
@@ -21,10 +20,13 @@ Models/Product.md
 Models/ProductValidity.md
 Models/RegistrationDocument.md
 Models/RequestDNS.md
+Models/RequestDeviceSerialNumber.md
 Models/RequestExtensions.md
 Models/RequestIP.md
 Models/RequestOverrides.md
 Models/RequestRFC822.md
+Models/RequestRole.md
+Models/RequestScope.md
 Models/RequestUPN.md
 Models/RevocationReason.md
 Models/RevocationRequest.md

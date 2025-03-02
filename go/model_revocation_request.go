@@ -3,7 +3,7 @@ SwissSign RA REST API
 
 See https://github.com/SwissSign-AG/RaApi/README.md
 
-API version: 2.5.17
+API version: 3.4.4
 Contact: ssc@swisssign.com
 */
 
@@ -13,7 +13,12 @@ package swisssign_ra_api.v2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
+
+// checks if the RevocationRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RevocationRequest{}
 
 // RevocationRequest struct for RevocationRequest
 type RevocationRequest struct {
@@ -24,8 +29,10 @@ type RevocationRequest struct {
 	// Certificate issuer distinguished name
 	IssuerName string `json:"issuerName"`
 	// First- and last name of revocation requestor. Revocation requestor must be used when API account is of type SERVICE_ACCOUNT
-	RevocationRequestor NullableString `json:"revocationRequestor,omitempty"`
+	RevocationRequestor *string `json:"revocationRequestor,omitempty"`
 }
+
+type _RevocationRequest RevocationRequest
 
 // NewRevocationRequest instantiates a new RevocationRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -119,63 +126,94 @@ func (o *RevocationRequest) SetIssuerName(v string) {
 	o.IssuerName = v
 }
 
-// GetRevocationRequestor returns the RevocationRequestor field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetRevocationRequestor returns the RevocationRequestor field value if set, zero value otherwise.
 func (o *RevocationRequest) GetRevocationRequestor() string {
-	if o == nil || o.RevocationRequestor.Get() == nil {
+	if o == nil || IsNil(o.RevocationRequestor) {
 		var ret string
 		return ret
 	}
-	return *o.RevocationRequestor.Get()
+	return *o.RevocationRequestor
 }
 
 // GetRevocationRequestorOk returns a tuple with the RevocationRequestor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RevocationRequest) GetRevocationRequestorOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RevocationRequestor) {
 		return nil, false
 	}
-	return o.RevocationRequestor.Get(), o.RevocationRequestor.IsSet()
+	return o.RevocationRequestor, true
 }
 
 // HasRevocationRequestor returns a boolean if a field has been set.
 func (o *RevocationRequest) HasRevocationRequestor() bool {
-	if o != nil && o.RevocationRequestor.IsSet() {
+	if o != nil && !IsNil(o.RevocationRequestor) {
 		return true
 	}
 
 	return false
 }
 
-// SetRevocationRequestor gets a reference to the given NullableString and assigns it to the RevocationRequestor field.
+// SetRevocationRequestor gets a reference to the given string and assigns it to the RevocationRequestor field.
 func (o *RevocationRequest) SetRevocationRequestor(v string) {
-	o.RevocationRequestor.Set(&v)
-}
-// SetRevocationRequestorNil sets the value for RevocationRequestor to be an explicit nil
-func (o *RevocationRequest) SetRevocationRequestorNil() {
-	o.RevocationRequestor.Set(nil)
-}
-
-// UnsetRevocationRequestor ensures that no value is present for RevocationRequestor, not even an explicit nil
-func (o *RevocationRequest) UnsetRevocationRequestor() {
-	o.RevocationRequestor.Unset()
+	o.RevocationRequestor = &v
 }
 
 func (o RevocationRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["serialNumber"] = o.SerialNumber
-	}
-	if true {
-		toSerialize["revocationReason"] = o.RevocationReason
-	}
-	if true {
-		toSerialize["issuerName"] = o.IssuerName
-	}
-	if o.RevocationRequestor.IsSet() {
-		toSerialize["revocationRequestor"] = o.RevocationRequestor.Get()
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RevocationRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["serialNumber"] = o.SerialNumber
+	toSerialize["revocationReason"] = o.RevocationReason
+	toSerialize["issuerName"] = o.IssuerName
+	if !IsNil(o.RevocationRequestor) {
+		toSerialize["revocationRequestor"] = o.RevocationRequestor
+	}
+	return toSerialize, nil
+}
+
+func (o *RevocationRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"serialNumber",
+		"revocationReason",
+		"issuerName",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varRevocationRequest := _RevocationRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varRevocationRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RevocationRequest(varRevocationRequest)
+
+	return err
 }
 
 type NullableRevocationRequest struct {

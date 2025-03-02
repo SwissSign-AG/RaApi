@@ -15,7 +15,7 @@
 | **publishCertificate** | **Boolean** | Indicate if the certificate is published to the public LDAP after issuance | [default to null] |
 | **clientPublishCertificateOverride** | **Boolean** | Indicate if the certificate publication can be overridden | [default to null] |
 | **clientPublishCertificateOverrideDefault** | **Boolean** | Indicate the default value if publication override is enabled | [default to null] |
-| **expirationDate** | **date** | Indicate if the certificate product has an expiration date | [optional] [default to null] |
+| **expirationDate** | **Date** | Indicate if the certificate product has an expiration date | [optional] [default to null] |
 | **allowAdditionalIssuanceNotificationRecipients** | **Boolean** | When enabled, additional certificate issuance notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. | [default to null] |
 | **allowAdditionalRevocationNotificationRecipients** | **Boolean** | When enabled, additional certificate revocation notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. | [default to null] |
 | **allowAdditionalRenewalNotificationRecipients** | **Boolean** | When enabled, additional certificate renewal notification recipients can be added to the certificate order. Additional recipients are skipped when disabled. | [default to null] |
