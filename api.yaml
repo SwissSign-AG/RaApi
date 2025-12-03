@@ -4,7 +4,7 @@ tags:
     description: Registration Authority APIs
 info:
   title: SwissSign RA REST API
-  version: 3.4.14
+  version: 3.5.0
   contact:
     name: "SwissSign Support"
     url: "https://support.swisspki.com"
@@ -278,15 +278,6 @@ paths:
         required: true
         content:
           text/plain:
-            schema:
-              type: string
-              example: |
-                ----BEGIN CERTIFICATE REQUEST-----
-                MIIBQDCByAIBADBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEh
-                ... [snipped] ...
-                6EYCyy3DWH2/ZTmKYjcaCE/iuOigqJOtgRyIeufDV9HKF4UP
-                -----END CERTIFICATE REQUEST-----
-          application/json:
             schema:
               type: string
               example: |
