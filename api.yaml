@@ -4,7 +4,7 @@ tags:
     description: Registration Authority APIs
 info:
   title: SwissSign RA REST API
-  version: 3.5.0
+  version: 3.6.4
   contact:
     name: "SwissSign Support"
     url: "https://support.swisspki.com"
@@ -842,10 +842,11 @@ paths:
                 $ref: '#/components/schemas/APIError'
   /v2/client/domain/{clientReference}/list:
     post:
+      deprecated: true
       summary: Get the list of pre validated domains for the selected client given its reference Id
       description: |
         Retrieve the list of pre validated domains and their status for the selected client
-      operationId: getClientPrevalidatedDomains
+      operationId: getClientPrevalidatedDomainsV2
       tags:
         - RA
       security:
@@ -895,12 +896,75 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIError'
+  /v3/client/domain/{clientReference}/list:
+    post:
+      summary: Get the list of pre validated domains for the selected client given its reference Id
+      description: |
+        Retrieve the list of pre validated domains and their status for the selected client
+      operationId: getClientPrevalidatedDomains
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: clientReference
+          required: true
+          description: Client reference UUID
+          schema:
+            type: string
+            pattern: cli-[0-9a-f-]{36}
+            nullable: false
+            description: Client reference UUID
+            example: cli-123e4567-e89b-12d3-a456-426614174000
+      requestBody:
+        description: Client domain search options
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainValidations'
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                readOnly: true
+                items:
+                  $ref: '#/components/schemas/ClientDNS'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
   /v2/client/domain/{clientReference}/register:
     post:
+      deprecated: true
       summary: Register new pre validated domains for the selected client given its reference Id
       description: |
         Create and issue domains pre validation tokens for the selected client
-      operationId: createClientPrevalidatedDomains
+      operationId: createClientPrevalidatedDomainsV2
       tags:
         - RA
       security:
@@ -938,6 +1002,127 @@ paths:
                 readOnly: true
                 items:
                   $ref: '#/components/schemas/ClientDNS'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+  /v3/client/domain/{clientReference}/register:
+    post:
+      summary: Register new pre validated domains for the selected client given its reference Id
+      description: |
+        Create and issue domains pre validation tokens for the selected client
+      operationId: createClientPrevalidatedDomains
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: clientReference
+          required: true
+          description: Client reference UUID
+          schema:
+            type: string
+            pattern: cli-[0-9a-f-]{36}
+            nullable: false
+            description: Client reference UUID
+            example: cli-123e4567-e89b-12d3-a456-426614174000
+      requestBody:
+        description: Client domains
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainValidations'
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                readOnly: true
+                items:
+                  $ref: '#/components/schemas/ClientDNS'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+  /v3/client/domain/{productReference}/check:
+    post:
+      summary: Check if domains are already validated
+      description: |
+        Checks domains which are already validated and returns the ones which are not
+      operationId: checkDomainValidations
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: productReference
+          required: true
+          description: Product reference UUID
+          schema:
+            type: string
+            pattern: pma-[0-9a-f-]{36}
+            nullable: false
+            description: Product reference UUID
+            example: pma-123e4567-e89b-12d3-a456-426614174000
+      requestBody:
+        description: Client domains
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainValidations'
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainValidations'
         '400':
           description: bad request
           content:
@@ -1583,7 +1768,19 @@ components:
           readOnly: true
           nullable: true
           description: The default certificate validity
-          example: 1
+          example: 7
+        minValidity:
+          type: integer
+          readOnly: true
+          nullable: true
+          description: The minimum certificate validity
+          example: 3
+        maxValidity:
+          type: integer
+          readOnly: true
+          nullable: true
+          description: The maximum certificate validity
+          example: 14
         validityOptions:
           type: array
           nullable: false
@@ -2301,6 +2498,17 @@ components:
           items:
             type: string
             nullable: false
+    DomainValidationMethods:
+      type: array
+      default: []
+      items:
+        type: string
+        enum:
+          - CAB_DNS
+          - CAB_DNS_PERSISTENT
+      nullable: true
+      description: Validation method
+      example: [CAB_DNS, CAB_DNS_PERSISTENT]
     ClientDomainValidationStatus:
       type: string
       readOnly: true
@@ -2413,6 +2621,12 @@ components:
           readOnly: true
           description: Indicates if the random value is expired
           example: false
+        persistentValue:
+          type: string
+          nullable: true
+          readOnly: true
+          description: "The persistent value to add to the DNS Persistent TXT record for the domain (DNS owner name label: _validation-persist)"
+          example: "swisspki.com; accounturi=http://swisspki.com/dcv-persistent/client/cli-12345"
         status:
           $ref: "#/components/schemas/ClientDomainValidationStatus"
     DNS:
@@ -2700,7 +2914,7 @@ components:
           example: true
         acceptTandC:
           type: boolean
-          default: true
+          default: false
           nullable: false
           description: |
             When server backend has T&C enabled, this value is checked.
@@ -2712,3 +2926,17 @@ components:
           description: |
             Include the certificate chain in the reply (only valid when 'synchronous' is true).
           example: true
+    DomainValidations:
+      type: object
+      properties:
+        domains:
+          type: array
+          items:
+            type: string
+            nullable: false
+            description: Domain name
+            example: déjà.vu.com
+        topDomainsOnly:
+          type: boolean
+        validationMethods:
+          $ref: '#/components/schemas/DomainValidationMethods'
