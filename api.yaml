@@ -4,7 +4,7 @@ tags:
     description: Registration Authority APIs
 info:
   title: SwissSign RA REST API
-  version: 3.6.4
+  version: 3.9.6
   contact:
     name: "SwissSign Support"
     url: "https://support.swisspki.com"
@@ -1677,12 +1677,356 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIError'
+  /v2/scep/pins:
+    post:
+      summary: Retrieve SCEP PINs
+      description: Returns a list of all active SCEP PINs for authorized clients.
+      operationId: getScepPins
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RAScepPin'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+  /v2/scep/pin/{policyMappingUUID}/refresh:
+    post:
+      summary: Refresh a SCEP PIN
+      description: Resets and returns a new SCEP PIN for the specified policy mapping.
+      operationId: refreshScepPin
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: policyMappingUUID
+          required: true
+          schema:
+            type: string
+            pattern: pma-[0-9a-f-]{36}
+            description: Policy mapping reference UUID
+            example: pma-123e4567-e89b-12d3-a456-426614174000
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RAScepPin'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+  /v2/client/{clientReference}/acme/external-accounts:
+    post:
+      summary: List ACME External Account Bindings
+      description: Returns all ACME External Account Bindings (RFC 8555 7.3.4) for the given Client. MAC keys are never returned.
+      operationId: listExternalAccounts
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientReference'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RAExternalAccount'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+  /v2/client/{clientReference}/acme/external-account:
+    post:
+      summary: Create an ACME External Account Binding
+      description: |
+        Creates an ACME External Account Binding (RFC 8555 7.3.4) for the given Client and returns the
+        `eabKID` and the base64url MAC `key`. The `key` is returned __only once__ — it is stored
+        encrypted and never returned again. If omitted in the request the server generates a random key.
+      operationId: createExternalAccount
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientReference'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RAExternalAccountCreate'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RAExternalAccountCreated'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+  /v2/acme/external-account/{eabReference}:
+    post:
+      summary: Retrieve an ACME External Account Binding
+      description: Returns a single ACME External Account Binding, addressed by its own reference. The MAC key is never returned.
+      operationId: getExternalAccount
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/EabReference'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RAExternalAccount'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '403':
+          description: forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+  /v2/acme/external-account/{eabReference}/update:
+    post:
+      summary: Update an ACME External Account Binding
+      description: Updates the label and/or expiry of an ACME External Account Binding. The MAC key and algorithm are immutable.
+      operationId: updateExternalAccount
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/EabReference'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RAExternalAccountUpdate'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RAExternalAccount'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '403':
+          description: forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+  /v2/acme/external-account/{eabReference}/delete:
+    post:
+      summary: Delete an ACME External Account Binding
+      description: |
+        Deletes an ACME External Account Binding. Accounts already bound to it keep working (the link is
+        cleared); future newAccount requests using its `eabKID` are rejected.
+      operationId: deleteExternalAccount
+      tags:
+        - RA
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/EabReference'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                example: External account binding 'eab-123e4567-e89b-12d3-a456-426614174000' deleted
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '403':
+          description: forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
 components:
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  parameters:
+    ClientReference:
+      in: path
+      name: clientReference
+      required: true
+      description: Client reference UUID
+      schema:
+        type: string
+        pattern: cli-[0-9a-f-]{36}
+        nullable: false
+        description: Client reference UUID
+        example: cli-123e4567-e89b-12d3-a456-426614174000
+    EabReference:
+      in: path
+      name: eabReference
+      required: true
+      description: ACME External Account Binding reference UUID
+      schema:
+        type: string
+        pattern: eab-[0-9a-f-]{36}
+        nullable: false
+        description: ACME External Account Binding reference UUID
+        example: eab-123e4567-e89b-12d3-a456-426614174000
   schemas:
     APIError:
       type: object
@@ -2528,7 +2872,6 @@ components:
         - domain
         - domainUnicode
         - validated
-        - trustedDomain
         - validationMethod
         - expired
         - randomValueTimeExpired
@@ -2556,12 +2899,6 @@ components:
           nullable: false
           readOnly: true
           description: Indicates if the domain is validated
-          example: true
-        trustedDomain:
-          type: boolean
-          nullable: false
-          readOnly: false
-          description: Indicates if the domain is a trusted domain (for private PKIs). This setting is linked to the certificate product DNS validation rule for Private PKIs.
           example: true
         timeValidated:
           type: string
@@ -2940,3 +3277,188 @@ components:
           type: boolean
         validationMethods:
           $ref: '#/components/schemas/DomainValidationMethods'
+    RAScepPin:
+      type: object
+      required:
+        - uuid
+        - policyMappingUUID
+        - clientName
+        - password
+        - validUntil
+        - expired
+        - active
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: false
+          description: SCEP PIN UUID reference
+          example: 123e4567-e89b-12d3-a456-426614174000
+        policyMappingUUID:
+          type: string
+          pattern: pma-[0-9a-f-]{36}
+          readOnly: true
+          nullable: false
+          description: Policy mapping reference UUID
+          example: pma-123e4567-e89b-12d3-a456-426614174000
+        policyInstanceName:
+          type: string
+          readOnly: true
+          nullable: true
+          description: Policy instance name
+          example: SCEP Policy
+        clientName:
+          type: string
+          readOnly: true
+          nullable: false
+          description: Client name
+          example: My Client
+        scepURL:
+          type: string
+          readOnly: true
+          nullable: true
+          description: SCEP enrollment URL
+          example: https://swisspki.ch/scep/v1/pma-123e4567-e89b-12d3-a456-426614174000
+        password:
+          type: string
+          readOnly: true
+          nullable: false
+          description: SCEP Challenge Password (PIN)
+          example: ABCDEF1234
+        validUntil:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: false
+          description: SCEP PIN validity date
+          example: "2026-04-23T14:10:00.00Z"
+        expired:
+          type: boolean
+          readOnly: true
+          nullable: false
+          description: Indicate if the SCEP PIN is expired
+          example: false
+        active:
+          type: boolean
+          readOnly: true
+          nullable: false
+          description: Indicate if the SCEP PIN is active
+          example: true
+    RAExternalAccount:
+      type: object
+      description: An ACME External Account Binding (RFC 8555 7.3.4). Never carries the MAC key.
+      required:
+        - eabReference
+        - clientReference
+        - eabKID
+        - algorithm
+      properties:
+        eabReference:
+          type: string
+          pattern: eab-[0-9a-f-]{36}
+          readOnly: true
+          nullable: false
+          description: External Account Binding reference UUID
+          example: eab-123e4567-e89b-12d3-a456-426614174000
+        clientReference:
+          type: string
+          pattern: cli-[0-9a-f-]{36}
+          readOnly: true
+          nullable: false
+          description: Client reference UUID the binding belongs to
+          example: cli-123e4567-e89b-12d3-a456-426614174000
+        clientName:
+          type: string
+          readOnly: true
+          nullable: true
+          description: Display name of the Client the binding belongs to
+          example: Company Ltd
+        eabKID:
+          type: string
+          readOnly: true
+          nullable: false
+          description: Key identifier the ACME client passes as --eab-kid (full URL)
+          example: https://swisspki.ch/acme/client/cli-123e4567-e89b-12d3-a456-426614174000/acme/external-account/eab-123e4567-e89b-12d3-a456-426614174000
+        label:
+          type: string
+          nullable: true
+          description: Free-text label for the binding
+          example: acme.example.com
+        algorithm:
+          type: string
+          enum: [HS256, HS384, HS512]
+          nullable: false
+          description: MAC algorithm
+          example: HS256
+        expiresOn:
+          type: string
+          format: date-time
+          nullable: true
+          description: Optional expiry (UTC); after this the binding is rejected
+          example: "2027-04-23T14:10:00.00Z"
+    RAExternalAccountCreated:
+      description: |
+        Create response for an ACME External Account Binding. Carries the base64url MAC `key` in
+        plaintext — this is the ONLY time it is returned (rotate by delete + recreate).
+      allOf:
+        - $ref: '#/components/schemas/RAExternalAccount'
+        - type: object
+          required:
+            - key
+          properties:
+            key:
+              type: string
+              readOnly: true
+              nullable: false
+              description: base64url-encoded MAC key (--eab-hmac-key), returned only once on create
+              example: zWNDZM6eQGHWpSRTPal5eIUYFTu7EajVIoguysqZ9wG
+    RAExternalAccountCreate:
+      type: object
+      description: Request body to create an ACME External Account Binding.
+      required:
+        - label
+      properties:
+        label:
+          type: string
+          nullable: false
+          maxLength: 255
+          description: Free-text label for the binding (required, at most 255 characters after trimming)
+          example: acme.example.com
+        algorithm:
+          type: string
+          enum: [HS256, HS384, HS512]
+          nullable: true
+          description: MAC algorithm (defaults to HS256 when omitted, null or unrecognised)
+          example: HS256
+        expiresOn:
+          type: string
+          format: date-time
+          nullable: true
+          description: Optional expiry (UTC). When supplied it must be in the future.
+          example: "2027-04-23T14:10:00.00Z"
+        key:
+          type: string
+          nullable: true
+          description: >-
+            Optional base64url MAC key; when omitted the server generates a random one. When supplied it must decode as base64url and be at least the hash output size of the algorithm it is bound to (32 bytes for HS256, 48 for HS384, 64 for HS512).
+          example: zWNDZM6eQGHWpSRTPal5eIUYFTu7EajVIoguysqZ9wG
+    RAExternalAccountUpdate:
+      type: object
+      description: Request body to update an ACME External Account Binding (label and/or expiry only).
+      required:
+        - label
+      properties:
+        label:
+          type: string
+          nullable: false
+          maxLength: 255
+          description: Free-text label for the binding (required, at most 255 characters after trimming)
+          example: acme.example.com
+        expiresOn:
+          type: string
+          format: date-time
+          nullable: true
+          description: >-
+            Expiry (UTC). Omit or send null to clear it, which makes the binding permanent. When supplied it must be in the future.
+          example: "2027-04-23T14:10:00.00Z"
